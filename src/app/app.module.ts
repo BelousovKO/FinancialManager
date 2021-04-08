@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
-
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
-import { LogInComponent } from './log-in/log-in.component';
+
+import {AppComponent} from './app.component';
+import {LogInComponent} from './log-in/log-in.component';
 
 const appRoutes: Routes = [
-  { path: '**', redirectTo: '/' }
+  {path: '**', redirectTo: '/'}
 ];
 
 @NgModule({
@@ -16,9 +16,12 @@ const appRoutes: Routes = [
     LogInComponent,
   ],
   imports: [
-    BrowserModule, RouterModule.forRoot(appRoutes)
+    BrowserModule,
+    RouterModule.forRoot(appRoutes),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
