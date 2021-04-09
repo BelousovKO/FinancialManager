@@ -18,9 +18,9 @@ interface User {
 export class LogInComponent implements OnInit {
 
   public userModel: User = {
-    name: 'rob',
+    name: '',
     email: 'd@d.com',
-    phone: 1234567890,
+    phone: null,
     topic: '',
     timePreference: 'morning',
     subscribe: true
