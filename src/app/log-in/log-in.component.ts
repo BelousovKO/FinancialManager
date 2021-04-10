@@ -1,13 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-
-interface User {
-  name: string;
-  email: string;
-  phone: number;
-  topic: string;
-  timePreference: string;
-  subscribe: boolean;
-}
+import {User} from '../user';
+import {EnrollmentService} from '../services/enrollment.service';
 
 @Component({
   selector: 'app-log-in',
@@ -17,22 +10,30 @@ interface User {
 
 export class LogInComponent implements OnInit {
 
-  public userModel: User = {
-    name: '',
-    email: 'd@d.com',
-    phone: null,
-    topic: '',
-    timePreference: 'morning',
-    subscribe: true
-  };
-
   topics = ['Angular', 'React', 'Vue'];
+  submitted = false;
+  errorMsg = '';
 
-  constructor() {
+  userModel = new User(
+    'rob',
+    'd@d.com',
+    1234567890,
+    '',
+    'morning',
+    true);
+
+  constructor(private _enrolmentService: EnrollmentService) {
   }
 
   ngOnInit(): void {
   }
 
-
+  onSubmit(): void {
+    this.submitted = true;
+    this._enrolmentService.enroll(this.userModel)
+      .subscribe(
+        data => console.log('Success!', data),
+        error => this.errorMsg = error.statusText
+      );
+  }
 }
