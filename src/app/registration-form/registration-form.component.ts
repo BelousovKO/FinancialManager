@@ -11,6 +11,8 @@ import {RegistrationService} from '../services/registration.service';
 })
 export class RegistrationFormComponent implements OnInit {
 
+  submitted = false;
+
   registrationForm: FormGroup;
 
   get userName(): any {
@@ -98,6 +100,7 @@ export class RegistrationFormComponent implements OnInit {
   }*/
 
   onSubmit(): any {
+    this.submitted = true;
     console.log(this.registrationForm.value);
     this._registrationService.register(this.registrationForm.value)
       .subscribe(

@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <h2>Registration form</h2>
   <!--{{ registrationForm.value | json }}-->
-  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="registrationForm" *ngIf="!submitted" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label>Username</label>
       <input [class.is-invalid]="registrationForm.get('userName').invalid &&
@@ -37,7 +37,7 @@
       </button>
       <input [class.is-invalid]="email.invalid && email.touched"
              formControlName="email"
-             type="text"
+             type="password"
              class="form-control">
       <small class="text-danger" [class.d-none]="email.valid || email.untouched">Email is required</small>
       <div formArrayName="alternateEmails" *ngFor="let email of alternateEmails.controls; let i = index">

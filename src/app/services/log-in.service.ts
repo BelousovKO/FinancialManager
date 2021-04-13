@@ -4,9 +4,9 @@ import {HttpClient} from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class RegistrationService {
+export class LogInService {
 
-  _url = 'http://localhost:8080/enroll';
+  _url = 'http://localhost:8080/users/login';
 
   constructor(private _http: HttpClient) {
   }

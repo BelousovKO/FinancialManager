@@ -7,8 +7,11 @@ import {HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {LogInComponent} from './log-in/log-in.component';
 import {RegistrationFormComponent} from './registration-form/registration-form.component';
+import { LogInFormComponent } from './log-in-form/log-in-form.component';
+import { TestFormsComponent } from './test-forms/test-forms.component';
 
 const appRoutes: Routes = [
+  {path: 'testForm', component: TestFormsComponent},
   {path: 'firstForm', component: LogInComponent},
   {path: 'regForm', component: RegistrationFormComponent},
   {path: '**', redirectTo: '/'}
@@ -19,6 +22,8 @@ const appRoutes: Routes = [
     AppComponent,
     LogInComponent,
     RegistrationFormComponent,
+    LogInFormComponent,
+    TestFormsComponent,
   ],
   imports: [
     BrowserModule,
