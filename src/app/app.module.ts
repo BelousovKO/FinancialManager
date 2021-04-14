@@ -9,12 +9,15 @@ import {LogInComponent} from './log-in/log-in.component';
 import {RegistrationFormComponent} from './registration-form/registration-form.component';
 import { LogInFormComponent } from './log-in-form/log-in-form.component';
 import { TestFormsComponent } from './test-forms/test-forms.component';
+import { RegFormComponent } from './reg-form/reg-form.component';
 
 const appRoutes: Routes = [
+  {path: 'loginForm', component: LogInFormComponent},
   {path: 'testForm', component: TestFormsComponent},
   {path: 'firstForm', component: LogInComponent},
-  {path: 'regForm', component: RegistrationFormComponent},
-  {path: '**', redirectTo: '/'}
+  {path: 'regForm', component: RegFormComponent},
+  {path: 'registrationForm', component: RegistrationFormComponent},
+  {path: '**', redirectTo: 'loginForm'}
 ];
 
 @NgModule({
@@ -24,6 +27,7 @@ const appRoutes: Routes = [
     RegistrationFormComponent,
     LogInFormComponent,
     TestFormsComponent,
+    RegFormComponent,
   ],
   imports: [
     BrowserModule,

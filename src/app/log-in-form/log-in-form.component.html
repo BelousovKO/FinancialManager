@@ -2,39 +2,41 @@
   <form [formGroup]="logInForm" *ngIf="!submitted" (ngSubmit)="onSubmit()">
     <div *ngIf="statusLogin === 'ERROR'">Пользователь с таким именем не регистрировался...</div>
     <div *ngIf="statusLogin === 'FALSE'">Не верное имя или пароль...</div>
-    <div class="form-group">
-      <label>Имя</label>
-      <input [class.is-invalid]="userName.invalid &&
+    <div class="form-group mb-3">
+      <label>
+        <input [class.is-invalid]="userName.invalid &&
                                  userName.touched"
-             formControlName="userName"
-             type="text"
-             class="form-control"
-             placeholder="Введите имя">
+               formControlName="userName"
+               type="text"
+               class="form-control"
+               placeholder="Введите имя">
+      </label>
       <div *ngIf="userName.invalid &&
                   userName.touched">
         <small *ngIf="userName.errors?.required" class="text-danger">
           Это поле обязательно для заполнения
         </small>
-        <small *ngIf="userName.errors?.minlength" class="text-danger">
+        <small *ngIf="userNameErrorMinlength" class="text-danger">
           Имя должно содержать минимум 3 символа
         </small>
       </div>
     </div>
 
     <div class="form-group">
-      <label>Пароль</label>
-      <input [class.is-invalid]="password.invalid &&
+      <label>
+        <input [class.is-invalid]="password.invalid &&
                                  password.touched"
-             formControlName="password"
-             type="text"
-             class="form-control"
-             placeholder="Введите пароль">
+               formControlName="password"
+               type="text"
+               class="form-control"
+               placeholder="Введите пароль">
+      </label>
       <div *ngIf="password.invalid &&
                   password.touched">
         <small *ngIf="password.errors?.required" class="text-danger">
           Это поле обязательно для заполнения
         </small>
-        <small *ngIf="password.errors?.minlength" class="text-danger">
+        <small *ngIf="passwordErrorMinlength" class="text-danger">
           Пароль должно содержать минимум 3 символа
         </small>
       </div>
@@ -43,6 +45,11 @@
     <br>
 
     <button [disabled]="!logInForm.valid" class="btn btn-primary" type="submit">Войти</button>
+    <div class="mt-2">
+      <a routerLink="/regForm">
+        <button class="btn btn-primary">Регистрация</button>
+      </a>
+    </div>
   </form>
   <div *ngIf="submitted">
     <div>Вход выполнен</div>
