@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators, FormArray} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {forbiddenNameValidator} from '../shared/user-name.validator';
 import {PasswordValidator} from '../shared/password.validator';
 import {RegistrationService} from '../services/registration.service';
@@ -18,85 +18,50 @@ export class RegFormComponent implements OnInit {
     return this.registrationForm.get('userName');
   }
 
+  get userNameMinLength(): any {
+    return this.userName.errors?.minlength;
+  }
+
+  get userNameMaxLength(): any {
+    return this.userName.errors?.maxlength;
+  }
+
+  get forbiddenName(): any {
+    return this.userName.errors?.forbiddenName;
+  }
+
   get email(): any {
     return this.registrationForm.get('email');
   }
 
-  get alternateEmails(): any {
-    return this.registrationForm.get('alternateEmails') as FormArray;
+  get emailMaxLength(): any {
+    return this.email.errors?.maxlength;
   }
 
-  addAlternateEmails(): any {
-    this.alternateEmails.push(this.fb.control(''));
+  get emailInvalid(): any {
+    return this.email.errors?.email;
   }
 
-  /*registrationForm = new FormGroup({
-    userName: new FormControl('Vishwas'),
-    password: new FormControl(''),
-    confirmPassword: new FormControl(''),
-    address: new FormGroup({
-      city: new FormControl(''),
-      state: new FormControl(''),
-      postalCode: new FormControl('')
-    })
-  });*/
+  get password(): any {
+    return this.registrationForm.get('password');
+  }
+
+  get consent(): any {
+    return this.registrationForm.get('consent');
+  }
 
   constructor(private fb: FormBuilder, private _registrationService: RegistrationService) {
   }
 
-
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
-      userName: ['', [Validators.required, Validators.minLength(3), forbiddenNameValidator]],
-      email: [''],
-      subscribe: [false],
-      password: [''],
-      confirmPassword: [''],
-      address: this.fb.group({
-        city: [''],
-        state: [''],
-        postalCode: [''],
-      }),
-      alternateEmails: this.fb.array([])
+      userName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20), forbiddenNameValidator]],
+      email: ['', [Validators.required, Validators.maxLength(20), Validators.email]],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+      consent: [false, Validators.required],
     }, {validator: PasswordValidator});
-
-    this.registrationForm.get('subscribe').valueChanges
-      .subscribe(checkedValue => {
-        const email = this.registrationForm.get('email');
-        checkedValue ? email.setValidators(Validators.required) : email.clearValidators();
-        email.updateValueAndValidity();
-      });
   }
-  /*заполнение части формы*/
-  loadApiData(): any {
-    this.registrationForm.patchValue({
-      userName: 'Bruce',
-      password: 'test',
-      confirmPassword: 'test',
-      address: {
-        city: 'City',
-        state: 'State',
-        postalCode: '123456',
-      }
-    });
-  }
-
-  /*заполнение всех полей*/
-  /*loadApiData(): any {
-    this.registrationForm.setValue({
-      userName: 'Bruce',
-      email: 's@s.com',
-      subscribe: [true],
-      password: 'test',
-      confirmPassword: 'test',
-      address: {
-        city: 'City',
-        state: 'State',
-        postalCode: '123456',
-      },
-      alternateEmails: ''
-    });
-  }*/
 
   onSubmit(): any {
     this.submitted = true;

@@ -1,63 +1,90 @@
-<div class="container-fluid">
-  <h2>Registration form</h2>
-  <!--{{ registrationForm.value | json }}-->
-  <form [formGroup]="registrationForm" *ngIf="!submitted" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label>Username</label>
-      <input [class.is-invalid]="registrationForm.get('userName').invalid &&
-                                 registrationForm.get('userName').touched"
+<!--{{ registrationForm.value | json }}-->
+<form [formGroup]="registrationForm" *ngIf="!submitted" (ngSubmit)="onSubmit()">
+  <h2>Форма регистрации</h2>
+  <div class="form-group mb-2">
+    <label>
+      <input [class.is-invalid]="userName.invalid && userName.touched"
              formControlName="userName"
              type="text"
-             class="form-control">
-      <div *ngIf="userName.invalid &&
+             class="form-control"
+             placeholder="Введите имя">
+    </label>
+    <div *ngIf="userName.invalid &&
                   userName.touched">
-        <small *ngIf="userName.errors?.required" class="text-danger">
-          Username is required
-        </small>
-        <small *ngIf="userName.errors?.minlength" class="text-danger">
-          Username must be at least 3 characters
-        </small>
-        <small *ngIf="userName.errors?.forbiddenName" class="text-danger">
-          {{userName.errors?.forbiddenName.value}} Username not allowed
-        </small>
-      </div>
+      <small *ngIf="userName.errors?.required" class="text-danger">
+        Это поле обязателно для заполнения
+      </small>
+      <small *ngIf="userNameMinLength" class="text-danger">
+        Имя должно быть больше 3 символов
+      </small>
+      <small *ngIf="userNameMaxLength" class="text-danger">
+        Имя должно быть меньше 20 символов
+      </small>
+      <small *ngIf="forbiddenName" class="text-danger">
+        {{forbiddenName.value}} - это имя использовать нельзя
+      </small>
     </div>
+  </div>
 
-    <div class="form-group mb-2">
-      <label>
-        <input [class.is-invalid]="email.invalid && email.touched"
-               formControlName="email"
-               type="email"
-               class="form-control"
-               placeholder="Введите e-mail">
-      </label>
-      <small class="text-danger" [class.d-none]="email.valid || email.untouched">Email is required</small>
-      </div>
-
-    <div class="form-check">
-      <input class="form-check-input" formControlName="subscribe" type="checkbox">
-      <label class="form-check-label">
-        Send me promotion offers
-      </label>
+  <div class="form-group mb-2">
+    <label>
+      <input [class.is-invalid]="email.invalid && email.touched"
+             formControlName="email"
+             type="email"
+             class="form-control"
+             placeholder="Введите e-mail">
+    </label>
+    <div *ngIf="email.invalid &&
+                  email.touched">
+      <small *ngIf="email.errors?.required" class="text-danger">
+        Это поле обязателно для заполнения
+      </small>
+      <small *ngIf="emailMaxLength" class="text-danger">
+        Имя должно быть меньше 20 символов
+      </small>
+      <small *ngIf="emailInvalid" class="text-danger">
+        Введен некорректный email
+      </small>
     </div>
+  </div>
 
-    <div class="form-group">
-      <label>Password</label>
-      <input formControlName="password" type="password" class="form-control">
+  <div class="form-group mb-2">
+    <label>
+      <input [class.is-invalid]="password.invalid && password.touched"
+             formControlName="password"
+             type="password"
+             class="form-control"
+             placeholder="Введите пароль">
+    </label>
+    <div *ngIf="password.invalid &&
+                  password.touched">
+      <small *ngIf="password.errors?.required" class="text-danger">
+        Это поле обязателно для заполнения
+      </small>
     </div>
+  </div>
 
-    <div class="form-group">
-      <label>Confirm Password</label>
+  <div class="form-group mb-2">
+    <label>
       <input [class.is-invalid]="registrationForm.errors?.misMach"
              formControlName="confirmPassword"
              type="password"
-             class="form-control">
-      <small class="text-danger" *ngIf="registrationForm.errors?.misMatch">Password do not match</small>
-    </div>
+             class="form-control"
+             placeholder="Повторите пароль">
+    </label>
+    <small class="text-danger" *ngIf="registrationForm.errors?.misMatch">Пароль не совпадает</small>
+  </div>
 
-    <br>
+  <div class="form-check mb-2">
+    <label class="form-check-label">
+      <input class="form-check-input" formControlName="consent" type="checkbox">
+      Согласие...
+    </label>
+  </div>
 
-    <button [disabled]="!registrationForm.valid" class="btn btn-primary" type="submit">Register</button>
-    <button (click)="loadApiData()" class="btn btn-secondary ml-2" type="button">Load API Data</button>
-  </form>
-</div>
+  <button [disabled]="registrationForm.invalid || !consent.value" class="btn btn-primary" type="submit">Регистрация</button>
+  <a routerLink="/">
+    <button class="btn btn-secondary" type="button">Отмена</button>
+  </a>
+</form>
+
