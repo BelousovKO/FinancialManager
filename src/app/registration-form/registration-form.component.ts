@@ -32,7 +32,7 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   /*registrationForm = new FormGroup({
-    userName: new FormControl('Vishwas'),
+    userName: new FormControl('Den'),
     password: new FormControl(''),
     confirmPassword: new FormControl(''),
     address: new FormGroup({

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LogInService} from '../services/log-in.service';
+import {AuthorizationService} from '../services/authorization.service';
 
 @Component({
   selector: 'app-log-in-form',
@@ -10,6 +11,7 @@ import {LogInService} from '../services/log-in.service';
 export class LogInFormComponent implements OnInit {
 
   submitted = false;
+  user = '';
   statusLogin = '';
 
   logInForm: FormGroup;
@@ -30,7 +32,7 @@ export class LogInFormComponent implements OnInit {
     return this.logInForm.get('password').errors?.minlength;
   }
 
-  constructor(private fb: FormBuilder, private _logInService: LogInService) {
+  constructor(private fb: FormBuilder, private _logInService: LogInService, public authorization: AuthorizationService) {
   }
 
   ngOnInit(): void {
@@ -38,6 +40,13 @@ export class LogInFormComponent implements OnInit {
       userName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]],
       password: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]],
     });
+    if (localStorage.getItem('userName') && localStorage.getItem('userPas')) {
+      this.logInForm.patchValue({
+        userName: localStorage.getItem('userName'),
+        password: localStorage.getItem('userPas'),
+      });
+      this.onSubmit();
+    }
   }
 
   removeSpaceUserName(): void {
@@ -63,12 +72,19 @@ export class LogInFormComponent implements OnInit {
   }
 
   onSubmit(): any {
+    this.logInForm.patchValue({
+      password: this.logInForm.controls.password.value.toLowerCase(),
+    });
     this._logInService.register(this.logInForm.value)
       .subscribe(
         response => {
           this.statusLogin = response.status;
           if (response.status === 'OK') {
-            this.submitted = true;
+            this.authorization.login = true;
+            this.authorization.username = this.logInForm.controls.userName.value;
+            this.user = this.logInForm.controls.userName.value;
+            localStorage.setItem('userName', this.logInForm.controls.userName.value);
+            localStorage.setItem('userPas', this.logInForm.controls.password.value);
             this.logInForm.setValue({
               userName: '',
               password: '',
@@ -79,6 +95,13 @@ export class LogInFormComponent implements OnInit {
         },
         error => console.error('Error! ', error)
       );
+  }
+
+  exit(): any {
+    this.authorization.login = false;
+    this.authorization.username = '';
+    localStorage.setItem('userName', '');
+    localStorage.setItem('userPas', '');
   }
 }
 

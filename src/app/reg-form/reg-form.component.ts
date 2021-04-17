@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {forbiddenNameValidator} from '../shared/user-name.validator';
 import {PasswordValidator} from '../shared/password.validator';
 import {RegistrationService} from '../services/registration.service';
+import {CheckNameService} from '../services/check-name.service';
+import {AuthorizationService} from '../services/authorization.service';
 
 @Component({
   selector: 'app-reg-form',
@@ -11,6 +13,7 @@ import {RegistrationService} from '../services/registration.service';
 })
 export class RegFormComponent implements OnInit {
   submitted = false;
+  nameIsTaken = false;
 
   registrationForm: FormGroup;
 
@@ -46,29 +49,58 @@ export class RegFormComponent implements OnInit {
     return this.registrationForm.get('password');
   }
 
+  get passwordMaxLength(): any {
+    return this.password.errors?.maxlength;
+  }
+
+  get passwordMinLength(): any {
+    return this.password.errors?.minlength;
+  }
+
   get consent(): any {
     return this.registrationForm.get('consent');
   }
 
-  constructor(private fb: FormBuilder, private _registrationService: RegistrationService) {
+  constructor(private fb: FormBuilder,
+              private _registrationService: RegistrationService,
+              private _checkNameService: CheckNameService,
+              public authorization: AuthorizationService) {
   }
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
       userName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20), forbiddenNameValidator]],
       email: ['', [Validators.required, Validators.maxLength(20), Validators.email]],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
       confirmPassword: ['', Validators.required],
       consent: [false, Validators.required],
     }, {validator: PasswordValidator});
   }
 
+  checkName(userName): void {
+    this._checkNameService.checking(userName)
+      .subscribe(
+        response => {
+          console.log('Success! ', response);
+          if (response.status === 'CANCEL') {
+            this.nameIsTaken = true;
+          }
+        },
+        error => console.error('Error! ', error)
+      );
+  }
+
   onSubmit(): any {
     this.submitted = true;
-    console.log(this.registrationForm.value);
     this._registrationService.register(this.registrationForm.value)
       .subscribe(
-        response => console.log('Success! ', response),
+        response => { if (response.status === 'OK'){
+          this.authorization.login = true;
+          this.authorization.reg = false;
+          this.authorization.username = this.registrationForm.controls.userName.value;
+          localStorage.setItem('userName', this.registrationForm.controls.userName.value);
+          localStorage.setItem('userPas', this.registrationForm.controls.password.value);
+        }},
         error => console.error('Error! ', error)
       );
   }

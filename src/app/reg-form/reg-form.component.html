@@ -3,12 +3,17 @@
   <h2>Форма регистрации</h2>
   <div class="form-group mb-2">
     <label>
-      <input [class.is-invalid]="userName.invalid && userName.touched"
+      <input [class.is-invalid]="(userName.invalid && userName.touched) || nameIsTaken"
              formControlName="userName"
              type="text"
              class="form-control"
-             placeholder="Введите имя">
+             placeholder="Введите имя"
+             (blur)="checkName(registrationForm.controls.userName.value)"
+             (ngModelChange)="nameIsTaken = false">
     </label>
+    <div *ngIf="nameIsTaken && userName.valid">
+      <small class="text-danger">Это имя занято...</small>
+    </div>
     <div *ngIf="userName.invalid &&
                   userName.touched">
       <small *ngIf="userName.errors?.required" class="text-danger">
@@ -54,12 +59,19 @@
              formControlName="password"
              type="password"
              class="form-control"
-             placeholder="Введите пароль">
+             placeholder="Введите пароль"
+             autocomplete="">
     </label>
     <div *ngIf="password.invalid &&
                   password.touched">
       <small *ngIf="password.errors?.required" class="text-danger">
         Это поле обязателно для заполнения
+      </small>
+      <small *ngIf="passwordMaxLength" class="text-danger">
+        Пароль должен быть меньше 20 символов
+      </small>
+      <small *ngIf="passwordMinLength" class="text-danger">
+        Пароль должен быть больше 4 символов
       </small>
     </div>
   </div>
@@ -70,9 +82,12 @@
              formControlName="confirmPassword"
              type="password"
              class="form-control"
-             placeholder="Повторите пароль">
+             placeholder="Повторите пароль"
+             autocomplete="">
     </label>
-    <small class="text-danger" *ngIf="registrationForm.errors?.misMatch">Пароль не совпадает</small>
+    <div *ngIf="registrationForm.errors?.misMatch">
+      <small class="text-danger">Пароль не совпадает</small>
+    </div>
   </div>
 
   <div class="form-check mb-2">
@@ -82,9 +97,9 @@
     </label>
   </div>
 
-  <button [disabled]="registrationForm.invalid || !consent.value" class="btn btn-primary" type="submit">Регистрация</button>
-  <a routerLink="/">
-    <button class="btn btn-secondary" type="button">Отмена</button>
-  </a>
+  <button [disabled]="registrationForm.invalid || !consent.value || nameIsTaken" class="btn btn-primary" type="submit">
+    Регистрация
+  </button>
+  <button class="btn btn-secondary" type="button" (click)="authorization.reg = false">Отмена</button>
 </form>
 
