@@ -35,22 +35,50 @@ export class LogInFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.logInForm = this.fb.group({
-      userName: ['', [Validators.required, Validators.minLength(3)]],
-      password: ['', [Validators.required, Validators.minLength(3)]],
+      userName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]],
+      password: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]],
     });
   }
 
+  removeSpaceUserName(): void {
+    let tempUserName: string = this.logInForm.controls.userName.value;
+
+    if (tempUserName.search(/\s/) !== -1) {
+      tempUserName = tempUserName.replace(/\s/g, '');
+      this.logInForm.patchValue({
+        userName: tempUserName,
+      });
+    }
+  }
+
+  removeSpacePassword(): void {
+    let tempPassword: string = this.logInForm.controls.password.value;
+
+    if (tempPassword.search(/\s/) !== -1) {
+      tempPassword = tempPassword.replace(/\s/g, '');
+      this.logInForm.patchValue({
+        password: tempPassword,
+      });
+    }
+  }
+
   onSubmit(): any {
-    console.log(this.logInForm.value);
     this._logInService.register(this.logInForm.value)
       .subscribe(
         response => {
           this.statusLogin = response.status;
-          response.status === 'OK' ? this.submitted = true : this.submitted = false;
+          if (response.status === 'OK') {
+            this.submitted = true;
+            this.logInForm.setValue({
+              userName: '',
+              password: '',
+            });
+          } else {
+            this.submitted = false;
+          }
         },
         error => console.error('Error! ', error)
       );
-    this.statusLogin === 'OK' ? this.submitted = true : this.submitted = false;
   }
 }
 
