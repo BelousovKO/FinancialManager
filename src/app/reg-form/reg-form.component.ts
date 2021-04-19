@@ -70,7 +70,7 @@ export class RegFormComponent implements OnInit {
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
       userName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20), forbiddenNameValidator]],
-      email: ['', [Validators.required, Validators.maxLength(20), Validators.email]],
+      email: ['', [Validators.required, Validators.maxLength(40), Validators.email]],
       password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
       confirmPassword: ['', Validators.required],
       consent: [false, Validators.required],

@@ -83,8 +83,7 @@ export class LogInFormComponent implements OnInit {
             this.authorization.login = true;
             this.authorization.username = this.logInForm.controls.userName.value;
             this.user = this.logInForm.controls.userName.value;
-            localStorage.setItem('userName', this.logInForm.controls.userName.value);
-            localStorage.setItem('userPas', this.logInForm.controls.password.value);
+            localStorage.setItem('token', response.token);
             this.logInForm.setValue({
               userName: '',
               password: '',
