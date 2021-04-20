@@ -98,8 +98,7 @@ export class RegFormComponent implements OnInit {
           this.authorization.login = true;
           this.authorization.reg = false;
           this.authorization.username = this.registrationForm.controls.userName.value;
-          localStorage.setItem('userName', this.registrationForm.controls.userName.value);
-          localStorage.setItem('userPas', this.registrationForm.controls.password.value);
+          localStorage.setItem('token', response.token);
         }},
         error => console.error('Error! ', error)
       );

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LogInService} from '../services/log-in.service';
 import {AuthorizationService} from '../services/authorization.service';
+import {AuthenticationService} from '../services/authentication.service';
 
 @Component({
   selector: 'app-log-in-form',
@@ -32,7 +33,10 @@ export class LogInFormComponent implements OnInit {
     return this.logInForm.get('password').errors?.minlength;
   }
 
-  constructor(private fb: FormBuilder, private _logInService: LogInService, public authorization: AuthorizationService) {
+  constructor(private fb: FormBuilder,
+              private _logInService: LogInService,
+              public authorization: AuthorizationService,
+              public _authentication: AuthenticationService) {
   }
 
   ngOnInit(): void {
@@ -40,14 +44,28 @@ export class LogInFormComponent implements OnInit {
       userName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]],
       password: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]],
     });
-    if (localStorage.getItem('userName') && localStorage.getItem('userPas')) {
-      this.logInForm.patchValue({
-        userName: localStorage.getItem('userName'),
-        password: localStorage.getItem('userPas'),
-      });
-      this.onSubmit();
+    if (localStorage.getItem('token')) {
+      const token = {
+        token: ''
+      };
+      token.token = localStorage.getItem('token');
+      this._authentication.register(token)
+        .subscribe(
+          response => {
+            this.statusLogin = response.status;
+            if (response.status === 'OK') {
+              this.authorization.login = true;
+              this.authorization.username = response.data;
+              this.user = response.data;
+            } else {
+              this.submitted = false;
+            }
+          },
+          error => console.error('Error! ', error)
+        );
     }
   }
+
 
   removeSpaceUserName(): void {
     let tempUserName: string = this.logInForm.controls.userName.value;
@@ -80,17 +98,16 @@ export class LogInFormComponent implements OnInit {
         response => {
           this.statusLogin = response.status;
           if (response.status === 'OK') {
+            console.log(response);
             this.authorization.login = true;
             this.authorization.username = this.logInForm.controls.userName.value;
             this.user = this.logInForm.controls.userName.value;
             localStorage.setItem('token', response.token);
-            this.logInForm.setValue({
-              userName: '',
-              password: '',
-            });
-          } else {
-            this.submitted = false;
           }
+          this.logInForm.setValue({
+            userName: '',
+            password: '',
+          });
         },
         error => console.error('Error! ', error)
       );
@@ -99,8 +116,7 @@ export class LogInFormComponent implements OnInit {
   exit(): any {
     this.authorization.login = false;
     this.authorization.username = '';
-    localStorage.setItem('userName', '');
-    localStorage.setItem('userPas', '');
+    localStorage.removeItem('token');
   }
 }
 
