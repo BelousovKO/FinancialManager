@@ -12,7 +12,6 @@ import {AuthenticationService} from '../services/authentication.service';
 export class LogInFormComponent implements OnInit {
 
   submitted = false;
-  user = '';
   statusLogin = '';
 
   logInForm: FormGroup;
@@ -56,9 +55,12 @@ export class LogInFormComponent implements OnInit {
             if (response.status === 'OK') {
               this.authorization.login = true;
               this.authorization.username = response.data;
-              this.user = response.data;
             } else {
               this.submitted = false;
+              this.authorization.login = false;
+              this.authorization.username = '';
+              this.statusLogin = '';
+              localStorage.removeItem('token');
             }
           },
           error => console.error('Error! ', error)
@@ -98,10 +100,8 @@ export class LogInFormComponent implements OnInit {
         response => {
           this.statusLogin = response.status;
           if (response.status === 'OK') {
-            console.log(response);
             this.authorization.login = true;
             this.authorization.username = this.logInForm.controls.userName.value;
-            this.user = this.logInForm.controls.userName.value;
             localStorage.setItem('token', response.token);
           }
           this.logInForm.setValue({
