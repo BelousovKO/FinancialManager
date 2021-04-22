@@ -1,0 +1,34 @@
+<div>
+  <form [formGroup]="recovery" (ngSubmit)="onSubmit()">
+    <div *ngIf="statusLogin === 'ERROR'">Пользователь с таким именем не регистрировался...</div>
+    <div *ngIf="statusLogin === 'FALSE'">Не верное имя или пароль...</div>
+    <div class="form-group mb-3">
+      <label>
+        <input formControlName="userName"
+               type="text"
+               class="form-control"
+               placeholder="Введите имя"
+               autocomplete="username"
+               (ngModelChange)="removeSpaceUserName()">
+      </label>
+    </div>
+
+    <div class="form-group mb-1">
+
+      <label>
+        <input formControlName="email"
+               type="email"
+               class="form-control"
+               placeholder="Введите e-mail"
+               (ngModelChange)="removeSpaceEmail()">
+      </label>
+    </div>
+
+    <button [disabled]="this.recovery.controls.userName.value.length < 3 &&
+                        this.recovery.controls.email.value.length < 3"
+            class="btn btn-primary" type="submit">
+      Востановить
+    </button>
+    <button class="btn btn-secondary" type="button" (click)="authorization.recovery = false">Отмена</button>
+  </form>
+</div>

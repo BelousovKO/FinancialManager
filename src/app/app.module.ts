@@ -11,6 +11,7 @@ import { LogInFormComponent } from './log-in-form/log-in-form.component';
 import { TestFormsComponent } from './test-forms/test-forms.component';
 import { RegFormComponent } from './reg-form/reg-form.component';
 import { MainComponent } from './main/main.component';
+import { RecoveryComponent } from './recovery/recovery.component';
 
 const appRoutes: Routes = [
   {path: '', component: MainComponent},
@@ -30,6 +31,7 @@ const appRoutes: Routes = [
     TestFormsComponent,
     RegFormComponent,
     MainComponent,
+    RecoveryComponent,
   ],
   imports: [
     BrowserModule,

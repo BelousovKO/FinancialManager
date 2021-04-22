@@ -16,22 +16,6 @@ export class LogInFormComponent implements OnInit {
 
   logInForm: FormGroup;
 
-  get userName(): any {
-    return this.logInForm.get('userName');
-  }
-
-  get userNameErrorMinlength(): any {
-    return this.logInForm.get('userName').errors?.minlength;
-  }
-
-  get password(): any {
-    return this.logInForm.get('password');
-  }
-
-  get passwordErrorMinlength(): any {
-    return this.logInForm.get('password').errors?.minlength;
-  }
-
   constructor(private fb: FormBuilder,
               private _logInService: LogInService,
               public authorization: AuthorizationService,

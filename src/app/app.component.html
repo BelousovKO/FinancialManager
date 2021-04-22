@@ -1,4 +1,5 @@
 <a routerLink="/testForm">Test</a> --- <a routerLink="/">back</a>
-<app-log-in-form *ngIf="!stat.reg"></app-log-in-form>
+<app-log-in-form *ngIf="!stat.reg && !stat.recovery"></app-log-in-form>
 <app-reg-form *ngIf="stat.reg"></app-reg-form>
+<app-recovery *ngIf="stat.recovery"></app-recovery>
 <router-outlet *ngIf="stat.login"></router-outlet>
