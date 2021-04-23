@@ -2,7 +2,7 @@
   <form [formGroup]="recovery" (ngSubmit)="onSubmit()">
     <div *ngIf="statusLogin === 'ERROR'">Пользователь с таким именем не регистрировался...</div>
     <div *ngIf="statusLogin === 'FALSE'">Не верное имя или пароль...</div>
-    <div class="form-group mb-3">
+    <div class="form-group mb-1">
       <label>
         <input formControlName="userName"
                type="text"
@@ -13,19 +13,34 @@
       </label>
     </div>
 
+    <div class="mb-1">или</div>
+
     <div class="form-group mb-1">
 
       <label>
         <input formControlName="email"
-               type="email"
-               class="form-control"
+               type="text"
+               class="form-control mb-2
+"
                placeholder="Введите e-mail"
-               (ngModelChange)="removeSpaceEmail()">
+               (ngModelChange)="removeSpaceEmail()"
+               (blur)="checkValidEmail()">
       </label>
     </div>
 
-    <button [disabled]="this.recovery.controls.userName.value.length < 3 &&
-                        this.recovery.controls.email.value.length < 3"
+    <div class="mb-1">
+      <small *ngIf="this.recovery.controls.email.value.length > 0 &&
+                    this.recovery.controls.userName.value.length > 0"
+             class="text-danger">
+        Введите или имя или e-mail
+      </small>
+      <small *ngIf=""
+             class="text-danger">
+        Введен не корректный e-mail
+      </small>
+    </div>
+
+    <button [disabled]="disabledSubmit()"
             class="btn btn-primary" type="submit">
       Востановить
     </button>

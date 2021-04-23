@@ -53,6 +53,23 @@ export class RecoveryComponent implements OnInit {
     }
   }
 
+  checkValidEmail(): void {
+    const tempEmail: string = this.recovery.controls.email.value;
+
+    const re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    if (re.test(String(tempEmail).toLowerCase())) {
+    }
+  }
+
+  disabledSubmit(): boolean {
+    return ((this.recovery.controls.userName.value.length < 3 &&
+      this.recovery.controls.email.value.length < 3) ||
+      this.recovery.controls.userName.value.length > 20 ||
+      this.recovery.controls.email.value.length > 40 ||
+      (this.recovery.controls.email.value.length > 0 &&
+        this.recovery.controls.userName.value.length > 0));
+  }
+
   onSubmit(): any {
     this._logInService.register(this.recovery.value)
       .subscribe(

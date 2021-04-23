@@ -7,4 +7,15 @@ form {
   input {
     text-align: center;
   }
+
+  .link-recovery {
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
 }
+
+
