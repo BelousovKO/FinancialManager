@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
+  public number1 = 100000000;
+  public number2 = 200000000;
+
   constructor() { }
 
   ngOnInit(): void {

@@ -12,6 +12,7 @@ import { TestFormsComponent } from './test-forms/test-forms.component';
 import { RegFormComponent } from './reg-form/reg-form.component';
 import { MainComponent } from './main/main.component';
 import { RecoveryComponent } from './recovery/recovery.component';
+import { PointReplacerPipe } from './pipes/point-replacer.pipe';
 
 const appRoutes: Routes = [
   {path: '', component: MainComponent},
@@ -32,6 +33,7 @@ const appRoutes: Routes = [
     RegFormComponent,
     MainComponent,
     RecoveryComponent,
+    PointReplacerPipe,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [PointReplacerPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {
