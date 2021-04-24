@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthorizationService} from '../services/authorization.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {LogInService} from '../services/log-in.service';
-import {AuthenticationService} from '../services/authentication.service';
+import {ChangePasService} from '../services/change-pas.service';
 
 @Component({
   selector: 'app-recovery',
@@ -12,16 +11,19 @@ import {AuthenticationService} from '../services/authentication.service';
 export class RecoveryComponent implements OnInit {
 
   submitted = false;
-  statusLogin = '';
-  notEmpty = false;
-
+  nameIsTaken = false;
+  emailIsTaken = false;
+  responseReceived = false;
   recovery: FormGroup;
 
 
   constructor(private fb: FormBuilder,
-              private _logInService: LogInService,
               public authorization: AuthorizationService,
-              public _authentication: AuthenticationService) {
+              public _changePas: ChangePasService) {
+  }
+
+  get email(): any {
+    return this.recovery.get('email');
   }
 
   ngOnInit(): void {
@@ -33,32 +35,42 @@ export class RecoveryComponent implements OnInit {
 
   removeSpaceUserName(): void {
     let tempUserName: string = this.recovery.controls.userName.value;
-
+    this.submitted = false;
+    this.responseReceived = false;
     if (tempUserName.search(/\s/) !== -1) {
       tempUserName = tempUserName.replace(/\s/g, '');
       this.recovery.patchValue({
         userName: tempUserName,
       });
     }
+    if (tempUserName.length > 0) {
+      this.recovery.patchValue({
+        email: '',
+      });
+    }
   }
 
-  removeSpaceEmail(): void {
+  removeValueEmail(): void {
     let tempEmail: string = this.recovery.controls.email.value;
-
+    this.submitted = false;
+    this.responseReceived = false;
     if (tempEmail.search(/\s/) !== -1) {
       tempEmail = tempEmail.replace(/\s/g, '');
       this.recovery.patchValue({
         email: tempEmail,
       });
     }
+    if (tempEmail.length > 0) {
+      this.recovery.patchValue({
+        userName: '',
+      });
+    }
   }
 
-  checkValidEmail(): void {
+  checkValidEmail(): boolean {
     const tempEmail: string = this.recovery.controls.email.value;
-
     const re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-    if (re.test(String(tempEmail).toLowerCase())) {
-    }
+    return re.test(String(tempEmail).toLowerCase());
   }
 
   disabledSubmit(): boolean {
@@ -66,26 +78,37 @@ export class RecoveryComponent implements OnInit {
       this.recovery.controls.email.value.length < 3) ||
       this.recovery.controls.userName.value.length > 20 ||
       this.recovery.controls.email.value.length > 40 ||
+      this.recovery.controls.email.value.length > 0 && !this.checkValidEmail() ||
       (this.recovery.controls.email.value.length > 0 &&
         this.recovery.controls.userName.value.length > 0));
   }
 
   onSubmit(): any {
-    this._logInService.register(this.recovery.value)
-      .subscribe(
-        response => {
-          this.statusLogin = response.status;
-          if (response.status === 'OK') {
-            this.authorization.login = true;
-            this.authorization.username = this.recovery.controls.userName.value;
-            localStorage.setItem('token', response.token);
-          }
-          this.recovery.setValue({
-            userName: '',
-            password: '',
-          });
-        },
-        error => console.error('Error! ', error)
-      );
+    if (this.recovery.controls.userName.value.length > 2) {
+      this._changePas.sendTo(this.recovery.controls.userName.value)
+        .subscribe(
+          response => {
+            this.nameIsTaken = response.status === 'OK';
+            this.responseReceived = true;
+            if (this.nameIsTaken) {
+              setTimeout(() => { this.authorization.recovery = false; }, 5000);
+            }
+          },
+          error => console.error('Error! ', error)
+        );
+    } else {
+      this._changePas.sendTo(this.recovery.controls.email.value)
+        .subscribe(
+          response => {
+            this.emailIsTaken = response.status === 'OK';
+            this.responseReceived = true;
+            if (this.emailIsTaken) {
+              setTimeout(() => { this.authorization.recovery = false; }, 5000);
+            }
+          },
+          error => console.error('Error! ', error)
+        );
+    }
+    this.submitted = true;
   }
 }

@@ -1,7 +1,13 @@
 <div>
-  <form [formGroup]="recovery" (ngSubmit)="onSubmit()">
-    <div *ngIf="statusLogin === 'ERROR'">Пользователь с таким именем не регистрировался...</div>
-    <div *ngIf="statusLogin === 'FALSE'">Не верное имя или пароль...</div>
+  <div *ngIf="nameIsTaken || emailIsTaken" class="successful-message">
+    <div class="successful-message_content">
+      <h2>Письмо с новым паролем отправлено на ваш e-mail</h2>
+      <button class="btn btn-secondary" type="button" (click)="authorization.recovery = false">Вернуться</button>
+    </div>
+  </div>
+  <form [formGroup]="recovery"
+        (ngSubmit)="onSubmit()"
+        *ngIf="!nameIsTaken && !emailIsTaken">
     <div class="form-group mb-1">
       <label>
         <input formControlName="userName"
@@ -20,23 +26,28 @@
       <label>
         <input formControlName="email"
                type="text"
-               class="form-control mb-2
-"
+               class="form-control mb-2"
                placeholder="Введите e-mail"
-               (ngModelChange)="removeSpaceEmail()"
+               (ngModelChange)="removeValueEmail()"
                (blur)="checkValidEmail()">
       </label>
     </div>
 
-    <div class="mb-1">
-      <small *ngIf="this.recovery.controls.email.value.length > 0 &&
-                    this.recovery.controls.userName.value.length > 0"
-             class="text-danger">
-        Введите или имя или e-mail
-      </small>
-      <small *ngIf=""
+    <div class="mb-1" *ngIf="email.touched">
+      <small *ngIf="this.recovery.controls.email.value.length > 0 && !checkValidEmail()"
              class="text-danger">
         Введен не корректный e-mail
+      </small>
+    </div>
+
+    <div class="mb-1" *ngIf="submitted && responseReceived">
+      <small *ngIf="!nameIsTaken && submitted  && this.recovery.controls.userName.value"
+             class="text-danger">
+        Пользователь с таким именем не регистрировался
+      </small>
+      <small *ngIf="!emailIsTaken && submitted && this.recovery.controls.email.value"
+             class="text-danger">
+        Пользователь с таким e-mail не регистрировался
       </small>
     </div>
 
