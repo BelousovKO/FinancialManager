@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {reduce} from 'rxjs/operators';
 
 @Component({
   selector: 'app-main',
@@ -7,12 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  public number1 = 100000000;
-  public number2 = 200000000;
 
-  constructor() { }
+  constructor() {
+  }
+
+  public income = 0;
+  public costs = [100, 100, 100];
+  public costsAll = this.costs.reduce((total, amount) => {
+    return total + amount;
+  });
+  public coefficient = 100 / this.costsAll;
+
 
   ngOnInit(): void {
   }
+
 
 }

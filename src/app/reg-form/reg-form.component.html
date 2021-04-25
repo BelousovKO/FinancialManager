@@ -1,4 +1,3 @@
-<!--{{ registrationForm.value | json }}-->
 <form [formGroup]="registrationForm" *ngIf="!submitted" (ngSubmit)="onSubmit()">
   <h2>Форма регистрации</h2>
   <div class="form-group mb-2">
@@ -33,12 +32,17 @@
 
   <div class="form-group mb-2">
     <label>
-      <input [class.is-invalid]="email.invalid && email.touched"
+      <input [class.is-invalid]="(email.invalid && email.touched) || emailIsTaken"
              formControlName="email"
              type="email"
              class="form-control"
-             placeholder="Введите e-mail">
+             placeholder="Введите e-mail"
+             (blur)="checkMail(registrationForm.controls.email.value)"
+             (ngModelChange)="emailIsTaken = false">
     </label>
+    <div *ngIf="emailIsTaken && email.valid">
+      <small class="text-danger">Пользователь с таким e-mail уже регистрировался</small>
+    </div>
     <div *ngIf="email.invalid &&
                   email.touched">
       <small *ngIf="email.errors?.required" class="text-danger">
@@ -97,7 +101,9 @@
     </label>
   </div>
 
-  <button [disabled]="registrationForm.invalid || !consent.value || nameIsTaken" class="btn btn-primary" type="submit">
+  <button [disabled]="registrationForm.invalid || !consent.value || nameIsTaken || emailIsTaken"
+          class="btn btn-primary"
+          type="submit">
     Регистрация
   </button>
   <button class="btn btn-secondary" type="button" (click)="authorization.reg = false">Отмена</button>

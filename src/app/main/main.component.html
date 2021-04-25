@@ -1,22 +1,24 @@
-<svg width="25%" height="25%" viewBox="0 0 42 42" class="diagram">
-  <circle class="diagram-hole" cx="21" cy="21" r="15.91549430918954" fill="#fff"></circle>
+<div>coefficient: {{ coefficient }}</div>
+<div>costs[0]: {{ costs[0] }}</div>
+
+<svg width="100%" height="100%" viewBox="0 0 42 42" class="diagram">
   <circle class="diagram-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#d2d3d4"
           stroke-width="3"></circle>
   <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#ce4b99"
-          stroke-width="3" stroke-dasharray="40 60" stroke-dashoffset="25"></circle>
+          stroke-width="3" stroke-dasharray="33.3333 66.6666" stroke-dashoffset="25"></circle>
   <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#b1c94e"
-          stroke-width="3" stroke-dasharray="20 80" stroke-dashoffset="85"></circle>
+          stroke-width="3" stroke-dasharray="33.3333 66.6666" stroke-dashoffset="58.3333"></circle>
   <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#377bbc"
-          stroke-width="3" stroke-dasharray="30 70" stroke-dashoffset="65"></circle>
+          stroke-width="3" stroke-dasharray="33.3333 66.6666" stroke-dashoffset="91.6666"></circle>
   <g class="diagram-text">
     <text x="50%" y="50%" class="costs-label">
       Расходы
     </text>
     <text x="50%" y="50%" class="costs-number" fill="#B51515" stroke="#B51515" stroke-width="0.1">
-      {{ number1 | number | pointReplacer | pointReplacer }} ₽
+      {{ costsAll | number | pointReplacer | pointReplacer }} ₽
     </text>
     <text x="50%" y="50%" class="income-number" fill="#14802D">
-      {{ number2 | number | pointReplacer | pointReplacer }} ₽
+      {{ income | number | pointReplacer | pointReplacer }} ₽
     </text>
   </g>
 </svg>

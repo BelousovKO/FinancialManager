@@ -5,6 +5,7 @@ import {PasswordValidator} from '../shared/password.validator';
 import {RegistrationService} from '../services/registration.service';
 import {CheckNameService} from '../services/check-name.service';
 import {AuthorizationService} from '../services/authorization.service';
+import {CheckMailService} from '../services/check-mail.service';
 
 @Component({
   selector: 'app-reg-form',
@@ -14,6 +15,8 @@ import {AuthorizationService} from '../services/authorization.service';
 export class RegFormComponent implements OnInit {
   submitted = false;
   nameIsTaken = false;
+  emailIsTaken = false;
+  type1 = 'text';
 
   registrationForm: FormGroup;
 
@@ -64,7 +67,8 @@ export class RegFormComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private _registrationService: RegistrationService,
               private _checkNameService: CheckNameService,
-              public authorization: AuthorizationService) {
+              public authorization: AuthorizationService,
+              public _checkMailService: CheckMailService) {
   }
 
   ngOnInit(): void {
@@ -81,9 +85,21 @@ export class RegFormComponent implements OnInit {
     this._checkNameService.checking(userName)
       .subscribe(
         response => {
-          console.log('Success! ', response);
           if (response.status === 'CANCEL') {
             this.nameIsTaken = true;
+          }
+        },
+        error => console.error('Error! ', error)
+      );
+  }
+
+  checkMail(userMail): void {
+    this._checkMailService.checking(userMail)
+      .subscribe(
+        response => {
+          console.log('Success! ', response);
+          if (response.status === 'CANCEL') {
+            this.emailIsTaken = true;
           }
         },
         error => console.error('Error! ', error)
