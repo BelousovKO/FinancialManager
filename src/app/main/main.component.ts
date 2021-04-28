@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {UserDataService} from '../services/user-data.service';
 
 @Component({
   selector: 'app-main',
@@ -7,10 +8,9 @@ import {Component, OnInit} from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-
-  constructor() {
+  constructor(public data: UserDataService) {
   }
-
+  public costsData = this.data.costs;
   public income = 0;
   public costs = [10, 10, 10, 2, 1, 2, 1, 2, 1, 2, 1, 2];
   public costsAll = this.costs.reduce((total, amount) => {
@@ -18,17 +18,14 @@ export class MainComponent implements OnInit {
   });
   public coefficient = 100 / this.costsAll;
   public strokeDasharray = this.costs.map(currentValue => `${currentValue * this.coefficient} ${100 - currentValue * this.coefficient}`);
-
   public strokeDashoffset = [25];
 
-  private temp = this.costs.forEach((elem, idx) => {
-    if (idx > 0) {
-      this.strokeDashoffset.push(this.strokeDashoffset[idx - 1] + this.costs[idx] * this.coefficient);
-    }
-  });
-
-
   ngOnInit(): void {
+    this.costs.forEach((elem, idx) => {
+      if (idx > 0) {
+        this.strokeDashoffset.push(this.strokeDashoffset[idx - 1] + this.costs[idx] * this.coefficient);
+      }
+    });
   }
 
 

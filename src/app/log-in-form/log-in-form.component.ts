@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LogInService} from '../services/log-in.service';
 import {AuthorizationService} from '../services/authorization.service';
 import {AuthenticationService} from '../services/authentication.service';
+import {UserDataService} from '../services/user-data.service';
 
 @Component({
   selector: 'app-log-in-form',
@@ -19,7 +20,8 @@ export class LogInFormComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private _logInService: LogInService,
               public authorization: AuthorizationService,
-              public _authentication: AuthenticationService) {
+              public _authentication: AuthenticationService,
+              private data: UserDataService) {
   }
 
   ngOnInit(): void {
@@ -37,6 +39,8 @@ export class LogInFormComponent implements OnInit {
           response => {
             this.statusLogin = response.status;
             if (response.status === 'OK') {
+              this.data.userData = response.userData;
+              this.data.costs = response.userData.costs;
               this.authorization.login = true;
               this.authorization.username = response.data;
             } else {
@@ -84,6 +88,7 @@ export class LogInFormComponent implements OnInit {
         response => {
           this.statusLogin = response.status;
           if (response.status === 'OK') {
+            this.data.userData = response.userData;
             this.authorization.login = true;
             this.authorization.username = this.logInForm.controls.userName.value;
             localStorage.setItem('token', response.token);
