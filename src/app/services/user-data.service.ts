@@ -7,6 +7,7 @@ export class UserDataService {
 
   public userData = [];
   public costs = [];
+  public dataInterfaceExpense = [];
 
   constructor() { }
 }
