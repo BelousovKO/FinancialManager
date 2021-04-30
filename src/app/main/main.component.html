@@ -1,56 +1,55 @@
-<!--{{data.userData | json}}-->
-<!--{{costsData | json}}-->
-<!--{{costsData[10].category | json}}-->
-<!--{{costs | json}}-->
+<!--{{costsBackground | json}}-->
 
-<svg width="100%" height="100%" viewBox="0 0 42 42" class="diagram">
-  <circle class="diagram-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#d2d3d4"
-          stroke-width="3"></circle>
-  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#ce4b99"
-          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[0]"
-          [attr.stroke-dashoffset]="strokeDashoffset[0]"></circle>
-  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#b1c94e"
-          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[1]"
-          [attr.stroke-dashoffset]="strokeDashoffset[1]"></circle>
-  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#563227"
-          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[2]"
-          [attr.stroke-dashoffset]="strokeDashoffset[2]"></circle>
-  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#cf7e1a"
-          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[3]"
-          [attr.stroke-dashoffset]="strokeDashoffset[3]"></circle>
-  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#601480"
-          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[4]"
-          [attr.stroke-dashoffset]="strokeDashoffset[4]"></circle>
-  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#377bbc"
-          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[5]"
-          [attr.stroke-dashoffset]="strokeDashoffset[5]"></circle>
-  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#A50606"
-          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[6]"
-          [attr.stroke-dashoffset]="strokeDashoffset[6]"></circle>
-  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#138539"
-          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[7]"
-          [attr.stroke-dashoffset]="strokeDashoffset[7]"></circle>
-  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#00B7C6"
-          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[8]"
-          [attr.stroke-dashoffset]="strokeDashoffset[8]"></circle>
-  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#EA09B9"
-          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[9]"
-          [attr.stroke-dashoffset]="strokeDashoffset[9]"></circle>
-  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#d0db00"
-          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[10]"
-          [attr.stroke-dashoffset]="strokeDashoffset[10]"></circle>
-  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#09EA9B"
-          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[11]"
-          [attr.stroke-dashoffset]="strokeDashoffset[11]"></circle>
-  <g class="diagram-text">
-    <text x="50%" y="50%" class="costs-label">
-      Расходы
-    </text>
-    <text x="50%" y="50%" class="costs-number" fill="#B51515" stroke="#B51515" stroke-width="0.1">
-      {{ costsAll | number | pointReplacer | pointReplacer }} ₽
-    </text>
-    <text x="50%" y="50%" class="income-number" fill="#14802D">
-      {{ income | number | pointReplacer | pointReplacer }} ₽
-    </text>
-  </g>
-</svg>
+<ul>
+  <li><h2>dfg</h2>
+    <div class="costs" style="background-color: {{costsBackground[0]}}">1</div>
+    <div class="sum">10</div>
+  </li>
+  <li><h2>dfg</h2>
+    <div class="costs" style="background-color: {{costsBackground[1]}}">2</div>
+    <div class="sum">10</div>
+  </li>
+  <li><h2>dfg</h2>
+    <div class="costs" style="background-color: {{costsBackground[2]}}">3</div>
+    <div class="sum">10</div>
+  </li>
+  <li><h2>dfg</h2>
+    <div class="costs" style="background-color: {{costsBackground[3]}}">4</div>
+    <div class="sum">10</div>
+  </li>
+  <li><h2>dfg</h2>
+    <div class="costs" style="background-color: {{costsBackground[4]}}">5</div>
+    <div class="sum">10</div>
+  </li>
+  <li class="donut-chart">
+    <app-donut-chart></app-donut-chart>
+  </li>
+  <li><h2>dfg</h2>
+    <div class="costs" style="background-color: {{costsBackground[5]}}">6</div>
+    <div class="sum">10</div>
+  </li>
+  <li><h2>dfg</h2>
+    <div class="costs" style="background-color: {{costsBackground[6]}}">7</div>
+    <div class="sum">10</div>
+  </li>
+  <li><h2>dfg</h2>
+    <div class="costs" style="background-color: {{costsBackground[7]}}">8</div>
+    <div class="sum">10</div>
+  </li>
+  <li><h2>dfg</h2>
+    <div class="costs" style="background-color: {{costsBackground[8]}}">9</div>
+    <div class="sum">10</div>
+  </li>
+  <li><h2>dfg</h2>
+    <div class="costs" style="background-color: {{costsBackground[9]}}">10</div>
+    <div class="sum">10</div>
+  </li>
+  <li><h2>dfg</h2>
+    <div class="costs" style="background-color: {{costsBackground[10]}}">11</div>
+    <div class="sum">10</div>
+  </li>
+  <li><h2>dfg</h2>
+    <div class="costs" style="background-color: {{costsBackground[11]}}">12</div>
+    <div class="sum">10</div>
+  </li>
+</ul>

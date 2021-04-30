@@ -13,6 +13,7 @@ import { RegFormComponent } from './reg-form/reg-form.component';
 import { MainComponent } from './main/main.component';
 import { RecoveryComponent } from './recovery/recovery.component';
 import { PointReplacerPipe } from './pipes/point-replacer.pipe';
+import { DonutChartComponent } from './donut-chart/donut-chart.component';
 
 const appRoutes: Routes = [
   {path: '', component: MainComponent},
@@ -34,6 +35,7 @@ const appRoutes: Routes = [
     MainComponent,
     RecoveryComponent,
     PointReplacerPipe,
+    DonutChartComponent,
   ],
   imports: [
     BrowserModule,

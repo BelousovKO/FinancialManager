@@ -1,0 +1,53 @@
+<!--{{data.stroke | json}}-->
+
+<svg width="100%" height="100%" viewBox="0 0 42 42" class="diagram">
+  <circle class="diagram-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#d2d3d4"
+          stroke-width="3"></circle>
+  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" [attr.stroke]=stroke[0]
+          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[0]"
+          [attr.stroke-dashoffset]="strokeDashoffset[0]"></circle>
+  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" [attr.stroke]=stroke[1]
+          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[1]"
+          [attr.stroke-dashoffset]="strokeDashoffset[1]"></circle>
+  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" [attr.stroke]=stroke[2]
+          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[2]"
+          [attr.stroke-dashoffset]="strokeDashoffset[2]"></circle>
+  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" [attr.stroke]=stroke[3]
+          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[3]"
+          [attr.stroke-dashoffset]="strokeDashoffset[3]"></circle>
+  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" [attr.stroke]=stroke[4]
+          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[4]"
+          [attr.stroke-dashoffset]="strokeDashoffset[4]"></circle>
+  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" [attr.stroke]=stroke[5]
+          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[5]"
+          [attr.stroke-dashoffset]="strokeDashoffset[5]"></circle>
+  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" [attr.stroke]=stroke[6]
+          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[6]"
+          [attr.stroke-dashoffset]="strokeDashoffset[6]"></circle>
+  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" [attr.stroke]=stroke[7]
+          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[7]"
+          [attr.stroke-dashoffset]="strokeDashoffset[7]"></circle>
+  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" [attr.stroke]=stroke[8]
+          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[8]"
+          [attr.stroke-dashoffset]="strokeDashoffset[8]"></circle>
+  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" [attr.stroke]=stroke[9]
+          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[9]"
+          [attr.stroke-dashoffset]="strokeDashoffset[9]"></circle>
+  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" [attr.stroke]=stroke[10]
+          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[10]"
+          [attr.stroke-dashoffset]="strokeDashoffset[10]"></circle>
+  <circle class="diagram-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" [attr.stroke]=stroke[11]
+          stroke-width="3" [attr.stroke-dasharray]="strokeDasharray[11]"
+          [attr.stroke-dashoffset]="strokeDashoffset[11]"></circle>
+  <g class="diagram-text">
+    <text x="50%" y="50%" class="costs-label">
+      Расходы
+    </text>
+    <text x="50%" y="50%" class="costs-number" fill="#B51515" stroke="#B51515" stroke-width="0.1">
+      {{ costsAll | number | pointReplacer | pointReplacer }} ₽
+    </text>
+    <text x="50%" y="50%" class="income-number" fill="#14802D">
+      {{ income | number | pointReplacer | pointReplacer }} ₽
+    </text>
+  </g>
+</svg>

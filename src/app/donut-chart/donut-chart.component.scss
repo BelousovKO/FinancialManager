@@ -1,0 +1,26 @@
+.diagram-text {
+  fill: #000;
+  transform: translateY(0.25em);
+}
+
+.costs-number {
+  font-size: 0.25em;
+  line-height: 1;
+  text-anchor: middle;
+  transform: translateY(-0.5em);
+  color: #d0db00;
+}
+
+.income-number {
+  font-size: 0.2em;
+  line-height: 1;
+  text-anchor: middle;
+  transform: translateY(1em);
+}
+
+.costs-label {
+  font-size: 0.2em;
+  text-transform: uppercase;
+  text-anchor: middle;
+  transform: translateY(-2.5em);
+}
