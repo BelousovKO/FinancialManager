@@ -8,7 +8,8 @@ export class UserDataService {
   public userData = [];
   public costs = [];
   public dataInterfaceExpense = [];
-  public stroke = [];
+  public expenseColors = [];
+  public sumCosts = [];
 
   constructor() { }
 }

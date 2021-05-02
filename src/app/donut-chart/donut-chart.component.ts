@@ -14,26 +14,14 @@ export class DonutChartComponent implements OnInit {
   public costsData = this.data.costs;
   public dataInterfaceExpense = this.data.dataInterfaceExpense;
   public income = 0;
-  public costs = [];
+  public costs = this.data.sumCosts;
   public costsAll = 0;
   public coefficient = 0;
   public strokeDasharray = [];
   public strokeDashoffset = [25];
-  public stroke = this.data.stroke;
-  public temp = 0;
+  public stroke = this.data.expenseColors;
 
   ngOnInit(): void {
-    this.data.dataInterfaceExpense.forEach((e, idx) => {
-      this.stroke.push(e.color);
-      this.temp = 0;
-      this.costsData.forEach((elem) => {
-        if (elem.category === idx) {
-          this.temp += elem.amount;
-        }
-      });
-      this.costs.push(this.temp);
-    });
-
     this.costsAll = this.costs.reduce((total, amount) => {
       return total + amount;
     });
