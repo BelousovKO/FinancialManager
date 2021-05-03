@@ -19,6 +19,7 @@ export class MainComponent implements OnInit {
   public titlesExpense = [];
   public dataInterfaceExpense = this.data.dataInterfaceExpense;
   private temp: number;
+  public modalCreateExpenseCategory = false;
 
   ngOnInit(): void {
     this.data.dataInterfaceExpense.forEach((e, idx) => {
@@ -34,6 +35,10 @@ export class MainComponent implements OnInit {
       });
       this.costs.push(this.temp);
     });
+  }
+
+  createExpenseCategory(): void {
+
   }
 
 }
