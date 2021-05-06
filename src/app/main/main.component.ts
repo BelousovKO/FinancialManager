@@ -20,6 +20,7 @@ export class MainComponent implements OnInit {
   public dataInterfaceExpense = this.data.dataInterfaceExpense;
   private temp: number;
   public modalCreateExpenseCategory = false;
+  public newCategory = '';
 
   ngOnInit(): void {
     this.data.dataInterfaceExpense.forEach((e, idx) => {
@@ -37,8 +38,18 @@ export class MainComponent implements OnInit {
     });
   }
 
-  createExpenseCategory(): void {
+  inputHandler(event: any): any {
+    this.newCategory = event.target.value;
+  }
 
+  createExpenseCategory(): void {
+    this.modalCreateExpenseCategory = false;
+    this.data.dataInterfaceExpense.forEach((e, idx) => {
+      if (!e.title && e[idx].title !== e[idx - 1].title) {
+        e.title = this.newCategory;
+      }
+      console.log('this.data.dataInterfaceExpense: ', this.data.dataInterfaceExpense);
+    });
   }
 
 }

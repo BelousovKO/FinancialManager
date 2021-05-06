@@ -60,11 +60,12 @@
   <div class="modalCreateExpenseCategory" *ngIf="modalCreateExpenseCategory">
     <div class="buttons-container">
       <button class="btn cancel" (click)="modalCreateExpenseCategory = false">x</button>
-      <button class="btn create" (click)="modalCreateExpenseCategory = false">v</button>
+      <button class="btn create" [disabled]="!newCategory" (click)="createExpenseCategory()">v</button>
     </div>
     <div class="input-container">
-      <label for="inputCEC" class="inputCEC">Название</label>
-      <input id="inputCEC" type="text"/>
+      <label>
+        <input type="text" (input)="inputHandler($event)" placeholder="Название"/>
+      </label>
     </div>
   </div>
 </main>
