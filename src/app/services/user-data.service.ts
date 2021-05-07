@@ -10,6 +10,7 @@ export class UserDataService {
   public dataInterfaceExpense = [];
   public expenseColors = [];
   public sumCosts = [];
+  public userId = '';
 
   constructor() { }
 }

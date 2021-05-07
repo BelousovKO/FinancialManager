@@ -42,6 +42,7 @@ export class LogInFormComponent implements OnInit {
               this.data.userData = response.userData;
               this.data.costs = response.userData.costs;
               this.data.dataInterfaceExpense = response.userData.interface.expense;
+              this.data.userId = response.userData.userId;
               this.authorization.login = true;
               this.authorization.username = response.data;
             } else {
