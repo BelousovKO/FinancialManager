@@ -4,6 +4,7 @@ import {LogInService} from '../services/log-in.service';
 import {AuthorizationService} from '../services/authorization.service';
 import {AuthenticationService} from '../services/authentication.service';
 import {UserDataService} from '../services/user-data.service';
+import {DonutChartComponent} from '../donut-chart/donut-chart.component';
 
 @Component({
   selector: 'app-log-in-form',
@@ -20,7 +21,7 @@ export class LogInFormComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private _logInService: LogInService,
               public authorization: AuthorizationService,
-              public _authentication: AuthenticationService,
+              private _authentication: AuthenticationService,
               private data: UserDataService) {
   }
 
@@ -108,6 +109,8 @@ export class LogInFormComponent implements OnInit {
     this.authorization.login = false;
     this.authorization.username = '';
     localStorage.removeItem('token');
+    this.data.costsAll = 0;
+    this.data.sumCosts = [];
   }
 }
 

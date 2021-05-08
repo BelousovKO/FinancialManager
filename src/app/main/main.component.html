@@ -1,70 +1,47 @@
 <!--{{titlesExpense | json}}-->
 <main>
   <ul>
-    <li *ngIf="titlesExpense[0]"><h2>{{titlesExpense[0]}}</h2>
-      <div class="costs" style="{{backgroundColors[0]}}">1</div>
-      <div class="sum" style="{{costsColor[0]}}">{{costs[0]}} ₽</div>
+
+    <li *ngFor="let elem of data.dataInterfaceExpense; let idx = index">
+      <div *ngIf="titlesExpense[idx]" (click)="openModalCreateCost(idx)">
+        <h2>{{titlesExpense[idx]}}</h2>
+        <div class="costs" style="{{backgroundColors[idx]}}">1</div>
+        <div class="sum" style="{{costsColor[idx]}}">{{costs[idx]}} ₽</div>
+      </div>
+    <div *ngIf="!titlesExpense[idx] && titlesExpense[idx - 1]" (click)="modalCreateExpenseCategory = true">
+      <div class="costs newCost material-icons">add</div>
+    </div>
     </li>
-    <li *ngIf="titlesExpense[1]"><h2>{{titlesExpense[1]}}</h2>
-      <div class="costs" style="{{backgroundColors[1]}}">2</div>
-      <div class="sum" style="{{costsColor[1]}}">{{costs[1]}} ₽</div>
-    </li>
-    <li *ngIf="titlesExpense[2]"><h2>{{titlesExpense[2]}}</h2>
-      <div class="costs" style="{{backgroundColors[2]}}">3</div>
-      <div class="sum" style="{{costsColor[2]}}">{{costs[2]}} ₽</div>
-    </li>
-    <li *ngIf="titlesExpense[3]"><h2>{{titlesExpense[3]}}</h2>
-      <div class="costs" style="{{backgroundColors[3]}}">4</div>
-      <div class="sum" style="{{costsColor[3]}}">{{costs[3]}} ₽</div>
-    </li>
-    <li *ngIf="titlesExpense[4]"><h2>{{titlesExpense[4]}}</h2>
-      <div class="costs" style="{{backgroundColors[4]}}">5</div>
-      <div class="sum" style="{{costsColor[4]}}">{{costs[4]}} ₽</div>
-    </li>
+
     <li class="donut-chart">
       <app-donut-chart></app-donut-chart>
     </li>
-    <li *ngIf="titlesExpense[5]"><h2>{{titlesExpense[5]}}</h2>
-      <div class="costs" style="{{backgroundColors[5]}}">6</div>
-      <div class="sum" style="{{costsColor[5]}}">{{costs[5]}} ₽</div>
-    </li>
-    <li *ngIf="titlesExpense[6]"><h2>{{titlesExpense[6]}}</h2>
-      <div class="costs" style="{{backgroundColors[6]}}">7</div>
-      <div class="sum" style="{{costsColor[6]}}">{{costs[6]}} ₽</div>
-    </li>
-    <li *ngIf="titlesExpense[7]"><h2>{{titlesExpense[7]}}</h2>
-      <div class="costs" style="{{backgroundColors[7]}}">8</div>
-      <div class="sum" style="{{costsColor[7]}}">{{costs[7]}} ₽</div>
-    </li>
-    <li *ngIf="titlesExpense[8]"><h2>{{titlesExpense[8]}}</h2>
-      <div class="costs" style="{{backgroundColors[8]}}">9</div>
-      <div class="sum" style="{{costsColor[8]}}">{{costs[8]}} ₽</div>
-    </li>
-    <li *ngIf="titlesExpense[9]"><h2>{{titlesExpense[9]}}</h2>
-      <div class="costs" style="{{backgroundColors[9]}}">10</div>
-      <div class="sum" style="{{costsColor[9]}}">{{costs[9]}} ₽</div>
-    </li>
-    <li *ngIf="titlesExpense[10]"><h2>{{titlesExpense[10]}}</h2>
-      <div class="costs" style="{{backgroundColors[10]}}">11</div>
-      <div class="sum" style="{{costsColor[10]}}">{{costs[10]}} ₽</div>
-    </li>
-    <li *ngIf="titlesExpense[11]"><h2>{{titlesExpense[11]}}</h2>
-      <div class="costs" style="{{backgroundColors[11]}}">12</div>
-      <div class="sum" style="{{costsColor[11]}}">{{costs[11]}} ₽</div>
-    </li>
-    <li *ngIf="!titlesExpense[11]" (click)="modalCreateExpenseCategory = true">
-      <div class="costs newCost material-icons">add</div>
-    </li>
+
   </ul>
 
   <div class="modalCreateExpenseCategory" *ngIf="modalCreateExpenseCategory">
     <div class="buttons-container">
       <button class="btn cancel" (click)="modalCreateExpenseCategory = false">x</button>
-      <button class="btn create" [disabled]="!newCategory" (click)="createExpenseCategory()">v</button>
+      <button class="btn create" [disabled]="!inputValue" (click)="createExpenseCategory()">v</button>
     </div>
     <div class="input-container">
       <label>
-        <input type="text" (input)="inputHandler($event)" placeholder="Название"/>
+        <input type="text" (input)="inputHandlerCategory($event)" placeholder="Название"/>
+      </label>
+    </div>
+  </div>
+
+  <div class="modalCreateCost" *ngIf="modalCreateCost">
+    <div class="buttons-container">
+      <button class="btn cancel" (click)="modalCreateCost = false">x</button>
+      <button class="btn create" [disabled]="!inputValue" (click)="createNewCost()">v</button>
+    </div>
+    <div class="input-container">
+      <label>
+        <input type="number" class="mb-2" (input)="inputHandlerCost($event)" placeholder="Введите сумму"/>
+      </label>
+      <label>
+        <input type="text" (input)="inputHandlerNotes($event)" placeholder="Заметки..."/>
       </label>
     </div>
   </div>
