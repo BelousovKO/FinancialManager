@@ -32,8 +32,8 @@
         <button class="btn btn-primary" type="button" (click)="authorization.reg = true">Регистрация</button>
     </div>
   </form>
-  <div *ngIf="this.authorization.login">
-    <div>Вход выполнен. {{this.authorization.username}} привет!
+  <div *ngIf="this.authorization.login" class="header">
+    <div class="header__content">Вход выполнен. {{this.authorization.username}} привет!
       <button class="btn btn-primary" (click)="exit()">Выход</button>
     </div>
   </div>

@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {UserDataService} from '../services/user-data.service';
 import {ChangeInterface} from '../services/change-interface';
 import {CreateCostService} from '../services/create-cost.service';
+import {DateService} from '../services/date.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-main',
@@ -12,7 +14,8 @@ export class MainComponent implements OnInit {
 
   constructor(public data: UserDataService,
               public changeInterface: ChangeInterface,
-              public createCost: CreateCostService) {
+              public createCost: CreateCostService,
+              public dateService: DateService) {
   }
 
   public costsData = this.data.costs;
@@ -21,26 +24,39 @@ export class MainComponent implements OnInit {
   public backgroundColors = [];
   public colorsExpense = this.data.expenseColors;
   public titlesExpense = [];
+  public iconExpense = [];
   public dataInterfaceExpense = this.data.dataInterfaceExpense;
   private temp: number;
   public modalCreateExpenseCategory = false;
   public inputValue = '';
   public inputValueNotes = '';
   public modalCreateCost = false;
+  public modalChangeIcon = false;
   private indexCostCategory: number;
+  public colorNewCost = '';
+  public colorNewExpenseCategory = '';
+  public iconNewExpenseCategory = '';
   private token = localStorage.getItem('token');
   public date1 = new Date();
   public costsAll = 0;
   public strokeDasharray = [];
   public strokeDashoffset = [25];
+  public listIcon = ['favorite_border', 'language', 'pets', 'work', 'supervisor_account', 'flight_takeoff', 'settings_phone',
+    'build', 'bookmark_add', 'commute', 'theaters', 'anchor', 'camera_enhance', 'rowing', 'maps_home_work', 'content_cut', 'biotech',
+    'build', 'weekend', 'school', 'public', 'construction', 'sentiment_very_satisfied', 'emoji_events', 'cake', 'coronavirus',
+    'sports_esports', 'self_improvement', 'female', 'male', 'sports_soccer', 'luggage', 'sports_basketball', 'emoji_food_beverage',
+    'outdoor_grill', 'piano', 'restaurant', 'directions_car', 'celebration', 'fastfood', 'local_gas_station', 'hotel', 'liquor',
+    'local_airport', 'theater_comedy', 'star_border', 'wifi', 'fitness_center', 'ac_unit', 'family_restroom', 'checkroom', 'child_care',
+    'beach_access', 'child_friendly', 'smoking_rooms', 'add_shopping_cart', 'apartment', 'local_hospital', 'local_grocery_store', 'hiking'];
 
   ngOnInit(): void {
+    this.dateService.date.subscribe(this.generateDate.bind(this));
     this.strokeDasharray = [];
     this.strokeDashoffset = [25];
-    console.log('ngOnInit');
     this.data.dataInterfaceExpense.forEach((e, idx) => {
       this.colorsExpense.push(e.color);
       this.titlesExpense.push(e.title);
+      this.iconExpense.push(e.icon);
       this.backgroundColors.push(`background-color: ${this.colorsExpense[idx]}`);
       this.costsColor.push(`color: ${this.colorsExpense[idx]}`);
       this.temp = 0;
@@ -51,6 +67,7 @@ export class MainComponent implements OnInit {
       });
       this.costs.push(this.temp);
     });
+    this.data.icons = this.iconExpense;
     this.data.sumCosts = this.costs;
     this.costsAll = 0;
     this.costsAll = this.data.sumCosts.reduce((total, amount) => {
@@ -76,6 +93,13 @@ export class MainComponent implements OnInit {
     this.data.strokeDashoffset = this.strokeDashoffset;
   }
 
+  generateDate(now: moment.Moment): void {
+
+
+    console.log(now.toISOString().substr(5, 2));
+    console.log(now.format('MM'));
+  }
+
   inputHandlerCategory(event: any): any {
     this.inputValue = event.target.value;
   }
@@ -88,6 +112,22 @@ export class MainComponent implements OnInit {
     this.inputValueNotes = event.target.value;
   }
 
+  openModalCreateExpenseCategory(): void {
+    this.modalCreateExpenseCategory = true;
+    let temp = 12;
+    this.data.dataInterfaceExpense.forEach((e, idx) => {
+      if (!e.title && temp > idx) {
+        temp = idx;
+        this.colorNewExpenseCategory = `background-color: ${this.colorsExpense[idx]}`;
+        this.iconNewExpenseCategory = this.iconExpense[idx];
+      }
+    });
+  }
+
+  changeIcon(): void {
+    this.modalChangeIcon = false;
+  }
+
   createExpenseCategory(): void {
     let temp = 12;
     this.modalCreateExpenseCategory = false;
@@ -95,7 +135,9 @@ export class MainComponent implements OnInit {
       if (!e.title && temp > idx) {
         temp = idx;
         this.data.dataInterfaceExpense[idx].title = this.inputValue;
+        this.data.dataInterfaceExpense[idx].icon = this.iconNewExpenseCategory;
         this.titlesExpense[idx] = this.inputValue;
+        this.iconExpense[idx] = this.iconNewExpenseCategory;
         const body = {userId: this.data.userId, expense: this.data.dataInterfaceExpense, token: this.token};
         this.changeInterface.change(body)
           .subscribe(
@@ -112,6 +154,7 @@ export class MainComponent implements OnInit {
   openModalCreateCost(i): void {
     this.modalCreateCost = true;
     this.indexCostCategory = i;
+    this.colorNewCost = `background-color: ${this.colorsExpense[i]}`;
   }
 
   createNewCost(): void {
@@ -140,5 +183,9 @@ export class MainComponent implements OnInit {
         error => console.error('Error! ', error)
       );
     this.modalCreateCost = false;
+  }
+
+  go(dir: number): void {
+    this.dateService.changeMonth(dir);
   }
 }

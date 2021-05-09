@@ -14,6 +14,7 @@ import { MainComponent } from './main/main.component';
 import { RecoveryComponent } from './recovery/recovery.component';
 import { PointReplacerPipe } from './pipes/point-replacer.pipe';
 import { DonutChartComponent } from './donut-chart/donut-chart.component';
+import { MomentPipe } from './pipes/moment.pipe';
 
 const appRoutes: Routes = [
   {path: '', component: MainComponent},
@@ -36,6 +37,7 @@ const appRoutes: Routes = [
     RecoveryComponent,
     PointReplacerPipe,
     DonutChartComponent,
+    MomentPipe,
   ],
   imports: [
     BrowserModule,

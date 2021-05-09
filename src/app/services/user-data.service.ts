@@ -15,6 +15,7 @@ export class UserDataService {
   public coefficient: number;
   public strokeDasharray = [];
   public strokeDashoffset = [];
+  public icons = [];
 
   constructor() { }
 }

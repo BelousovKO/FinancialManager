@@ -17,3 +17,12 @@ form {
     }
   }
 }
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+
+  &__content {
+  margin-right: 25px;
+  }
+}
