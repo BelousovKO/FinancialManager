@@ -19,6 +19,7 @@ export class MainComponent implements OnInit {
   }
 
   public costsData = this.data.costs;
+  public costsDataFiltered = [];
   public costs = this.data.sumCosts;
   public costsColor = [];
   public backgroundColors = [];
@@ -26,6 +27,7 @@ export class MainComponent implements OnInit {
   public titlesExpense = [];
   public iconExpense = [];
   public dataInterfaceExpense = this.data.dataInterfaceExpense;
+  public dateFilter = 'm';
   private temp: number;
   public modalCreateExpenseCategory = false;
   public inputValue = '';
@@ -53,6 +55,7 @@ export class MainComponent implements OnInit {
     this.dateService.date.subscribe(this.generateDate.bind(this));
     this.strokeDasharray = [];
     this.strokeDashoffset = [25];
+    this.costs = [];
     this.data.dataInterfaceExpense.forEach((e, idx) => {
       this.colorsExpense.push(e.color);
       this.titlesExpense.push(e.title);
@@ -60,7 +63,7 @@ export class MainComponent implements OnInit {
       this.backgroundColors.push(`background-color: ${this.colorsExpense[idx]}`);
       this.costsColor.push(`color: ${this.colorsExpense[idx]}`);
       this.temp = 0;
-      this.costsData.forEach((elem) => {
+      this.costsDataFiltered.forEach((elem) => {
         if (elem.category === idx) {
           this.temp += elem.amount;
         }
@@ -93,11 +96,57 @@ export class MainComponent implements OnInit {
     this.data.strokeDashoffset = this.strokeDashoffset;
   }
 
+  createDataDonut(): void {
+
+  }
+
   generateDate(now: moment.Moment): void {
+  /*  console.log(now.toISOString().substr(5, 2));
+    console.log(now.format('MM'));*/
 
-
-    console.log(now.toISOString().substr(5, 2));
-    console.log(now.format('MM'));
+    this.strokeDasharray = [];
+    this.strokeDashoffset = [25];
+    this.costsDataFiltered = [];
+    if (this.dateFilter === 'm') {
+      this.costsData.forEach(e => {
+        if (e.date.substr(5, 2) === now.toISOString().substr(5, 2)) {
+          this.costsDataFiltered.push(e);
+        }
+      });
+    }
+    this.costs = [];
+    this.data.dataInterfaceExpense.forEach((e, idx) => {
+      this.temp = 0;
+      this.costsDataFiltered.forEach((elem) => {
+        if (elem.category === idx) {
+          this.temp += elem.amount;
+        }
+      });
+      this.costs.push(this.temp);
+    });
+    this.data.sumCosts = this.costs;
+    this.costsAll = 0;
+    this.costsAll = this.data.sumCosts.reduce((total, amount) => {
+      return total + amount;
+    });
+    this.data.costsAll = this.costsAll;
+    this.data.coefficient = 100 / this.costsAll;
+    if (this.costsAll) {
+      this.strokeDasharray = this.costs.map(currentValue =>
+        `${currentValue * this.data.coefficient} ${100 - currentValue * this.data.coefficient}`);
+      this.costs.forEach((elem, idx) => {
+        if (idx > 0) {
+          this.strokeDashoffset.push(this.strokeDashoffset[idx - 1] + this.costs[idx] * this.data.coefficient);
+        }
+      });
+    } else {
+      this.strokeDasharray = this.costs.map(() => `0 100`);
+      this.costs.forEach(() => {
+        this.strokeDashoffset.push(25);
+      });
+    }
+    this.data.strokeDasharray = this.strokeDasharray;
+    this.data.strokeDashoffset = this.strokeDashoffset;
   }
 
   inputHandlerCategory(event: any): any {
@@ -178,7 +227,6 @@ export class MainComponent implements OnInit {
             this.costs = [];
             this.ngOnInit();
           }
-          console.log(response.status);
         },
         error => console.error('Error! ', error)
       );
