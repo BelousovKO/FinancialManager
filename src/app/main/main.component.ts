@@ -39,7 +39,7 @@ export class MainComponent implements OnInit {
   public colorNewExpenseCategory = '';
   public iconNewExpenseCategory = '';
   private token = localStorage.getItem('token');
-  public date1 = new Date();
+  public dateCost: any;
   public costsAll = 0;
   public strokeDasharray = [];
   public strokeDashoffset = [25];
@@ -52,6 +52,7 @@ export class MainComponent implements OnInit {
     'beach_access', 'child_friendly', 'smoking_rooms', 'add_shopping_cart', 'apartment', 'local_hospital', 'local_grocery_store', 'hiking'];
 
   ngOnInit(): void {
+    this.dateCost = new Date();
     this.dateService.date.subscribe(this.generateDate.bind(this));
     this.strokeDasharray = [];
     this.strokeDashoffset = [25];
@@ -72,44 +73,21 @@ export class MainComponent implements OnInit {
     });
     this.data.icons = this.iconExpense;
     this.data.sumCosts = this.costs;
-    this.costsAll = 0;
-    this.costsAll = this.data.sumCosts.reduce((total, amount) => {
-      return total + amount;
-    });
-    this.data.costsAll = this.costsAll;
-    this.data.coefficient = 100 / this.costsAll;
-    if (this.costsAll) {
-      this.strokeDasharray = this.costs.map(currentValue =>
-        `${currentValue * this.data.coefficient} ${100 - currentValue * this.data.coefficient}`);
-      this.costs.forEach((elem, idx) => {
-        if (idx > 0) {
-          this.strokeDashoffset.push(this.strokeDashoffset[idx - 1] + this.costs[idx] * this.data.coefficient);
-        }
-      });
-    } else {
-      this.strokeDasharray = this.costs.map(() => `0 100`);
-      this.costs.forEach(() => {
-        this.strokeDashoffset.push(25);
-      });
-    }
-    this.data.strokeDasharray = this.strokeDasharray;
-    this.data.strokeDashoffset = this.strokeDashoffset;
-  }
-
-  createDataDonut(): void {
-
+    this.createDataDonut();
   }
 
   generateDate(now: moment.Moment): void {
-  /*  console.log(now.toISOString().substr(5, 2));
-    console.log(now.format('MM'));*/
-
+    /*console.log(now.toISOString());
+    console.log(now.toISOString().substr(0, 7));
+    console.log(now.format('YYYY-MM'));*/
+    console.log('dateCost: ', this.dateCost.toISOString().substr(0, 7));
+    this.dateCost = now;
     this.strokeDasharray = [];
     this.strokeDashoffset = [25];
     this.costsDataFiltered = [];
     if (this.dateFilter === 'm') {
       this.costsData.forEach(e => {
-        if (e.date.substr(5, 2) === now.toISOString().substr(5, 2)) {
+        if (e.date.substr(0, 7) === now.toISOString().substr(0, 7)) {
           this.costsDataFiltered.push(e);
         }
       });
@@ -125,6 +103,10 @@ export class MainComponent implements OnInit {
       this.costs.push(this.temp);
     });
     this.data.sumCosts = this.costs;
+    this.createDataDonut();
+  }
+
+  createDataDonut(): void {
     this.costsAll = 0;
     this.costsAll = this.data.sumCosts.reduce((total, amount) => {
       return total + amount;
@@ -206,14 +188,14 @@ export class MainComponent implements OnInit {
     this.colorNewCost = `background-color: ${this.colorsExpense[i]}`;
   }
 
-  createNewCost(): void {
+  createNewCost(now: moment.Moment): void {
     const newCost = Number(this.inputValue);
-    const dateCost = new Date();
+    console.log('dateCost: ', this.dateCost);
     const token = localStorage.getItem('token');
     const body = {
       userId: this.data.userId,
       title: this.inputValueNotes,
-      date: dateCost,
+      date: this.dateCost,
       category: this.indexCostCategory,
       amount: newCost,
       token
