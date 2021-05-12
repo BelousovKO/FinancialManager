@@ -13,6 +13,16 @@ export class DateService {
     this.date.next(value);
   }
 
+  changeDay(dir: number): void {
+    const value = this.date.value.add(dir, 'day');
+    this.date.next(value);
+  }
+
+  changeYear(dir: number): void {
+    const value = this.date.value.add(dir, 'year');
+    this.date.next(value);
+  }
+
   constructor() {
   }
 }

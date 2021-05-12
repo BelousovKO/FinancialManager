@@ -16,6 +16,7 @@ export class UserDataService {
   public strokeDasharray = [];
   public strokeDashoffset = [];
   public icons = [];
+  public dateFilter = 'm';
 
   constructor() { }
 }
