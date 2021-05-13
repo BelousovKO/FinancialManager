@@ -4,7 +4,7 @@
   justify-content: center;
   margin: 50px 0 30px 0;
 
-  span {
+  .modal-button {
     font-weight: 500;
     margin: 0 2rem;
     text-align: center;
@@ -13,6 +13,7 @@
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
+    cursor: pointer;
   }
 
   i {
@@ -92,9 +93,10 @@
     left: calc(50% - 100px);
     top: 50px;
     border-radius: 5px;
-    background-color: lightgray;
+    background-color: dimgray;
     width: 200px;
     height: 200px;
+    color: white;
 
     .buttons-container {
       display: flex;
@@ -158,10 +160,13 @@
   .modalDateFilter {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: repeat(4, 1fr);
     grid-gap: 0;
     margin: 0;
     padding: 0;
+    height: 300px;
+    font-size: small;
+    color: lightgray;
 
     .filterDateBtn {
       margin: 0;
@@ -177,13 +182,45 @@
       }
     }
 
-    .filterDay {
-      grid-column: span 2;
-      border-bottom: 1px solid #e9e3e3;
+    .filter-text {
+      color: white;
     }
 
+    .filterRange {
+      grid-column: span 2;
+    }
+
+    .filterInfinity,
+    .filterWeek,
+    .filterYear {
+      border-right: 1px solid #818181;
+    }
+
+    .filterInfinity,
+    .filterWeek,
+    .filterYear,
+    .filterDay,
+    .filterToday,
     .filterMonth {
-      border-right: 1px solid #e9e3e3;
+      border-top: 1px solid #818181;
+    }
+
+    .filter-icons {
+      display: flex;
+      justify-content: center;
+
+      .filter-icons_year {
+        width: 30px;
+      }
+
+      div {
+        background-color: lightgray;
+        width: 25px;
+        border-radius: 4px;
+        padding: 3px;
+        color: dimgray;
+        font-family: 'Roboto Slab', serif;
+      }
     }
 
     .date {

@@ -45,6 +45,8 @@ export class CostsPageComponent implements OnInit {
   public costsAll = 0;
   public strokeDasharray = [];
   public strokeDashoffset = [25];
+  public firstDayWeek: moment.Moment;
+  public lastDayWeek: moment.Moment;
   public listIcon = ['favorite_border', 'language', 'pets', 'work', 'supervisor_account', 'flight_takeoff', 'settings_phone',
     'build', 'bookmark_add', 'commute', 'theaters', 'anchor', 'camera_enhance', 'rowing', 'maps_home_work', 'content_cut', 'biotech',
     'build', 'weekend', 'school', 'public', 'construction', 'sentiment_very_satisfied', 'emoji_events', 'cake', 'coronavirus',
@@ -84,12 +86,16 @@ export class CostsPageComponent implements OnInit {
     /*console.log(now.toISOString().substr(0, 10));*/
     /*console.log(now.format('YYYY-MM'));*/
     /*console.log('dateCost: ', this.dateCost.toISOString().substr(0, 10));*/
+    this.firstDayWeek = now.clone().startOf('week');
+    this.lastDayWeek = now.clone().endOf('week');
+    /*console.log('firstDayWeek: ', this.firstDayWeek.format('DD MMMM'));*/
+    /*console.log('lostDayWeek: ', this.lastDayWeek.format('DD MMMM'));*/
     this.dateCost = now;
     this.strokeDasharray = [];
     this.strokeDashoffset = [25];
     this.costsDataFiltered = [];
     let characters: number;
-    if (this.dateFilter === 'd') {
+    if (this.dateFilter === 't') {
       characters = 10;
     }
     if (this.dateFilter === 'm') {
@@ -98,12 +104,15 @@ export class CostsPageComponent implements OnInit {
     if (this.dateFilter === 'y') {
       characters = 5;
     }
-
-    this.costsData.forEach(e => {
-      if (e.date.substr(0, characters) === now.toISOString().substr(0, characters)) {
-        this.costsDataFiltered.push(e);
-      }
-    });
+    if (this.dateFilter !== 'i') {
+      this.costsData.forEach(e => {
+        if (e.date.substr(0, characters) === now.toISOString().substr(0, characters)) {
+          this.costsDataFiltered.push(e);
+        }
+      });
+    } else {
+      this.costsDataFiltered =  this.costsData;
+    }
 
     this.costs = [];
     this.data.dataInterfaceExpense.forEach((e, idx) => {
@@ -228,11 +237,12 @@ export class CostsPageComponent implements OnInit {
   }
 
   go(dir: number): void {
+
     if (this.dateFilter  === 'm') {
       this.dateService.changeMonth(dir);
     }
 
-    if (this.dateFilter  === 'd') {
+    if (this.dateFilter  === 't') {
       this.dateService.changeDay(dir);
     }
 
