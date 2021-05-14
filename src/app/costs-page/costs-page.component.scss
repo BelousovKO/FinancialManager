@@ -8,12 +8,16 @@
     font-weight: 500;
     margin: 0 2rem;
     text-align: center;
-    width: 220px;
+    width: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
     cursor: pointer;
+
+    .date-filter-title {
+      margin-left: 10px;
+    }
   }
 
   i {
@@ -233,4 +237,20 @@ li {
   list-style: none;
 }
 
+.filter-icons, .filter-icons_year {
+  display: flex;
+  justify-content: center;
 
+  span {
+    background-color: lightgray;
+    width: 30px;
+    border-radius: 4px;
+    padding: 3px;
+    color: dimgray;
+    font-family: 'Roboto Slab', serif;
+  }
+}
+
+.filter-icons_year span {
+  width: 35px;
+}

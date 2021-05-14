@@ -2,19 +2,30 @@
   <div class="container-date-filter">
     <i class="material-icons" *ngIf="dateFilter !== 'i' && dateFilter !== 'r'" (click)="go(-1)">arrow_left</i>
     <span class="modal-button" *ngIf="dateFilter === 'm'" (click)="modalDateFilter = true">
-      {{ dateService.date | async | moment }}
+      <span class="filter-icons"><span>{{lastDayMonth | moment: 'DD' }}</span></span>
+      <span class="date-filter-title">{{ dateService.date | async | moment }}</span>
       <i class="material-icons">arrow_drop_down</i>
     </span>
     <span class="modal-button" *ngIf="dateFilter === 't'" (click)="modalDateFilter = true">
-      {{ dateService.date | async | moment: 'ddd DD MMMM y' }}
+      <span class="filter-icons"><span>1</span></span>
+      <span class="date-filter-title">{{ dateService.date | async | moment: 'ddd DD MMMM y' }}</span>
+      <i class="material-icons">arrow_drop_down</i>
+    </span>
+    <span class="modal-button" *ngIf="dateFilter === 'w'" (click)="modalDateFilter = true">
+      <span class="filter-icons"><span>7</span></span>
+      <span class="date-filter-title">
+        {{ firstDayWeek | moment: 'D' }} - {{ lastDayWeek | moment: 'D MMMM y'}}
+      </span>
       <i class="material-icons">arrow_drop_down</i>
     </span>
     <span class="modal-button" *ngIf="dateFilter === 'y'" (click)="modalDateFilter = true">
-      {{ dateService.date | async | moment: 'y' }}
+      <span class="filter-icons_year"><span>365</span></span>
+      <span class="date-filter-title">{{ dateService.date | async | moment: 'y' }} ГОД</span>
       <i class="material-icons">arrow_drop_down</i>
     </span>
     <span class="modal-button" *ngIf="dateFilter === 'i'" (click)="modalDateFilter = true">
       <span class="material-icons">all_inclusive</span>
+      <span class="date-filter-title">ВСЁ ВРЕМЯ</span>
       <i class="material-icons">arrow_drop_down</i>
     </span>
     <span class="modal-button" *ngIf="dateFilter === 'r'" (click)="modalDateFilter = true">
@@ -96,11 +107,15 @@
         <div class="filter-text">Всё время</div>
       </li>
       <li class="filterDay filterDateBtn" (click)="modalDateFilter = false; dateFilter = 'd'; ngOnInit()">
-        <div class="filter-icons"><div>1</div></div>
+        <div class="filter-icons">
+          <div>1</div>
+        </div>
         <div class="filter-text">Выбрать день</div>
       </li>
       <li class="filterWeek filterDateBtn" (click)="modalDateFilter = false; dateFilter = 'w'; ngOnInit()">
-        <div class="filter-icons"><div>7</div></div>
+        <div class="filter-icons">
+          <div>7</div>
+        </div>
         <div class="filter-text">Неделя</div>
         <div class="date">
           {{ firstDayWeek | moment: 'DD' }} - {{ lastDayWeek | moment: 'DD MMMM' }}
@@ -112,12 +127,16 @@
         <div class="date">{{ dateService.date | async | moment: 'DD MMMM y' }}</div>
       </li>
       <li class="filterYear filterDateBtn" (click)="modalDateFilter = false; dateFilter = 'y'; ngOnInit()">
-        <div class="filter-icons"><div class="filter-icons_year">365</div></div>
+        <div class="filter-icons">
+          <div class="filter-icons_year">365</div>
+        </div>
         <div class="filter-text">Год</div>
         <div class="date">{{ dateService.date | async | moment: 'y' }} год</div>
       </li>
       <li class="filterMonth filterDateBtn" (click)="modalDateFilter = false; dateFilter = 'm'; ngOnInit()">
-        <div class="filter-icons"><div>31</div></div>
+        <div class="filter-icons">
+          <div>{{lastDayMonth | moment: 'DD' }}</div>
+        </div>
         <div class="filter-text">Месяц</div>
         <div class="date">{{ dateService.date | async | moment }}</div>
       </li>

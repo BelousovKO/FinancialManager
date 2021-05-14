@@ -47,6 +47,7 @@ export class CostsPageComponent implements OnInit {
   public strokeDashoffset = [25];
   public firstDayWeek: moment.Moment;
   public lastDayWeek: moment.Moment;
+  public lastDayMonth: moment.Moment;
   public listIcon = ['favorite_border', 'language', 'pets', 'work', 'supervisor_account', 'flight_takeoff', 'settings_phone',
     'build', 'bookmark_add', 'commute', 'theaters', 'anchor', 'camera_enhance', 'rowing', 'maps_home_work', 'content_cut', 'biotech',
     'build', 'weekend', 'school', 'public', 'construction', 'sentiment_very_satisfied', 'emoji_events', 'cake', 'coronavirus',
@@ -88,6 +89,7 @@ export class CostsPageComponent implements OnInit {
     /*console.log('dateCost: ', this.dateCost.toISOString().substr(0, 10));*/
     this.firstDayWeek = now.clone().startOf('week');
     this.lastDayWeek = now.clone().endOf('week');
+    this.lastDayMonth = now.clone().endOf('month');
     /*console.log('firstDayWeek: ', this.firstDayWeek.format('DD MMMM'));*/
     /*console.log('lostDayWeek: ', this.lastDayWeek.format('DD MMMM'));*/
     this.dateCost = now;
@@ -104,14 +106,24 @@ export class CostsPageComponent implements OnInit {
     if (this.dateFilter === 'y') {
       characters = 5;
     }
-    if (this.dateFilter !== 'i') {
+    if (this.dateFilter !== 'i' && this.dateFilter !== 'w') {
       this.costsData.forEach(e => {
         if (e.date.substr(0, characters) === now.toISOString().substr(0, characters)) {
           this.costsDataFiltered.push(e);
         }
       });
-    } else {
+    }
+    if (this.dateFilter === 'i') {
       this.costsDataFiltered =  this.costsData;
+    }
+    if (this.dateFilter === 'w') {
+      const fd = Number(this.firstDayWeek.format('x'));
+      const ld = Number(this.lastDayWeek.format('x'));
+      this.costsData.forEach(e => {
+        if (Number(Date.parse(e.date)) >= fd && Number(Date.parse(e.date)) <= ld) {
+          this.costsDataFiltered.push(e);
+        }
+      });
     }
 
     this.costs = [];
@@ -244,6 +256,10 @@ export class CostsPageComponent implements OnInit {
 
     if (this.dateFilter  === 't') {
       this.dateService.changeDay(dir);
+    }
+
+    if (this.dateFilter  === 'w') {
+      this.dateService.changeWeek(dir);
     }
 
     if (this.dateFilter  === 'y') {

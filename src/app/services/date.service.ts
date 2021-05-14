@@ -23,6 +23,11 @@ export class DateService {
     this.date.next(value);
   }
 
+  changeWeek(dir: number): void {
+    const value = this.date.value.add(dir, 'week');
+    this.date.next(value);
+  }
+
   constructor() {
   }
 }
