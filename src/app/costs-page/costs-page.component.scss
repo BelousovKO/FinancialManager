@@ -93,7 +93,7 @@
   .modalCreateCost,
   .modalChangeIcon,
   .modalDateFilter,
-  .modalChoiceDay {
+  .modal-choice-day {
     position: absolute;
     left: calc(50% - 100px);
     top: 50px;
@@ -130,8 +130,33 @@
     }
   }
 
-  .modalChoiceDay {
-    height: 250px;
+  .modal-choice-day {
+    height: 400px;
+    top: 10px;
+    left: calc(50% - 200px);
+    width: 400px;
+
+    .total-date {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+    }
+
+    .choice-interface {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 5px;
+
+      div {
+        width: 40%;
+        display: flex;
+        justify-content: space-between;
+
+        i {
+          cursor: pointer;
+        }
+      }
+    }
   }
 
   .modalChangeIcon {

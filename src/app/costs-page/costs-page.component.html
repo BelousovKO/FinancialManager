@@ -158,9 +158,22 @@
       </li>
     </ul>
 
-    <div class="modalChoiceDay" *ngIf="modalChoiceDay === true">
+    <div class="modal-choice-day" *ngIf="modalChoiceDay === true">
       <div class="buttons-container mb-2" style="{{colorNewCost}}">
-        <button class="btn create material-icons" (click)="modalChoiceDay = false">check</button>
+        <button class="btn create material-icons" (click)="modalChoiceDay = false; ngOnInit()">check</button>
+        <div class="total-date">{{ dateService.date | async | moment: 'DD.MM.Y' }}</div>
+      </div>
+      <div class="choice-interface">
+      <div class="change-month">
+        <i class="material-icons" (click)="dateFilter = 'm'; go(-1); dateFilter = 't'">arrow_left</i>
+        <span>{{ dateService.date | async | moment: 'MMMM' }}</span>
+        <i class="material-icons" (click)="dateFilter = 'm'; go(1); dateFilter = 't'">arrow_right</i>
+      </div>
+      <div class="change-year">
+        <i class="material-icons" (click)="dateFilter = 'y'; go(-1); dateFilter = 't'">arrow_left</i>
+        <span>{{ dateService.date | async | moment: 'Y' }}</span>
+        <i class="material-icons" (click)="dateFilter = 'y'; go(1); dateFilter = 't'">arrow_right</i>
+      </div>
       </div>
       <app-calendar></app-calendar>
     </div>
