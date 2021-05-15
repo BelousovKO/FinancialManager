@@ -16,6 +16,7 @@ import { PointReplacerPipe } from './pipes/point-replacer.pipe';
 import { DonutChartComponent } from './donut-chart/donut-chart.component';
 import { MomentPipe } from './pipes/moment.pipe';
 import { CostsPageComponent } from './costs-page/costs-page.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 const appRoutes: Routes = [
   {path: '', component: MainComponent},
@@ -40,6 +41,7 @@ const appRoutes: Routes = [
     DonutChartComponent,
     MomentPipe,
     CostsPageComponent,
+    CalendarComponent,
   ],
   imports: [
     BrowserModule,

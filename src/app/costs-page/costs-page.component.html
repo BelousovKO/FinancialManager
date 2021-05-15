@@ -106,41 +106,64 @@
         <div class="material-icons">all_inclusive</div>
         <div class="filter-text">Всё время</div>
       </li>
-      <li class="filterDay filterDateBtn" (click)="modalDateFilter = false; dateFilter = 'd'; ngOnInit()">
+      <li class="filterDay filterDateBtn" (click)="modalDateFilter = false;
+                                          modalChoiceDay = true;
+                                          dateFilter = 't';
+                                          backToNowDate()">
         <div class="filter-icons">
           <div>1</div>
         </div>
         <div class="filter-text">Выбрать день</div>
       </li>
-      <li class="filterWeek filterDateBtn" (click)="modalDateFilter = false; dateFilter = 'w'; ngOnInit()">
+      <li class="filterWeek filterDateBtn" (click)="modalDateFilter = false;
+                                                    dateFilter = 'w';
+                                                    ngOnInit();
+                                                    backToNowDate()">
         <div class="filter-icons">
           <div>7</div>
         </div>
         <div class="filter-text">Неделя</div>
         <div class="date">
-          {{ firstDayWeek | moment: 'DD' }} - {{ lastDayWeek | moment: 'DD MMMM' }}
+          {{ today.firstDayOfWeek }} -
+          {{ today.lastDayOfWeek }}
         </div>
       </li>
-      <li class="filterToday filterDateBtn" (click)="modalDateFilter = false; dateFilter = 't'; ngOnInit()">
+      <li class="filterToday filterDateBtn" (click)="modalDateFilter = false;
+                                                     dateFilter = 't';
+                                                     ngOnInit();
+                                                     backToNowDate()">
         <div class="material-icons">today</div>
         <div class="filter-text">Сегодня</div>
-        <div class="date">{{ dateService.date | async | moment: 'DD MMMM y' }}</div>
+        <div class="date">{{ today.today }}</div>
       </li>
-      <li class="filterYear filterDateBtn" (click)="modalDateFilter = false; dateFilter = 'y'; ngOnInit()">
+      <li class="filterYear filterDateBtn" (click)="modalDateFilter = false;
+                                                    dateFilter = 'y';
+                                                    ngOnInit();
+                                                    backToNowDate()">
         <div class="filter-icons">
           <div class="filter-icons_year">365</div>
         </div>
         <div class="filter-text">Год</div>
-        <div class="date">{{ dateService.date | async | moment: 'y' }} год</div>
+        <div class="date">{{ today.year }} год</div>
       </li>
-      <li class="filterMonth filterDateBtn" (click)="modalDateFilter = false; dateFilter = 'm'; ngOnInit()">
+      <li class="filterMonth filterDateBtn" (click)="modalDateFilter = false;
+                                                     dateFilter = 'm';
+                                                     ngOnInit();
+                                                     backToNowDate()">
         <div class="filter-icons">
-          <div>{{lastDayMonth | moment: 'DD' }}</div>
+          <div>{{today.lastDayOfMonth }}</div>
         </div>
         <div class="filter-text">Месяц</div>
-        <div class="date">{{ dateService.date | async | moment }}</div>
+        <div class="date">{{ today.month }}</div>
       </li>
     </ul>
+
+    <div class="modalChoiceDay" *ngIf="modalChoiceDay === true">
+      <div class="buttons-container mb-2" style="{{colorNewCost}}">
+        <button class="btn create material-icons" (click)="modalChoiceDay = false">check</button>
+      </div>
+      <app-calendar></app-calendar>
+    </div>
 
   </div>
 </section>

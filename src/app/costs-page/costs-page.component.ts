@@ -36,6 +36,7 @@ export class CostsPageComponent implements OnInit {
   public modalCreateCost = false;
   public modalChangeIcon = false;
   public modalDateFilter = false;
+  public modalChoiceDay = false;
   private indexCostCategory: number;
   public colorNewCost = '';
   public colorNewExpenseCategory = '';
@@ -48,6 +49,14 @@ export class CostsPageComponent implements OnInit {
   public firstDayWeek: moment.Moment;
   public lastDayWeek: moment.Moment;
   public lastDayMonth: moment.Moment;
+  public today = {
+    today: moment().format('DD MMMM Y'),
+    firstDayOfWeek: moment().startOf('week').format('D'),
+    lastDayOfWeek: moment().endOf('week').format('D MMMM'),
+    lastDayOfMonth: moment().endOf('month').format('D'),
+    month: moment().format('MMMM Y'),
+    year: moment().format('Y')
+  };
   public listIcon = ['favorite_border', 'language', 'pets', 'work', 'supervisor_account', 'flight_takeoff', 'settings_phone',
     'build', 'bookmark_add', 'commute', 'theaters', 'anchor', 'camera_enhance', 'rowing', 'maps_home_work', 'content_cut', 'biotech',
     'build', 'weekend', 'school', 'public', 'construction', 'sentiment_very_satisfied', 'emoji_events', 'cake', 'coronavirus',
@@ -79,6 +88,10 @@ export class CostsPageComponent implements OnInit {
     this.data.icons = this.iconExpense;
     this.data.sumCosts = this.costs;
     this.createDataDonut();
+  }
+
+  backToNowDate(): void {
+    this.dateService.backToToday();
   }
 
   generateDate(now: moment.Moment): void {
