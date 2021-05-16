@@ -1,0 +1,66 @@
+.container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  .day-range {
+    padding: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    cursor: pointer;
+
+    div, .material-icons {
+      text-align: center;
+      width: 100%;
+    }
+  }
+
+  .first-day {
+    border-right: 1px solid gray;
+  }
+}
+
+.modal-choice-day {
+  position: absolute;
+  background-color: dimgray;
+  border-radius: 5px;
+  height: 400px;
+  top: 0;
+  left: calc(50% - 200px);
+  width: 400px;
+
+  .buttons-container {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+
+    .btn {
+      color: white;
+    }
+  }
+
+  .total-date {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+
+  .choice-interface {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 5px;
+
+    div {
+      width: 40%;
+      display: flex;
+      justify-content: space-between;
+
+      i {
+        cursor: pointer;
+      }
+    }
+  }
+}

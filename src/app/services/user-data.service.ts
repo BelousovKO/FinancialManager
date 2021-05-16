@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,8 @@ export class UserDataService {
   public strokeDashoffset = [];
   public icons = [];
   public dateFilter = 'm';
+  public choiceFirstDay = moment();
+  public choiceLastDay = moment();
 
   constructor() { }
 }

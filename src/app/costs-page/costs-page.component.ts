@@ -37,6 +37,7 @@ export class CostsPageComponent implements OnInit {
   public modalChangeIcon = false;
   public modalDateFilter = false;
   public modalChoiceDay = false;
+  public modalChooseRange = false;
   private indexCostCategory: number;
   public colorNewCost = '';
   public colorNewExpenseCategory = '';
@@ -96,15 +97,9 @@ export class CostsPageComponent implements OnInit {
 
   generateDate(now: moment.Moment): void {
     moment.locale('ru');
-    /*console.log(now.toISOString());*/
-    /*console.log(now.toISOString().substr(0, 10));*/
-    /*console.log(now.format('YYYY-MM'));*/
-    /*console.log('dateCost: ', this.dateCost.toISOString().substr(0, 10));*/
     this.firstDayWeek = now.clone().startOf('week');
     this.lastDayWeek = now.clone().endOf('week');
     this.lastDayMonth = now.clone().endOf('month');
-    /*console.log('firstDayWeek: ', this.firstDayWeek.format('DD MMMM'));*/
-    /*console.log('lostDayWeek: ', this.lastDayWeek.format('DD MMMM'));*/
     this.dateCost = now;
     this.strokeDasharray = [];
     this.strokeDashoffset = [25];
@@ -119,7 +114,7 @@ export class CostsPageComponent implements OnInit {
     if (this.dateFilter === 'y') {
       characters = 5;
     }
-    if (this.dateFilter !== 'i' && this.dateFilter !== 'w') {
+    if (this.dateFilter !== 'i' && this.dateFilter !== 'w' && this.dateFilter !== 'r') {
       this.costsData.forEach(e => {
         if (e.date.substr(0, characters) === now.toISOString().substr(0, characters)) {
           this.costsDataFiltered.push(e);
@@ -132,6 +127,16 @@ export class CostsPageComponent implements OnInit {
     if (this.dateFilter === 'w') {
       const fd = Number(this.firstDayWeek.format('x'));
       const ld = Number(this.lastDayWeek.format('x'));
+      this.costsData.forEach(e => {
+        if (Number(Date.parse(e.date)) >= fd && Number(Date.parse(e.date)) <= ld) {
+          this.costsDataFiltered.push(e);
+        }
+      });
+    }
+
+    if (this.dateFilter === 'r') {
+      const fd = Number(this.data.choiceFirstDay.startOf('day').format('x'));
+      const ld = Number(this.data.choiceLastDay.endOf('day').format('x'));
       this.costsData.forEach(e => {
         if (Number(Date.parse(e.date)) >= fd && Number(Date.parse(e.date)) <= ld) {
           this.costsDataFiltered.push(e);
@@ -278,5 +283,23 @@ export class CostsPageComponent implements OnInit {
     if (this.dateFilter  === 'y') {
       this.dateService.changeYear(dir);
     }
+
+    if (this.dateFilter  === 'r') {
+      this.dateService.changeRange(dir)
+      this.ngOnInit();
+    }
+  }
+
+  clearChoiceDate(): void {
+    this.data.choiceFirstDay = moment();
+    this.data.choiceLastDay = moment();
+  }
+
+  closeAllModal(): void {
+    this.modalChangeIcon = false;
+    this.modalChoiceDay = false;
+    this.modalChooseRange = false;
+    this.modalCreateCost = false;
+    this.modalCreateExpenseCategory = false;
   }
 }

@@ -93,7 +93,8 @@
   .modalCreateCost,
   .modalChangeIcon,
   .modalDateFilter,
-  .modal-choice-day {
+  .modal-choice-day,
+  .modal-choose-range {
     position: absolute;
     left: calc(50% - 100px);
     top: 50px;
@@ -188,6 +189,17 @@
         align-self: center;
         color: white;
       }
+    }
+  }
+
+  .modal-choose-range {
+    .container {
+      padding: 0;
+    }
+    width: 300px;
+    left: calc(50% - 150px);
+    .buttons-container span {
+      margin: 5px 15px;
     }
   }
 

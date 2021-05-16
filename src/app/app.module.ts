@@ -17,6 +17,7 @@ import { DonutChartComponent } from './donut-chart/donut-chart.component';
 import { MomentPipe } from './pipes/moment.pipe';
 import { CostsPageComponent } from './costs-page/costs-page.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { ChooseRangeComponent } from './choose-range/choose-range.component';
 
 const appRoutes: Routes = [
   {path: '', component: MainComponent},
@@ -42,6 +43,7 @@ const appRoutes: Routes = [
     MomentPipe,
     CostsPageComponent,
     CalendarComponent,
+    ChooseRangeComponent,
   ],
   imports: [
     BrowserModule,

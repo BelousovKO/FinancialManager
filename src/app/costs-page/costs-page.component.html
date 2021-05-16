@@ -1,6 +1,6 @@
 <section>
-  <div class="container-date-filter">
-    <i class="material-icons" *ngIf="dateFilter !== 'i' && dateFilter !== 'r'" (click)="go(-1)">arrow_left</i>
+  <div class="container-date-filter" (click)="closeAllModal()">
+    <i class="material-icons" *ngIf="dateFilter !== 'i'" (click)="go(-1)">arrow_left</i>
     <span class="modal-button" *ngIf="dateFilter === 'm'" (click)="modalDateFilter = true">
       <span class="filter-icons"><span>{{lastDayMonth | moment: 'DD' }}</span></span>
       <span class="date-filter-title">{{ dateService.date | async | moment }}</span>
@@ -28,23 +28,31 @@
       <span class="date-filter-title">ВСЁ ВРЕМЯ</span>
       <i class="material-icons">arrow_drop_down</i>
     </span>
-    <span class="modal-button" *ngIf="dateFilter === 'r'" (click)="modalDateFilter = true">
+    <span class="modal-button" *ngIf="dateFilter === 'r'" (click)="modalDateFilter = true; clearChoiceDate()">
       <span class="material-icons">date_range</span>
+      <span class="date-filter-title">{{ data.choiceFirstDay | moment: 'DD.MM.Y' }} -
+        {{ data.choiceLastDay | moment: 'DD.MM.Y' }}
+      </span>
       <i class="material-icons">arrow_drop_down</i>
     </span>
-    <i class="material-icons" *ngIf="dateFilter !== 'i' && dateFilter !== 'r'" (click)="go(1)">arrow_right</i>
+    <i class="material-icons" *ngIf="dateFilter !== 'i'" (click)="go(1)">arrow_right</i>
   </div>
 
   <div class="main-costs-page">
     <ul>
 
       <li *ngFor="let elem of data.dataInterfaceExpense; let idx = index">
-        <div *ngIf="titlesExpense[idx]" (click)="openModalCreateCost(idx)" [ngClass]="{opacity03: costs[idx] === 0}">
+        <div *ngIf="titlesExpense[idx]" (click)="closeAllModal();
+                                        this.modalDateFilter = false;
+                                        openModalCreateCost(idx)"
+             [ngClass]="{opacity03: costs[idx] === 0}">
           <h2>{{titlesExpense[idx]}}</h2>
           <div class="costs material-icons" style="{{backgroundColors[idx]}}">{{iconExpense[idx]}}</div>
           <div class="sum" style="{{costsColor[idx]}}">{{costs[idx]}} ₽</div>
         </div>
-        <div *ngIf="!titlesExpense[idx] && titlesExpense[idx - 1]" (click)="openModalCreateExpenseCategory()">
+        <div *ngIf="!titlesExpense[idx] && titlesExpense[idx - 1]" (click)="closeAllModal();
+                                                                            openModalCreateExpenseCategory();
+                                                                            this.modalDateFilter = false;">
           <div class="costs newCost material-icons">add</div>
         </div>
       </li>
@@ -97,9 +105,12 @@
     </div>
 
     <ul class="modalDateFilter" *ngIf="modalDateFilter">
-      <li class="filterRange filterDateBtn" (click)="modalDateFilter = false; dateFilter = 'r'; ngOnInit()">
+      <li class="filterRange filterDateBtn" (click)="modalDateFilter = false;
+                                            dateFilter = 'r';
+                                            modalChooseRange = true;
+                                            ngOnInit()">
         <div class="material-icons">date_range</div>
-        <div class="filter-text">Выбрать диапозон</div>
+        <div class="filter-text">Выбрать диапазон</div>
         <div class="date">{{ dateService.date | async | moment }}</div>
       </li>
       <li class="filterInfinity filterDateBtn" (click)="modalDateFilter = false; dateFilter = 'i'; ngOnInit()">
@@ -159,23 +170,39 @@
     </ul>
 
     <div class="modal-choice-day" *ngIf="modalChoiceDay === true">
-      <div class="buttons-container mb-2" style="{{colorNewCost}}">
-        <button class="btn create material-icons" (click)="modalChoiceDay = false; ngOnInit()">check</button>
+      <div class="buttons-container mb-2">
+        <button class="btn create material-icons"
+                (click)="modalChoiceDay = false;
+                ngOnInit()">
+          check
+        </button>
         <div class="total-date">{{ dateService.date | async | moment: 'DD.MM.Y' }}</div>
       </div>
       <div class="choice-interface">
-      <div class="change-month">
-        <i class="material-icons" (click)="dateFilter = 'm'; go(-1); dateFilter = 't'">arrow_left</i>
-        <span>{{ dateService.date | async | moment: 'MMMM' }}</span>
-        <i class="material-icons" (click)="dateFilter = 'm'; go(1); dateFilter = 't'">arrow_right</i>
-      </div>
-      <div class="change-year">
-        <i class="material-icons" (click)="dateFilter = 'y'; go(-1); dateFilter = 't'">arrow_left</i>
-        <span>{{ dateService.date | async | moment: 'Y' }}</span>
-        <i class="material-icons" (click)="dateFilter = 'y'; go(1); dateFilter = 't'">arrow_right</i>
-      </div>
+        <div class="change-month">
+          <i class="material-icons" (click)="dateFilter = 'm'; go(-1); dateFilter = 't'">arrow_left</i>
+          <span>{{ dateService.date | async | moment: 'MMMM' }}</span>
+          <i class="material-icons" (click)="dateFilter = 'm'; go(1); dateFilter = 't'">arrow_right</i>
+        </div>
+        <div class="change-year">
+          <i class="material-icons" (click)="dateFilter = 'y'; go(-1); dateFilter = 't'">arrow_left</i>
+          <span>{{ dateService.date | async | moment: 'Y' }}</span>
+          <i class="material-icons" (click)="dateFilter = 'y'; go(1); dateFilter = 't'">arrow_right</i>
+        </div>
       </div>
       <app-calendar></app-calendar>
+    </div>
+
+    <div class="modal-choose-range" *ngIf="modalChooseRange === true">
+      <div class="buttons-container mb-2">
+        <button class="btn create material-icons" (click)="modalChooseRange = false;
+                                                  dateFilter = 'r';
+                                                  ngOnInit()">
+          check
+        </button>
+        <span>Выбрать диапазон</span>
+      </div>
+      <app-choose-range></app-choose-range>
     </div>
 
   </div>

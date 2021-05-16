@@ -1,13 +1,16 @@
 import {Injectable} from '@angular/core';
 import * as moment from 'moment';
 import {BehaviorSubject} from 'rxjs';
+import {UserDataService} from './user-data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DateService {
   public date: BehaviorSubject<moment.Moment> = new BehaviorSubject(moment());
-  public sectDay: moment.Moment;
+
+  constructor( private data: UserDataService) {
+  }
 
   backToToday(): void {
     let difference = moment().diff(this.date.value, 'day');
@@ -38,6 +41,14 @@ export class DateService {
     this.date.next(value);
   }
 
+  changeRange(dir: number): void {
+    let difference = this.data.choiceLastDay.diff(this.data.choiceFirstDay, 'day');
+    dir >  0 ? difference = difference * dir + 1 : difference = difference * dir - 1;
+    this.data.choiceFirstDay.add(difference, 'day');
+    this.data.choiceLastDay.add(difference, 'day');
+
+  }
+
   selectDay(date: moment.Moment): void {
     const value = this.date.value.set({
       date: date.date(),
@@ -45,8 +56,5 @@ export class DateService {
       year: date.year()
     });
     this.date.next(value);
-  }
-
-  constructor() {
   }
 }
