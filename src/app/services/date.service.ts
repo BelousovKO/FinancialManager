@@ -9,7 +9,7 @@ import {UserDataService} from './user-data.service';
 export class DateService {
   public date: BehaviorSubject<moment.Moment> = new BehaviorSubject(moment());
 
-  constructor( private data: UserDataService) {
+  constructor(private data: UserDataService) {
   }
 
   backToToday(): void {
@@ -42,8 +42,9 @@ export class DateService {
   }
 
   changeRange(dir: number): void {
-    let difference = this.data.choiceLastDay.diff(this.data.choiceFirstDay, 'day');
-    dir >  0 ? difference = difference * dir + 1 : difference = difference * dir - 1;
+    let difference = this.data.choiceLastDay.startOf('day')
+      .diff(this.data.choiceFirstDay.startOf('day'), 'day');
+    dir > 0 ? difference = difference * dir + 1 : difference = difference * dir - 1;
     this.data.choiceFirstDay.add(difference, 'day');
     this.data.choiceLastDay.add(difference, 'day');
 

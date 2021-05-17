@@ -43,7 +43,7 @@ export class CostsPageComponent implements OnInit {
   public colorNewExpenseCategory = '';
   public iconNewExpenseCategory = '';
   private token = localStorage.getItem('token');
-  public dateCost: any;
+  public dateCost: moment.Moment;
   public costsAll = 0;
   public strokeDasharray = [];
   public strokeDashoffset = [25];
@@ -67,7 +67,7 @@ export class CostsPageComponent implements OnInit {
     'beach_access', 'child_friendly', 'smoking_rooms', 'add_shopping_cart', 'apartment', 'local_hospital', 'local_grocery_store', 'hiking'];
 
   ngOnInit(): void {
-    this.dateCost = new Date();
+    this.dateCost = moment();
     this.dateService.date.subscribe(this.generateDate.bind(this));
     this.strokeDasharray = [];
     this.strokeDashoffset = [25];
@@ -100,23 +100,64 @@ export class CostsPageComponent implements OnInit {
     this.firstDayWeek = now.clone().startOf('week');
     this.lastDayWeek = now.clone().endOf('week');
     this.lastDayMonth = now.clone().endOf('month');
-    this.dateCost = now;
+    const difference = now.startOf('day').diff(moment().startOf('day'), 'day');
+    console.log('difference: ', difference);
+    if (difference === 0) {
+      this.dateCost = now;
+    }
+    if (difference > 0) {
+      switch (this.dateFilter) {
+        case 't':
+          this.dateCost = now.clone().startOf('day');
+          console.log('now.clone().startOf: ', now.clone().startOf('day').format('YYYY-MM-DD:hh:mm:ss'));
+          break;
+        case 'w':
+          this.dateCost = now.clone().startOf('week');
+          break;
+        case 'm':
+          this.dateCost = now.clone().startOf('month');
+          break;
+        case 'y':
+          this.dateCost = now.clone().startOf('year');
+          break;
+      }
+    }
+    if (difference < 0) {
+      switch (this.dateFilter) {
+        case 't':
+          this.dateCost = now.clone().endOf('day');
+          break;
+        case 'w':
+          this.dateCost = now.clone().endOf('week');
+          break;
+        case 'm':
+          this.dateCost = now.clone().endOf('month');
+          break;
+        case 'y':
+          this.dateCost = now.clone().endOf('year');
+          break;
+      }
+    }
     this.strokeDasharray = [];
     this.strokeDashoffset = [25];
     this.costsDataFiltered = [];
-    let characters: number;
     if (this.dateFilter === 't') {
-      characters = 10;
+      this.costsData.forEach(e => {
+        if (e.date.substr(0, 10) === now.format('YYYY-MM-DD')) {
+          this.costsDataFiltered.push(e);
+        }
+      });
     }
     if (this.dateFilter === 'm') {
-      characters = 7;
+      this.costsData.forEach(e => {
+        if (e.date.substr(0, 7) === now.format('YYYY-MM')) {
+          this.costsDataFiltered.push(e);
+        }
+      });
     }
     if (this.dateFilter === 'y') {
-      characters = 5;
-    }
-    if (this.dateFilter !== 'i' && this.dateFilter !== 'w' && this.dateFilter !== 'r') {
       this.costsData.forEach(e => {
-        if (e.date.substr(0, characters) === now.toISOString().substr(0, characters)) {
+        if (e.date.substr(0, 4) === now.format('YYYY')) {
           this.costsDataFiltered.push(e);
         }
       });
@@ -246,7 +287,7 @@ export class CostsPageComponent implements OnInit {
     const body = {
       userId: this.data.userId,
       title: this.inputValueNotes,
-      date: this.dateCost,
+      date: this.dateCost.format('YYYY-MM-DD:hh:mm:ss'),
       category: this.indexCostCategory,
       amount: newCost,
       token
@@ -285,7 +326,7 @@ export class CostsPageComponent implements OnInit {
     }
 
     if (this.dateFilter  === 'r') {
-      this.dateService.changeRange(dir)
+      this.dateService.changeRange(dir);
       this.ngOnInit();
     }
   }

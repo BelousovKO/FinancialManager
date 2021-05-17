@@ -44,7 +44,6 @@ export class CalendarComponent implements OnInit {
             const active = moment().isSame(value, 'date');
             const disabled = !now.isSame(value, 'month');
             const selected = now.isSame(value, 'date');
-
             return {
               value, active, disabled, selected
             };
