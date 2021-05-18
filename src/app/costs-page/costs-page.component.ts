@@ -100,89 +100,110 @@ export class CostsPageComponent implements OnInit {
     this.firstDayWeek = now.clone().startOf('week');
     this.lastDayWeek = now.clone().endOf('week');
     this.lastDayMonth = now.clone().endOf('month');
-    const difference = now.startOf('day').diff(moment().startOf('day'), 'day');
-    console.log('difference: ', difference);
-    if (difference === 0) {
-      this.dateCost = now;
-    }
-    if (difference > 0) {
-      switch (this.dateFilter) {
-        case 't':
-          this.dateCost = now.clone().startOf('day');
-          console.log('now.clone().startOf: ', now.clone().startOf('day').format('YYYY-MM-DD:hh:mm:ss'));
-          break;
-        case 'w':
-          this.dateCost = now.clone().startOf('week');
-          break;
-        case 'm':
-          this.dateCost = now.clone().startOf('month');
-          break;
-        case 'y':
-          this.dateCost = now.clone().startOf('year');
-          break;
+    if (this.dateFilter !== 'r') {
+      const difference = now.startOf('day').diff(moment().startOf('day'), 'day');
+      if (difference === 0) {
+        this.dateCost = moment();
+      }
+      if (difference > 0) {
+        switch (this.dateFilter) {
+          case 't':
+            this.dateCost = now.clone().startOf('day');
+            break;
+          case 'w':
+            this.dateCost = now.clone().startOf('week');
+            break;
+          case 'm':
+            this.dateCost = now.clone().startOf('month');
+            break;
+          case 'y':
+            this.dateCost = now.clone().startOf('year');
+            break;
+        }
+      }
+      if (difference < 0) {
+        switch (this.dateFilter) {
+          case 't':
+            this.dateCost = now.clone().endOf('day');
+            break;
+          case 'w':
+            this.dateCost = now.clone().endOf('week');
+            break;
+          case 'm':
+            this.dateCost = now.clone().endOf('month');
+            break;
+          case 'y':
+            this.dateCost = now.clone().endOf('year');
+            break;
+        }
+      }
+    } else {
+      const differenceFirstDay = this.data.choiceFirstDay.startOf('day').diff(moment().startOf('day'), 'day');
+      const differenceLastDay = this.data.choiceLastDay.startOf('day').diff(moment().startOf('day'), 'day');
+      if (differenceFirstDay <= 0 && differenceLastDay >= 0) {
+        this.dateCost = moment();
+      }
+      if (differenceFirstDay > 0 && differenceLastDay > 0) {
+        this.dateCost = this.data.choiceFirstDay.startOf('day');
+      }
+      if (differenceFirstDay < 0 && differenceLastDay < 0) {
+        this.dateCost = this.data.choiceLastDay.endOf('day');
       }
     }
-    if (difference < 0) {
-      switch (this.dateFilter) {
-        case 't':
-          this.dateCost = now.clone().endOf('day');
-          break;
-        case 'w':
-          this.dateCost = now.clone().endOf('week');
-          break;
-        case 'm':
-          this.dateCost = now.clone().endOf('month');
-          break;
-        case 'y':
-          this.dateCost = now.clone().endOf('year');
-          break;
-      }
-    }
+
     this.strokeDasharray = [];
     this.strokeDashoffset = [25];
     this.costsDataFiltered = [];
-    if (this.dateFilter === 't') {
-      this.costsData.forEach(e => {
-        if (e.date.substr(0, 10) === now.format('YYYY-MM-DD')) {
-          this.costsDataFiltered.push(e);
-        }
-      });
-    }
-    if (this.dateFilter === 'm') {
-      this.costsData.forEach(e => {
-        if (e.date.substr(0, 7) === now.format('YYYY-MM')) {
-          this.costsDataFiltered.push(e);
-        }
-      });
-    }
-    if (this.dateFilter === 'y') {
-      this.costsData.forEach(e => {
-        if (e.date.substr(0, 4) === now.format('YYYY')) {
-          this.costsDataFiltered.push(e);
-        }
-      });
-    }
-    if (this.dateFilter === 'i') {
-      this.costsDataFiltered =  this.costsData;
-    }
-    if (this.dateFilter === 'w') {
-      const fd = Number(this.firstDayWeek.format('x'));
-      const ld = Number(this.lastDayWeek.format('x'));
-      this.costsData.forEach(e => {
-        if (Number(Date.parse(e.date)) >= fd && Number(Date.parse(e.date)) <= ld) {
-          this.costsDataFiltered.push(e);
-        }
-      });
-    }
 
-    if (this.dateFilter === 'r') {
-      const fd = Number(this.data.choiceFirstDay.startOf('day').format('x'));
-      const ld = Number(this.data.choiceLastDay.endOf('day').format('x'));
-      this.costsData.forEach(e => {
-        if (Number(Date.parse(e.date)) >= fd && Number(Date.parse(e.date)) <= ld) {
-          this.costsDataFiltered.push(e);
-        }
-      });
+    switch (this.dateFilter) {
+
+      case 't':
+        this.costsData.forEach(e => {
+          if (e.date.substr(0, 10) === now.format('YYYY-MM-DD')) {
+            this.costsDataFiltered.push(e);
+          }
+        });
+        break;
+
+      case 'w':
+        const fdw = Number(this.firstDayWeek.format('x'));
+        const ldw = Number(this.lastDayWeek.format('x'));
+        this.costsData.forEach(e => {
+          if (Number(Date.parse(e.date)) >= fdw && Number(Date.parse(e.date)) <= ldw) {
+            this.costsDataFiltered.push(e);
+          }
+        });
+        break;
+
+      case 'm':
+        this.costsData.forEach(e => {
+          if (e.date.substr(0, 7) === now.format('YYYY-MM')) {
+            this.costsDataFiltered.push(e);
+          }
+        });
+        break;
+
+      case 'y':
+        this.costsData.forEach(e => {
+          if (e.date.substr(0, 4) === now.format('YYYY')) {
+            this.costsDataFiltered.push(e);
+          }
+        });
+        break;
+
+      case 'i':
+        this.costsDataFiltered = this.costsData;
+        break;
+
+      case 'r':
+        const fdr = Number(this.data.choiceFirstDay.startOf('day').format('x'));
+        const ldr = Number(this.data.choiceLastDay.endOf('day').format('x'));
+        this.costsData.forEach(e => {
+          if (Number(Date.parse(e.date)) >= fdr && Number(Date.parse(e.date)) <= ldr) {
+            this.costsDataFiltered.push(e);
+          }
+        });
+        break;
     }
 
     this.costs = [];
@@ -287,7 +308,7 @@ export class CostsPageComponent implements OnInit {
     const body = {
       userId: this.data.userId,
       title: this.inputValueNotes,
-      date: this.dateCost.format('YYYY-MM-DD:hh:mm:ss'),
+      date: this.dateCost.format('YYYY-MM-DD:HH:mm:ss'),
       category: this.indexCostCategory,
       amount: newCost,
       token
@@ -309,25 +330,43 @@ export class CostsPageComponent implements OnInit {
 
   go(dir: number): void {
 
-    if (this.dateFilter  === 'm') {
-      this.dateService.changeMonth(dir);
+    switch (this.dateFilter) {
+      case 't':
+        this.dateService.changeDay(dir);
+        break;
+      case 'w':
+        this.dateService.changeWeek(dir);
+        break;
+      case 'm':
+        this.dateService.changeMonth(dir);
+        break;
+      case 'y':
+        this.dateService.changeYear(dir);
+        break;
+      case 'r':
+        this.dateService.changeRange(dir);
+        this.ngOnInit();
+        break;
     }
 
-    if (this.dateFilter  === 't') {
-      this.dateService.changeDay(dir);
+    if (this.dateFilter === 'm') {
+
     }
 
-    if (this.dateFilter  === 'w') {
-      this.dateService.changeWeek(dir);
+    if (this.dateFilter === 't') {
+
     }
 
-    if (this.dateFilter  === 'y') {
-      this.dateService.changeYear(dir);
+    if (this.dateFilter === 'w') {
+
     }
 
-    if (this.dateFilter  === 'r') {
-      this.dateService.changeRange(dir);
-      this.ngOnInit();
+    if (this.dateFilter === 'y') {
+
+    }
+
+    if (this.dateFilter === 'r') {
+
     }
   }
 

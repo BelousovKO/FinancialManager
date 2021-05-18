@@ -6,7 +6,7 @@
       <span class="date-filter-title">{{ dateService.date | async | moment }}</span>
       <i class="material-icons">arrow_drop_down</i>
     </span>
-    <span class="modal-button" *ngIf="dateFilter === 't'" (click)="modalDateFilter = true">
+    <span class="modal-button" *ngIf="dateFilter === 't'" (click)="modalDateFilter = true; backToNowDate()">
       <span class="filter-icons"><span>1</span></span>
       <span class="date-filter-title">{{ dateService.date | async | moment: 'ddd DD MMMM y' }}</span>
       <i class="material-icons">arrow_drop_down</i>

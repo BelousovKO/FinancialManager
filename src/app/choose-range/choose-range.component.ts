@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DateService} from '../services/date.service';
 import * as moment from 'moment';
 import 'moment/locale/ru';
@@ -12,7 +12,8 @@ import {UserDataService} from '../services/user-data.service';
 export class ChooseRangeComponent implements OnInit {
 
   constructor(public dateService: DateService,
-              public userData: UserDataService) { }
+              public userData: UserDataService) {
+  }
 
   public firstDayRange = moment();
   public lastDayRange = moment();
@@ -44,20 +45,19 @@ export class ChooseRangeComponent implements OnInit {
 
   go(dir: number): void {
 
-    if (this.userData.dateFilter  === 'm') {
-      this.dateService.changeMonth(dir);
-    }
-
-    if (this.userData.dateFilter  === 't') {
-      this.dateService.changeDay(dir);
-    }
-
-    if (this.userData.dateFilter  === 'w') {
-      this.dateService.changeWeek(dir);
-    }
-
-    if (this.userData.dateFilter  === 'y') {
-      this.dateService.changeYear(dir);
+    switch (this.userData.dateFilter) {
+      case 't':
+        this.dateService.changeDay(dir);
+        break;
+      case 'w':
+        this.dateService.changeWeek(dir);
+        break;
+      case 'm':
+        this.dateService.changeMonth(dir);
+        break;
+      case 'y':
+        this.dateService.changeYear(dir);
+        break;
     }
   }
 }

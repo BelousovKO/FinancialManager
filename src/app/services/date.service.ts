@@ -13,10 +13,7 @@ export class DateService {
   }
 
   backToToday(): void {
-    let difference = moment().diff(this.date.value, 'day');
-    if (difference < 0) {
-      difference -= 1;
-    }
+    const difference = moment().startOf('day').diff(this.date.value.startOf('day'), 'day');
     const value = this.date.value.add(difference, 'day');
     this.date.next(value);
   }
