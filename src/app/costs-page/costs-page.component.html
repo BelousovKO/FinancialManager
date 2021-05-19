@@ -1,5 +1,5 @@
 <section>
-  <div class="container-date-filter" (click)="closeAllModal()">
+  <div class="container-date-filter" (click)="closeAllModal()" [ngClass]="{hidden: data.editState}">
     <i class="material-icons" *ngIf="dateFilter !== 'i'" (click)="go(-1)">arrow_left</i>
     <span class="modal-button" *ngIf="dateFilter === 'm'" (click)="modalDateFilter = true">
       <span class="filter-icons"><span>{{lastDayMonth | moment: 'DD' }}</span></span>
@@ -51,9 +51,9 @@
           <div class="sum" style="{{costsColor[idx]}}">{{costs[idx]}} ₽</div>
         </div>
         <div *ngIf="!titlesExpense[idx] && titlesExpense[idx - 1]" (click)="closeAllModal();
-                                                                            openModalCreateExpenseCategory();
+                                                                            openModalCreateExpenseCategory(idx);
                                                                             this.modalDateFilter = false;">
-          <div class="costs newCost material-icons">add</div>
+          <div class="costs newCost material-icons" [ngClass]="{hidden: data.editState}">add</div>
         </div>
       </li>
 
@@ -66,16 +66,19 @@
     <div class="modalCreateExpenseCategory" *ngIf="modalCreateExpenseCategory">
       <div class="buttons-container mb-2" style="{{colorNewExpenseCategory}}">
         <button class="btn cancel material-icons" (click)="modalCreateExpenseCategory = false">close</button>
-        <button class="btn create material-icons" [disabled]="!inputValue" (click)="createExpenseCategory()">
+        <button class="btn create material-icons" [disabled]="!inputValue && !data.editState"
+                (click)="createExpenseCategory()">
           check
         </button>
       </div>
       <div class="input-container mb-3">
         <label>
-          <input type="text" (input)="inputHandlerCategory($event)" placeholder="Название категории"/>
+          <input type="text" (input)="inputHandlerCategory($event)" [value]="tempTitleCategory"
+                 placeholder="Название категории"/>
         </label>
         <div class="costs newIcon material-icons" style="{{colorNewExpenseCategory}}"
-             (click)="modalChangeIcon = true">{{iconNewExpenseCategory}}</div>
+             (click)="modalChangeIcon = true">{{iconNewExpenseCategory}}
+        </div>
       </div>
     </div>
 
@@ -83,14 +86,22 @@
       <div class="buttons-container" style="{{colorNewExpenseCategory}}">
         <button class="btn cancel material-icons" (click)="modalChangeIcon = false">close</button>
       </div>
+      <div class="container-input-color">
+        <div class="costs material-icons" style="{{colorNewExpenseCategory}}">
+          {{iconNewExpenseCategory}}
+        </div>
+        <label>
+          <input type="color" (input)="inputHandlerColor($event)"/>
+        </label>
+      </div>
       <ul class="list-icons">
         <li *ngFor="let elem of listIcon; let idx = index" class="material-icons"
-            (click)="iconNewExpenseCategory = listIcon[idx]; modalChangeIcon = false">{{elem}}</li>
+            (click)="iconNewExpenseCategory = listIcon[idx]">{{elem}}</li>
       </ul>
     </div>
 
     <div class="modalCreateCost" *ngIf="modalCreateCost">
-      <div class="buttons-container mb-2" style="{{colorNewCost}}">
+      <div class="buttons-container mb-2" style="{{colorCost}}">
         <button class="btn cancel material-icons" (click)="modalCreateCost = false">close</button>
         <button class="btn create material-icons" [disabled]="!inputValue" (click)="createNewCost()">check</button>
       </div>

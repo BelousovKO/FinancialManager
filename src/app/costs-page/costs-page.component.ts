@@ -30,6 +30,7 @@ export class CostsPageComponent implements OnInit {
   public dataInterfaceExpense = this.data.dataInterfaceExpense;
   public dateFilter = this.data.dateFilter;
   private temp: number;
+  public indexNewExpenseCategory: number;
   public modalCreateExpenseCategory = false;
   public inputValue = '';
   public inputValueNotes = '';
@@ -39,7 +40,7 @@ export class CostsPageComponent implements OnInit {
   public modalChoiceDay = false;
   public modalChooseRange = false;
   private indexCostCategory: number;
-  public colorNewCost = '';
+  public colorCost = '';
   public colorNewExpenseCategory = '';
   public iconNewExpenseCategory = '';
   private token = localStorage.getItem('token');
@@ -50,6 +51,8 @@ export class CostsPageComponent implements OnInit {
   public firstDayWeek: moment.Moment;
   public lastDayWeek: moment.Moment;
   public lastDayMonth: moment.Moment;
+  public tempTitleCategory = '';
+  public tempColorCategory = '';
   public today = {
     today: moment().format('DD MMMM Y'),
     firstDayOfWeek: moment().startOf('week').format('D'),
@@ -249,6 +252,11 @@ export class CostsPageComponent implements OnInit {
     this.inputValue = event.target.value;
   }
 
+  inputHandlerColor(event: any): any {
+    this.tempColorCategory = event.target.value;
+    this.colorNewExpenseCategory = `background-color: ${event.target.value}`;
+  }
+
   inputHandlerCost(event: any): any {
     this.inputValue = event.target.value;
   }
@@ -257,16 +265,11 @@ export class CostsPageComponent implements OnInit {
     this.inputValueNotes = event.target.value;
   }
 
-  openModalCreateExpenseCategory(): void {
+  openModalCreateExpenseCategory(idx): void {
     this.modalCreateExpenseCategory = true;
-    let temp = 12;
-    this.data.dataInterfaceExpense.forEach((e, idx) => {
-      if (!e.title && temp > idx) {
-        temp = idx;
-        this.colorNewExpenseCategory = `background-color: ${this.colorsExpense[idx]}`;
-        this.iconNewExpenseCategory = this.iconExpense[idx];
-      }
-    });
+    this.colorNewExpenseCategory = `background-color: ${this.colorsExpense[idx]}`;
+    this.iconNewExpenseCategory = this.iconExpense[idx];
+    this.indexNewExpenseCategory = idx;
   }
 
   changeIcon(): void {
@@ -274,32 +277,64 @@ export class CostsPageComponent implements OnInit {
   }
 
   createExpenseCategory(): void {
-    let temp = 12;
-    this.modalCreateExpenseCategory = false;
-    this.data.dataInterfaceExpense.forEach((e, idx) => {
-      if (!e.title && temp > idx) {
-        temp = idx;
-        this.data.dataInterfaceExpense[idx].title = this.inputValue;
-        this.data.dataInterfaceExpense[idx].icon = this.iconNewExpenseCategory;
-        this.titlesExpense[idx] = this.inputValue;
-        this.iconExpense[idx] = this.iconNewExpenseCategory;
-        const body = {userId: this.data.userId, expense: this.data.dataInterfaceExpense, token: this.token};
-        this.changeInterface.change(body)
-          .subscribe(
-            response => {
-              if (response.status === 'OK') {
-              }
-            },
-            error => console.error('Error! ', error)
-          );
+    if (!this.data.editState) {
+      let temp = 12;
+      this.data.dataInterfaceExpense.forEach((e, idx) => {
+        if (!e.title && temp > idx) {
+          temp = idx;
+          this.data.dataInterfaceExpense[idx].title = this.inputValue;
+          this.data.dataInterfaceExpense[idx].icon = this.iconNewExpenseCategory;
+          this.titlesExpense[idx] = this.inputValue;
+          this.iconExpense[idx] = this.iconNewExpenseCategory;
+          if (this.tempColorCategory) {
+            this.data.dataInterfaceExpense[idx].color = this.tempColorCategory;
+            this.data.expenseColors[idx] = this.tempColorCategory;
+            this.colorsExpense[idx] = this.tempColorCategory;
+            this.backgroundColors[idx] = `background-color: ${this.tempColorCategory}`;
+            this.costsColor[idx] = `color: ${this.tempColorCategory}`;
+          }
+        }
+      });
+    } else {
+      if (this.inputValue) {
+        this.data.dataInterfaceExpense[this.indexCostCategory].title = this.inputValue;
+        this.titlesExpense[this.indexCostCategory] = this.inputValue;
+      } else {
+        this.inputValue = this.data.dataInterfaceExpense[this.indexCostCategory].title;
       }
-    });
+      this.data.dataInterfaceExpense[this.indexCostCategory].icon = this.iconNewExpenseCategory;
+      this.iconExpense[this.indexCostCategory] = this.iconNewExpenseCategory;
+
+      if (this.tempColorCategory) {
+        this.data.dataInterfaceExpense[this.indexCostCategory].color = this.tempColorCategory;
+        this.data.expenseColors[this.indexCostCategory] = this.tempColorCategory;
+        this.colorsExpense[this.indexCostCategory] = this.tempColorCategory;
+        this.backgroundColors[this.indexCostCategory] = `background-color: ${this.tempColorCategory}`;
+        this.costsColor[this.indexCostCategory] = `color: ${this.tempColorCategory}`;
+      }
+    }
+    this.modalCreateExpenseCategory = false;
+    this.tempTitleCategory = '';
+    const body = {userId: this.data.userId, expense: this.data.dataInterfaceExpense, token: this.token};
+    this.changeInterface.change(body)
+      .subscribe(
+        response => {
+          if (response.status === 'OK') {
+          }
+        },
+        error => console.error('Error! ', error)
+      );
+    this.inputValue = '';
+    this.tempColorCategory = '';
   }
 
   openModalCreateCost(i): void {
-    this.modalCreateCost = true;
+    this.data.editState ? this.tempTitleCategory = this.data.dataInterfaceExpense[i].title : this.tempTitleCategory = '';
     this.indexCostCategory = i;
-    this.colorNewCost = `background-color: ${this.colorsExpense[i]}`;
+    this.colorCost = `background-color: ${this.colorsExpense[i]}`;
+    this.data.editState ? this.modalCreateExpenseCategory = true : this.modalCreateCost = true;
+    this.colorNewExpenseCategory = `background-color: ${this.colorsExpense[i]}`;
+    this.iconNewExpenseCategory = this.iconExpense[i];
   }
 
   createNewCost(): void {

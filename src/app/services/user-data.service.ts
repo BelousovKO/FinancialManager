@@ -20,6 +20,7 @@ export class UserDataService {
   public dateFilter = 'm';
   public choiceFirstDay = moment();
   public choiceLastDay = moment();
+  public editState = false;
 
   constructor() { }
 }

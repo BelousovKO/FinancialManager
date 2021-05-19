@@ -23,6 +23,10 @@ form {
   justify-content: flex-end;
 
   &__content {
-  margin-right: 25px;
+    margin-right: 25px;
+
+    .edit-menu {
+      cursor: pointer;
+    }
   }
 }

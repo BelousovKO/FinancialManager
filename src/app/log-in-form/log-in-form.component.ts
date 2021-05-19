@@ -22,7 +22,7 @@ export class LogInFormComponent implements OnInit {
               private _logInService: LogInService,
               public authorization: AuthorizationService,
               private _authentication: AuthenticationService,
-              private data: UserDataService) {
+              public data: UserDataService) {
   }
 
   ngOnInit(): void {
