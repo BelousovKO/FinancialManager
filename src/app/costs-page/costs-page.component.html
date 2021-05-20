@@ -53,7 +53,7 @@
         <div *ngIf="!titlesExpense[idx] && titlesExpense[idx - 1]" (click)="closeAllModal();
                                                                             openModalCreateExpenseCategory(idx);
                                                                             this.modalDateFilter = false;">
-          <div class="costs newCost material-icons" [ngClass]="{hidden: data.editState}">add</div>
+          <div class="costs new-cost material-icons" [ngClass]="{hidden: data.editState}">add</div>
         </div>
       </li>
 
@@ -63,7 +63,7 @@
 
     </ul>
 
-    <div class="modalCreateExpenseCategory" *ngIf="modalCreateExpenseCategory">
+    <div class="modal-create-expense-category" *ngIf="modalCreateExpenseCategory">
       <div class="buttons-container mb-2" style="{{colorNewExpenseCategory}}">
         <button class="btn cancel material-icons" (click)="modalCreateExpenseCategory = false">close</button>
         <button class="btn create material-icons" [disabled]="!inputValue && !data.editState"
@@ -76,31 +76,35 @@
           <input type="text" (input)="inputHandlerCategory($event)" [value]="tempTitleCategory"
                  placeholder="Название категории"/>
         </label>
-        <div class="costs newIcon material-icons" style="{{colorNewExpenseCategory}}"
+        <div class="costs new-icon material-icons" style="{{colorNewExpenseCategory}}"
              (click)="modalChangeIcon = true">{{iconNewExpenseCategory}}
         </div>
       </div>
     </div>
 
-    <div class="modalChangeIcon" *ngIf="modalChangeIcon">
+    <div class="modal-change-icon" *ngIf="modalChangeIcon">
       <div class="buttons-container" style="{{colorNewExpenseCategory}}">
-        <button class="btn cancel material-icons" (click)="modalChangeIcon = false">close</button>
+        <button class="btn cancel material-icons" (click)="modalChangeIcon = false">arrow_back</button>
       </div>
       <div class="container-input-color">
         <div class="costs material-icons" style="{{colorNewExpenseCategory}}">
           {{iconNewExpenseCategory}}
         </div>
         <label>
-          <input type="color" (input)="inputHandlerColor($event)"/>
+          <input type="color" (input)="inputHandlerColor($event)" [value]="tempColorCategory"/>
         </label>
       </div>
       <ul class="list-icons">
-        <li *ngFor="let elem of listIcon; let idx = index" class="material-icons"
+        <li class="material-icons" *ngFor="let elem of listIcon; let idx = index"
             (click)="iconNewExpenseCategory = listIcon[idx]">{{elem}}</li>
       </ul>
     </div>
 
-    <div class="modalCreateCost" *ngIf="modalCreateCost">
+    <div class="modal-transaction">
+      <app-modal-transaction></app-modal-transaction>
+    </div>
+
+    <div class="modal-create-cost" *ngIf="modalCreateCost">
       <div class="buttons-container mb-2" style="{{colorCost}}">
         <button class="btn cancel material-icons" (click)="modalCreateCost = false">close</button>
         <button class="btn create material-icons" [disabled]="!inputValue" (click)="createNewCost()">check</button>
@@ -115,8 +119,8 @@
       </div>
     </div>
 
-    <ul class="modalDateFilter" *ngIf="modalDateFilter">
-      <li class="filterRange filterDateBtn" (click)="modalDateFilter = false;
+    <ul class="modal-date-filter" *ngIf="modalDateFilter">
+      <li class="filter-range filter-date-btn" (click)="modalDateFilter = false;
                                             dateFilter = 'r';
                                             modalChooseRange = true;
                                             ngOnInit()">
@@ -124,11 +128,11 @@
         <div class="filter-text">Выбрать диапазон</div>
         <div class="date">{{ dateService.date | async | moment }}</div>
       </li>
-      <li class="filterInfinity filterDateBtn" (click)="modalDateFilter = false; dateFilter = 'i'; ngOnInit()">
+      <li class="filter-infinity filter-date-btn" (click)="modalDateFilter = false; dateFilter = 'i'; ngOnInit()">
         <div class="material-icons">all_inclusive</div>
         <div class="filter-text">Всё время</div>
       </li>
-      <li class="filterDay filterDateBtn" (click)="modalDateFilter = false;
+      <li class="filter-day filter-date-btn" (click)="modalDateFilter = false;
                                           modalChoiceDay = true;
                                           dateFilter = 't';
                                           backToNowDate()">
@@ -137,7 +141,7 @@
         </div>
         <div class="filter-text">Выбрать день</div>
       </li>
-      <li class="filterWeek filterDateBtn" (click)="modalDateFilter = false;
+      <li class="filter-week filter-date-btn" (click)="modalDateFilter = false;
                                                     dateFilter = 'w';
                                                     ngOnInit();
                                                     backToNowDate()">
@@ -150,7 +154,7 @@
           {{ today.lastDayOfWeek }}
         </div>
       </li>
-      <li class="filterToday filterDateBtn" (click)="modalDateFilter = false;
+      <li class="filter-today filter-date-btn" (click)="modalDateFilter = false;
                                                      dateFilter = 't';
                                                      ngOnInit();
                                                      backToNowDate()">
@@ -158,7 +162,7 @@
         <div class="filter-text">Сегодня</div>
         <div class="date">{{ today.today }}</div>
       </li>
-      <li class="filterYear filterDateBtn" (click)="modalDateFilter = false;
+      <li class="filter-year filter-date-btn" (click)="modalDateFilter = false;
                                                     dateFilter = 'y';
                                                     ngOnInit();
                                                     backToNowDate()">
@@ -168,7 +172,7 @@
         <div class="filter-text">Год</div>
         <div class="date">{{ today.year }} год</div>
       </li>
-      <li class="filterMonth filterDateBtn" (click)="modalDateFilter = false;
+      <li class="filter-month filter-date-btn" (click)="modalDateFilter = false;
                                                      dateFilter = 'm';
                                                      ngOnInit();
                                                      backToNowDate()">

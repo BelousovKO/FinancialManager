@@ -1,0 +1,58 @@
+.modal-transaction {
+  width: 350px;
+  height: 450px;
+  background-color: #eeeeee;
+  position: absolute;
+  left: calc(50% - 175px);
+
+  header {
+    background-color: #9c9cf6;
+    height: 15%;
+    position: relative;
+    color: white;
+    font-size: 1.7rem;
+    display: flex;
+    align-items: center;
+
+    i {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border: 4px solid #9c9cf6;
+      border-radius: 50%;
+      background-color: white;
+      color: #9c9cf6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      top: -30px;
+      right: 30px;
+      font-size: 2rem;
+    }
+
+    .title-category {
+      margin-left: 60px;
+    }
+  }
+
+  .info-amount {
+    height: 15%;
+    background-color: white;
+    border-bottom: 1px solid lightgray;
+
+    .transaction-type,
+    .transaction-sum {
+      color: #9c9cf6;
+      text-align: center;
+    }
+
+    .transaction-type {
+      margin-top: 3px;
+      font-size: 0.7rem;
+    }
+
+    .transaction-sum {
+      font-size: 2rem;
+    }
+  }
+}

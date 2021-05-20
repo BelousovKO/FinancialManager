@@ -76,23 +76,23 @@
     margin: 0 auto;
   }
 
-  .newIcon {
+  .new-icon {
     background-color: blue;
     margin-top: 30px;
     cursor: pointer;
   }
 
-  .newCost {
+  .new-cost {
     background-color: lightgray;
     opacity: .4;
     border: 2px dashed gray;
     color: black;
   }
 
-  .modalCreateExpenseCategory,
-  .modalCreateCost,
-  .modalChangeIcon,
-  .modalDateFilter,
+  .modal-create-expense-category,
+  .modal-create-cost,
+  .modal-change-icon,
+  .modal-date-filter,
   .modal-choice-day,
   .modal-choose-range {
     position: absolute;
@@ -160,7 +160,7 @@
     }
   }
 
-  .modalChangeIcon {
+  .modal-change-icon {
     width: 300px;
     height: 300px;
     left: calc(50% - 150px);
@@ -168,6 +168,17 @@
     .container-input-color {
       display: flex;
       justify-content: center;
+      position: relative;
+
+      .costs {
+        border: 4px solid dimgray;
+        position: absolute;
+        top: -25px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        cursor: default;
+      }
 
       input {
         border-radius: 50%;
@@ -175,6 +186,14 @@
         height: 40px;
         overflow: hidden;
         border-inline: none;
+        margin: 5px;
+        cursor: pointer;
+
+        &:hover {
+          border-inline: 4px solid gray;
+          width: 47px;
+          transition: all 0.1s;
+        }
       }
     }
 
@@ -183,7 +202,7 @@
       padding: 5px;
       background-color: lightgray;
       width: 100%;
-      height: 75%;
+      height: 65%;
       overflow-y: scroll;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -205,6 +224,10 @@
     }
   }
 
+  .modal-transaction {
+    position: relative;
+  }
+
   .modal-choose-range {
     .container {
       padding: 0;
@@ -218,7 +241,7 @@
     }
   }
 
-  .modalDateFilter {
+  .modal-date-filter {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(4, 1fr);
@@ -229,7 +252,7 @@
     font-size: small;
     color: lightgray;
 
-    .filterDateBtn {
+    .filter-date-btn {
       margin: 0;
       padding: 3px;
       display: flex;
@@ -247,22 +270,22 @@
       color: white;
     }
 
-    .filterRange {
+    .filter-range {
       grid-column: span 2;
     }
 
-    .filterInfinity,
-    .filterWeek,
-    .filterYear {
+    .filter-infinity,
+    .filter-week,
+    .filter-year {
       border-right: 1px solid #818181;
     }
 
-    .filterInfinity,
-    .filterWeek,
-    .filterYear,
-    .filterDay,
-    .filterToday,
-    .filterMonth {
+    .filter-infinity,
+    .filter-week,
+    .filter-year,
+    .filter-day,
+    .filter-today,
+    .filter-month {
       border-top: 1px solid #818181;
     }
 

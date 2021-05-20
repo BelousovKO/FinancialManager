@@ -18,6 +18,7 @@ import { MomentPipe } from './pipes/moment.pipe';
 import { CostsPageComponent } from './costs-page/costs-page.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { ChooseRangeComponent } from './choose-range/choose-range.component';
+import { ModalTransactionComponent } from './modal-transaction/modal-transaction.component';
 
 const appRoutes: Routes = [
   {path: '', component: MainComponent},
@@ -44,6 +45,7 @@ const appRoutes: Routes = [
     CostsPageComponent,
     CalendarComponent,
     ChooseRangeComponent,
+    ModalTransactionComponent,
   ],
   imports: [
     BrowserModule,

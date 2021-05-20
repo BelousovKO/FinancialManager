@@ -67,7 +67,8 @@ export class CostsPageComponent implements OnInit {
     'sports_esports', 'self_improvement', 'female', 'male', 'sports_soccer', 'luggage', 'sports_basketball', 'emoji_food_beverage',
     'outdoor_grill', 'piano', 'restaurant', 'directions_car', 'celebration', 'fastfood', 'local_gas_station', 'hotel', 'liquor',
     'local_airport', 'theater_comedy', 'star_border', 'wifi', 'fitness_center', 'ac_unit', 'family_restroom', 'checkroom', 'child_care',
-    'beach_access', 'child_friendly', 'smoking_rooms', 'add_shopping_cart', 'apartment', 'local_hospital', 'local_grocery_store', 'hiking'];
+    'beach_access', 'child_friendly', 'smoking_rooms', 'add_shopping_cart', 'apartment', 'local_hospital', 'local_grocery_store', 'hiking',
+    'savings', 'movie_creation', 'account_balance', 'attach_money'];
 
   ngOnInit(): void {
     this.dateCost = moment();
@@ -266,6 +267,7 @@ export class CostsPageComponent implements OnInit {
   }
 
   openModalCreateExpenseCategory(idx): void {
+    this.tempColorCategory = this.colorsExpense[idx];
     this.modalCreateExpenseCategory = true;
     this.colorNewExpenseCategory = `background-color: ${this.colorsExpense[idx]}`;
     this.iconNewExpenseCategory = this.iconExpense[idx];
@@ -329,6 +331,7 @@ export class CostsPageComponent implements OnInit {
   }
 
   openModalCreateCost(i): void {
+    this.tempColorCategory = this.colorsExpense[i];
     this.data.editState ? this.tempTitleCategory = this.data.dataInterfaceExpense[i].title : this.tempTitleCategory = '';
     this.indexCostCategory = i;
     this.colorCost = `background-color: ${this.colorsExpense[i]}`;
