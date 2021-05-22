@@ -101,7 +101,14 @@
     </div>
 
     <div class="modal-transaction">
-      <app-modal-transaction></app-modal-transaction>
+      <app-modal-transaction [dateFilter]="dateFilter"
+                             [firstDayWeek]="firstDayWeek"
+                             [lastDayWeek]="lastDayWeek"
+                             [tempTitleCategory]="tempTitleCategory"
+                             [typeTransactionColor]="typeTransactionColor"
+                             [tempIconCategory]="tempIconCategory"
+                             [tempColorCategory]="tempColorCategory">
+      </app-modal-transaction>
     </div>
 
     <div class="modal-create-cost" *ngIf="modalCreateCost">
@@ -122,19 +129,24 @@
     <ul class="modal-date-filter" *ngIf="modalDateFilter">
       <li class="filter-range filter-date-btn" (click)="modalDateFilter = false;
                                             dateFilter = 'r';
+                                            data.dateFilter = 'r';
                                             modalChooseRange = true;
                                             ngOnInit()">
         <div class="material-icons">date_range</div>
         <div class="filter-text">Выбрать диапазон</div>
         <div class="date">{{ dateService.date | async | moment }}</div>
       </li>
-      <li class="filter-infinity filter-date-btn" (click)="modalDateFilter = false; dateFilter = 'i'; ngOnInit()">
+      <li class="filter-infinity filter-date-btn" (click)="modalDateFilter = false;
+                                                  dateFilter = 'i';
+                                                  data.dateFilter = 'i';
+                                                  ngOnInit()">
         <div class="material-icons">all_inclusive</div>
         <div class="filter-text">Всё время</div>
       </li>
       <li class="filter-day filter-date-btn" (click)="modalDateFilter = false;
                                           modalChoiceDay = true;
                                           dateFilter = 't';
+                                          data.dateFilter = 't';
                                           backToNowDate()">
         <div class="filter-icons">
           <div>1</div>
@@ -143,6 +155,7 @@
       </li>
       <li class="filter-week filter-date-btn" (click)="modalDateFilter = false;
                                                     dateFilter = 'w';
+                                                    data.dateFilter = 'w';
                                                     ngOnInit();
                                                     backToNowDate()">
         <div class="filter-icons">
@@ -156,6 +169,7 @@
       </li>
       <li class="filter-today filter-date-btn" (click)="modalDateFilter = false;
                                                      dateFilter = 't';
+                                                     data.dateFilter = 't';
                                                      ngOnInit();
                                                      backToNowDate()">
         <div class="material-icons">today</div>
@@ -164,6 +178,7 @@
       </li>
       <li class="filter-year filter-date-btn" (click)="modalDateFilter = false;
                                                     dateFilter = 'y';
+                                                    data.dateFilter = 'y';
                                                     ngOnInit();
                                                     backToNowDate()">
         <div class="filter-icons">
@@ -174,6 +189,7 @@
       </li>
       <li class="filter-month filter-date-btn" (click)="modalDateFilter = false;
                                                      dateFilter = 'm';
+                                                     data.dateFilter = 'm';
                                                      ngOnInit();
                                                      backToNowDate()">
         <div class="filter-icons">
@@ -195,14 +211,34 @@
       </div>
       <div class="choice-interface">
         <div class="change-month">
-          <i class="material-icons" (click)="dateFilter = 'm'; go(-1); dateFilter = 't'">arrow_left</i>
+          <i class="material-icons" (click)="dateFilter = 'm';
+                                             go(-1);
+                                             dateFilter = 't';
+                                             data.dateFilter = 't'">
+            arrow_left
+          </i>
           <span>{{ dateService.date | async | moment: 'MMMM' }}</span>
-          <i class="material-icons" (click)="dateFilter = 'm'; go(1); dateFilter = 't'">arrow_right</i>
+          <i class="material-icons" (click)="dateFilter = 'm';
+                                             go(1);
+                                             dateFilter = 't';
+                                             data.dateFilter = 't'">
+            arrow_right
+          </i>
         </div>
         <div class="change-year">
-          <i class="material-icons" (click)="dateFilter = 'y'; go(-1); dateFilter = 't'">arrow_left</i>
+          <i class="material-icons" (click)="dateFilter = 'y';
+                                             go(-1);
+                                              dateFilter = 't';
+                                              data.dateFilter = 't'">
+            arrow_left
+          </i>
           <span>{{ dateService.date | async | moment: 'Y' }}</span>
-          <i class="material-icons" (click)="dateFilter = 'y'; go(1); dateFilter = 't'">arrow_right</i>
+          <i class="material-icons" (click)="dateFilter = 'y';
+                                    go(1);
+                                    dateFilter = 't';
+                                    data.dateFilter = 't'">
+            arrow_right
+          </i>
         </div>
       </div>
       <app-calendar></app-calendar>
@@ -212,6 +248,7 @@
       <div class="buttons-container mb-2">
         <button class="btn create material-icons" (click)="modalChooseRange = false;
                                                   dateFilter = 'r';
+                                                  data.dateFilter = 'r';
                                                   ngOnInit()">
           check
         </button>

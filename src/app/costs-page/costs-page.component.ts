@@ -53,6 +53,8 @@ export class CostsPageComponent implements OnInit {
   public lastDayMonth: moment.Moment;
   public tempTitleCategory = '';
   public tempColorCategory = '';
+  public tempIconCategory = '';
+  public typeTransactionColor = `color: red`;
   public today = {
     today: moment().format('DD MMMM Y'),
     firstDayOfWeek: moment().startOf('week').format('D'),
@@ -332,12 +334,13 @@ export class CostsPageComponent implements OnInit {
 
   openModalCreateCost(i): void {
     this.tempColorCategory = this.colorsExpense[i];
-    this.data.editState ? this.tempTitleCategory = this.data.dataInterfaceExpense[i].title : this.tempTitleCategory = '';
+    this.tempTitleCategory = this.data.dataInterfaceExpense[i].title;
     this.indexCostCategory = i;
     this.colorCost = `background-color: ${this.colorsExpense[i]}`;
     this.data.editState ? this.modalCreateExpenseCategory = true : this.modalCreateCost = true;
     this.colorNewExpenseCategory = `background-color: ${this.colorsExpense[i]}`;
     this.iconNewExpenseCategory = this.iconExpense[i];
+    this.tempIconCategory = this.iconExpense[i];
   }
 
   createNewCost(): void {

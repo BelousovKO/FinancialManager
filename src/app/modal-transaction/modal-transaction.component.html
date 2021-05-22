@@ -1,26 +1,34 @@
 <div class="modal-transaction">
-  <header>
-    <div class="title-category">
-      Категоррия
-    </div>
-    <i class="material-icons">home_work</i>
+  <header [style]="backgroundColor">
+    <div class="title-category">{{transactionCategory}}</div>
+    <i class="material-icons" [style]="textColor">{{tempIconCategory}}</i>
   </header>
 
   <div class="info-amount">
-    <div class="transaction-type">Расход</div>
-    <div class="transaction-sum">0 ₽</div>
+    <div class="transaction-type" [style]="typeTransactionColor">{{transactionType}}</div>
+    <div class="transaction-sum" [style]="typeTransactionColor">{{transactionSum}} ₽</div>
   </div>
 
-  <div>
-
+  <div class="note-amount">
+    <span>{{transactionTitle}}</span>
   </div>
 
-  <div class="buttons-amount">
-
-  </div>
+  <ul class="container-buttons-amount">
+    <li class="buttons-amount" *ngFor="let elem of buttonValues; let idx = index" (click)="clickButtons(elem)">
+    <span class="iconify" [attr.data-icon]=elem data-inline="false">{{elem}}</span>
+    </li>
+    <li class="buttons-amount button-done" [style]="backgroundColor" (click)="makeTransaction()">
+      <span class="iconify" data-icon="ic:baseline-done" data-inline="false"></span>
+    </li>
+  </ul>
 
   <div class="date-amount">
-
+    <span *ngIf="dateFilter === 't'">{{ dateService.date | async | moment: 'ddd DD MMMM y' }} года</span>
+    <span *ngIf="dateFilter === 'w'">
+      {{ firstDayWeek | moment: 'D' }} - {{ lastDayWeek | moment: 'D MMMM y'}} года
+    </span>
+    <span *ngIf="dateFilter === 'm'">{{ dateService.date | async | moment }} года</span>
+    <span *ngIf="dateFilter === 'y'">{{ dateService.date | async | moment: 'y' }} год</span>
   </div>
 
 </div>
