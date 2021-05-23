@@ -1,34 +1,121 @@
-<div class="modal-transaction">
-  <header [style]="backgroundColor">
-    <div class="title-category">{{transactionCategory}}</div>
-    <i class="material-icons" [style]="textColor">{{tempIconCategory}}</i>
-  </header>
+<div class="modal-transaction-container">
+  <div class="modal-transaction">
+    <header [style]="backgroundColor">
+      <div class="title-category">{{transactionCategory}}</div>
+      <i class="material-icons" [style]="textColor">{{tempIconCategory}}</i>
+    </header>
 
-  <div class="info-amount">
-    <div class="transaction-type" [style]="typeTransactionColor">{{transactionType}}</div>
-    <div class="transaction-sum" [style]="typeTransactionColor">{{transactionSum}} ₽</div>
-  </div>
+    <div class="info-amount">
+      <div class="transaction-type" [style]="typeTransactionColor">{{transactionType}}</div>
+      <div class="transaction-sum" [style]="typeTransactionColor">{{transactionSum}} ₽</div>
+    </div>
 
-  <div class="note-amount">
-    <span>{{transactionTitle}}</span>
-  </div>
+    <div class="note-amount" (click)="modalNote = true; openModalNote()">
+      <span *ngIf="!transactionTitle">{{tempTransactionTitle}}</span>
+      <span *ngIf="transactionTitle">{{transactionTitle}}</span>
+    </div>
 
-  <ul class="container-buttons-amount">
-    <li class="buttons-amount" *ngFor="let elem of buttonValues; let idx = index" (click)="clickButtons(elem)">
-    <span class="iconify" [attr.data-icon]=elem data-inline="false">{{elem}}</span>
-    </li>
-    <li class="buttons-amount button-done" [style]="backgroundColor" (click)="makeTransaction()">
-      <span class="iconify" data-icon="ic:baseline-done" data-inline="false"></span>
-    </li>
-  </ul>
+    <ul class="container-buttons-amount">
+      <li class="buttons-amount" *ngFor="let elem of buttonValues; let idx = index" (click)="clickButtons(elem)">
+        <span class="iconify" [attr.data-icon]=elem data-inline="false">{{elem}}</span>
+      </li>
+      <li class="buttons-amount button-choice-date" (click)="modalChoiceDate = true">
+        <span class="iconify" data-icon="ic:baseline-today" data-inline="false"></span>
+      </li>
+      <li class="buttons-amount button-done" [style]="backgroundColor" (click)="makeTransaction()">
+        <span class="iconify" data-icon="ic:baseline-done" data-inline="false"></span>
+      </li>
+    </ul>
 
-  <div class="date-amount">
-    <span *ngIf="dateFilter === 't'">{{ dateService.date | async | moment: 'ddd DD MMMM y' }} года</span>
-    <span *ngIf="dateFilter === 'w'">
+    <div class="date-amount">
+      <span *ngIf="dateFilter === 't' || dateFilter === 'd'">{{ transactionDate | moment: 'ddd DD MMMM y' }} года</span>
+      <span *ngIf="dateFilter === 'w'">
       {{ firstDayWeek | moment: 'D' }} - {{ lastDayWeek | moment: 'D MMMM y'}} года
     </span>
-    <span *ngIf="dateFilter === 'm'">{{ dateService.date | async | moment }} года</span>
-    <span *ngIf="dateFilter === 'y'">{{ dateService.date | async | moment: 'y' }} год</span>
+      <span *ngIf="dateFilter === 'm'">{{ transactionDate | moment }} года</span>
+      <span *ngIf="dateFilter === 'y'">{{ transactionDate | moment: 'y' }} год</span>
+    </div>
   </div>
+</div>
 
+<div class="modal-note-container" *ngIf="modalNote">
+  <div class="shadow" (click)="modalNote = false"></div>
+  <div class="modal-note">
+    <div class="header-modal-note">
+      Заметки
+    </div>
+    <div class="modal-input-container">
+      <label><input type="text" placeholder="Комментарий..." (input)="addTitle($event)" [value]="tempValueInput"></label>
+    </div>
+    <div class="modal-button-container">
+      <button class="cancel" (click)="modalNote = false">Отменить</button>
+      <button class="add"  (click)="modalNote = false">Ok</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-edit-date-container" *ngIf="modalChoiceDate">
+  <div class="shadow" (click)="modalChoiceDate = false"></div>
+  <div class="modal-edit-date">
+    <div class="choice-day" (click)="modalCalendar = true; modalChoiceDate = false">
+      <span class="iconify" data-icon="ic:baseline-today" data-inline="false"></span>
+      <span class="choice-day-title">Выбрать день</span>
+    </div>
+    <div class="choice-yesterday" (click)="choiceYesterday()">
+      <span class="iconify" data-icon="mdi:moon-waning-crescent" data-inline="false"></span>
+      <span class="choice-yesterday-title">Вчера</span>
+      <span class="choice-yesterday-date">{{yesterday | moment: 'D MMMM'}}</span>
+    </div>
+    <div class="choice-today" [style]="backgroundColor" (click)="choiceToday()">
+      <span class="iconify" data-icon="mdi:white-balance-sunny" data-inline="false"></span>
+      <span class="choice-today-title">Сегодня</span>
+      <span class="choice-today-date">{{today | moment: 'D MMMM'}}</span>
+    </div>
+  </div>
+</div>
+
+<div class="modal-calendar-container" *ngIf="modalCalendar">
+  <div class="shadow" (click)="modalCalendar = false"></div>
+  <div class="modal-calendar">
+    <div class="buttons-container mb-2" [style]="backgroundColor">
+      <button class="btn create material-icons"
+              (click)="choiceCalendarDate()">
+        check
+      </button>
+      <div class="total-date">{{ dateService.date | async | moment: 'DD.MM.Y' }}</div>
+    </div>
+    <div class="choice-interface">
+      <div class="change-month">
+        <i class="material-icons" (click)="dateFilter = 'm';
+                                             go(-1);
+                                             dateFilter = 't';
+                                             userData.dateFilter = 't'">
+          arrow_left
+        </i>
+        <span>{{ dateService.date | async | moment: 'MMMM' }}</span>
+        <i class="material-icons" (click)="dateFilter = 'm';
+                                             go(1);
+                                             dateFilter = 't';
+                                             userData.dateFilter = 't'">
+          arrow_right
+        </i>
+      </div>
+      <div class="change-year">
+        <i class="material-icons" (click)="dateFilter = 'y';
+                                             go(-1);
+                                              dateFilter = 't';
+                                              userData.dateFilter = 't'">
+          arrow_left
+        </i>
+        <span>{{ dateService.date | async | moment: 'Y' }}</span>
+        <i class="material-icons" (click)="dateFilter = 'y';
+                                    go(1);
+                                    dateFilter = 't';
+                                    userData.dateFilter = 't'">
+          arrow_right
+        </i>
+      </div>
+    </div>
+  <app-calendar></app-calendar>
+  </div>
 </div>

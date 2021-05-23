@@ -4,7 +4,7 @@ table {
 
   td, th {
     border: 1px solid #818181;
-    color: lightgray;
+    color: dimgray;
     text-align: center;
   }
 
@@ -21,7 +21,7 @@ table {
     }
 
     &.disabled {
-      opacity: .5;
+      opacity: .3;
     }
 
     &:hover:not(.disabled) {

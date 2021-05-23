@@ -1,139 +1,306 @@
-.modal-transaction {
-  width: 350px;
-  height: 450px;
-  position: absolute;
-  left: calc(50% - 175px);
+.modal-transaction-container {
 
-  header {
-    /*background-color: #9c9cf6;*/
-    height: 15%;
-    position: relative;
-    color: white;
-    font-size: 1.7rem;
-    display: flex;
-    align-items: center;
+  .modal-transaction {
+    width: 350px;
+    height: 450px;
+    position: absolute;
+    left: calc(50% - 175px);
+    bottom: 150px;
+    border-radius: 4px;
 
-    i {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      border: 4px solid;
-      border-radius: 50%;
-      background-color: white;
+    header {
+      height: 15%;
+      position: relative;
+      color: white;
+      font-size: 1.7rem;
       display: flex;
-      justify-content: center;
       align-items: center;
-      top: -30px;
-      right: 30px;
-      font-size: 2rem;
-    }
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
 
-    .title-category {
-      margin-left: 60px;
-    }
-  }
-
-  .info-amount {
-    height: 15%;
-    background-color: white;
-    border-bottom: 1px solid lightgray;
-
-    .transaction-type,
-    .transaction-sum {
-      text-align: center;
-    }
-
-    .transaction-type {
-      margin-top: 3px;
-      font-size: 0.7rem;
-    }
-
-    .transaction-sum {
-      font-size: 2rem;
-    }
-  }
-
-  .note-amount {
-    background-color: white;
-    height: 10%;
-    border-bottom: 1px solid lightgray;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    span {
-      opacity: .4;
-      font-weight: 500;
-      font-style: italic;
-    }
-  }
-
-  .container-buttons-amount {
-    background-color: white;
-    height: 64%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    color: #ff0000;
-
-    ul {
-      padding-inline-start: 0;
-      padding-left: 0;
-      margin: 0;
-    }
-
-    li {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-bottom: 1px solid #d2d2d2;
-      border-right: 1px solid #d2d2d2;
-      cursor: pointer;
-
-      span,
-      .iconify {
-        color: #7a7a7a;
+      i {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        border: 4px solid;
+        border-radius: 50%;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: -30px;
+        right: 30px;
         font-size: 2rem;
+      }
+
+      .title-category {
+        margin-left: 60px;
+      }
+    }
+
+    .info-amount {
+      height: 15%;
+      background-color: white;
+      border-bottom: 1px solid lightgray;
+
+      .transaction-type,
+      .transaction-sum {
         text-align: center;
       }
+
+      .transaction-type {
+        padding-top: 3px;
+        font-size: 0.7rem;
+      }
+
+      .transaction-sum {
+        font-size: 2rem;
+      }
     }
 
-    .buttons-amount:nth-child(4),
-    .buttons-amount:nth-child(8),
-    .button-done {
-      border-right: none;
+    .note-amount {
+      background-color: white;
+      height: 10%;
+      border-bottom: 1px solid lightgray;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        opacity: .4;
+        font-weight: 500;
+        font-style: italic;
+      }
     }
 
-    .buttons-amount:nth-child(4),
-    .buttons-amount:nth-child(8){
+    .container-buttons-amount {
+      background-color: white;
+      height: 64%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      color: #ff0000;
+
+      ul {
+        padding-inline-start: 0;
+        padding-left: 0;
+        margin: 0;
+      }
+
+      li {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 1px solid #d2d2d2;
+        border-right: 1px solid #d2d2d2;
+        cursor: pointer;
+
+        span,
+        .iconify {
+          color: #7a7a7a;
+          font-size: 2rem;
+          text-align: center;
+        }
+      }
+
+      .buttons-amount:nth-child(4),
+      .button-done {
+        border-right: none;
+      }
+
+      .buttons-amount:nth-child(4) {
+        background-color: #e2e2e2;
+      }
+
+      .button-choice-date {
+        grid-column-start: 4;
+        grid-column-end: 5;
+        grid-row-start: 2;
+        grid-row-end: 3;
+        background-color: #e2e2e2;
+      }
+
+      .button-done {
+        grid-column-start: 4;
+        grid-column-end: 5;
+        grid-row-start: 3;
+        grid-row-end: 5;
+
+        .iconify {
+          color: white;
+        }
+      }
+    }
+
+    .date-amount {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       background-color: #e2e2e2;
+      height: 6%;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+
+      span {
+        opacity: .5;
+        font-weight: 600;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+      }
+    }
+  }
+}
+
+.modal-note-container,
+.modal-edit-date-container,
+.modal-calendar-container {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+
+  .modal-edit-date,
+  .modal-note,
+  .modal-calendar {
+    position: absolute;
+    top: 200px;
+    left: calc(50% - 150px);
+    height: 200px;
+    width: 300px;
+    background-color: white;
+    border-radius: 4px;
+  }
+
+  .shadow {
+    background-color: black;
+    opacity: .4;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+.modal-note-container {
+  .modal-note {
+
+
+    .header-modal-note {
+      height: 30%;
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin: 0 30px;
+      padding-top: 20px;
     }
 
-    .button-done {
-      grid-column-start: 4;
-      grid-column-end: 5;
-      grid-row-start: 3;
-      grid-row-end: 5;
+    .modal-input-container {
+      margin: 0 30px;
+      width: calc(100% - 60px);
+      height: 25%;
+      display: flex;
+      align-items: flex-end;
 
-      .iconify {
-        color: white;
+      input {
+        border: none;
+        border-bottom: 1px solid dimgray;
+        outline: none;
+        width: calc(100% + 62px);
+      }
+    }
+
+    .modal-button-container {
+      padding-top: 30px;
+      padding-left: 120px;
+
+      button {
+        color: dimgray;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        margin: 10px;
+        background-color: white;
+        border: none;
+      }
+    }
+  }
+}
+
+.modal-edit-date-container .modal-edit-date {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+
+  div {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    .iconify {
+      font-size: 2.5rem;
+      margin-top: 3px;
+    }
+
+    span {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  .choice-day {
+    grid-column: span 2;
+    border-bottom: 1px solid lightgray;
+  }
+
+  .choice-today {
+    border-left: 1px solid lightgray;
+    border-bottom-right-radius: 4px;
+    color: white;
+  }
+}
+
+.modal-calendar-container .modal-calendar {
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  left: calc(50% - 200px);
+  top: 150px;
+
+  .choice-interface {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 5px;
+
+    div {
+      width: 40%;
+      display: flex;
+      justify-content: space-between;
+      color: #818181;
+      font-size: 1rem;
+
+      i {
+        cursor: pointer;
       }
     }
   }
 
-  .date-amount {
+  .buttons-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #e2e2e2;
-    height: 6%;
+    justify-content: space-between;
+    border-radius: 3px;
 
-    span {
-      opacity: .5;
-      font-weight: 600;
-      font-size: 0.8rem;
-      text-transform: uppercase;
+    .btn,
+    .total-date {
+      color: white;
+    }
+
+    .total-date {
+      margin: 0 8px;
+      font-size: 1.5rem;
     }
   }
 }

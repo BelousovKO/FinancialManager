@@ -99,15 +99,16 @@
     left: calc(50% - 100px);
     top: 50px;
     border-radius: 5px;
-    background-color: dimgray;
+    background-color: white;
     width: 200px;
     height: 200px;
-    color: white;
+    color: dimgray;
 
     .buttons-container {
       display: flex;
       justify-content: space-between;
       border-radius: 5px;
+      background-color: dimgray;
 
       .btn {
         color: white;
@@ -131,6 +132,29 @@
     }
   }
 
+  .modal-create-expense-category-container {
+    position: absolute;
+    top: -202px;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+
+    .shadow {
+      height: 100vh;
+      width: 100%;
+      background-color: black;
+      opacity: .6;
+    }
+
+    .modal-create-expense-category {
+      top: 255px;
+
+      input {
+        border-bottom: 1px solid lightgray;
+      }
+    }
+  }
+
   .modal-choice-day {
     height: 400px;
     top: 10px;
@@ -141,6 +165,7 @@
       display: flex;
       align-items: center;
       margin-right: 10px;
+      color: lightgray;
     }
 
     .choice-interface {
@@ -171,7 +196,7 @@
       position: relative;
 
       .costs {
-        border: 4px solid dimgray;
+        border: 4px solid white;
         position: absolute;
         top: -25px;
         right: 30px;
@@ -191,7 +216,7 @@
 
         &:hover {
           border-inline: 4px solid gray;
-          width: 47px;
+          width: 40px;
           transition: all 0.1s;
         }
       }
@@ -225,7 +250,21 @@
   }
 
   .modal-transaction {
-    position: relative;
+    position: absolute;
+    top: -202px;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+
+    .modal-transaction-shadow {
+      background-color: black;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: .6;
+      height: 100vh;
+      width: 100%;
+    }
   }
 
   .modal-choose-range {
@@ -241,74 +280,109 @@
     }
   }
 
-  .modal-date-filter {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(4, 1fr);
-    grid-gap: 0;
-    margin: 0;
-    padding: 0;
-    height: 300px;
-    font-size: small;
-    color: lightgray;
+  .modal-date-filter-container {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    top: -202px;
+    left: 0;
 
-    .filter-date-btn {
+    .shadow {
+      height: 100vh;
+      width: 100%;
+      background-color: black;
+      opacity: .6;
+    }
+
+    .modal-date-filter {
+      width: 300px;
+      left: calc(50% - 150px);
+      top: 180px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(4, 1fr);
+      grid-gap: 0;
       margin: 0;
-      padding: 3px;
-      display: flex;
-      flex-wrap: wrap;
-      height: 100%;
-      align-items: center;
+      padding: 0;
+      height: 400px;
+      font-size: small;
+      color: dimgray;
 
-      & * {
-        width: 100%;
-        text-align: center;
-      }
-    }
-
-    .filter-text {
-      color: white;
-    }
-
-    .filter-range {
-      grid-column: span 2;
-    }
-
-    .filter-infinity,
-    .filter-week,
-    .filter-year {
-      border-right: 1px solid #818181;
-    }
-
-    .filter-infinity,
-    .filter-week,
-    .filter-year,
-    .filter-day,
-    .filter-today,
-    .filter-month {
-      border-top: 1px solid #818181;
-    }
-
-    .filter-icons {
-      display: flex;
-      justify-content: center;
-
-      .filter-icons_year {
-        width: 30px;
-      }
-
-      div {
-        background-color: lightgray;
-        width: 25px;
+      .choice {
+        background-color: #4444b7;
+        color: white;
         border-radius: 4px;
-        padding: 3px;
-        color: dimgray;
-        font-family: 'Roboto Slab', serif;
-      }
-    }
 
-    .date {
-      font-size: smaller;
+        * {
+          color: white;
+        }
+      }
+
+      .filter-date-btn {
+        margin: 0;
+        padding: 3px;
+        display: flex;
+        flex-wrap: wrap;
+        height: 100%;
+        align-items: center;
+
+        .material-icons {
+          font-size: 2.2rem;
+        }
+
+        & * {
+          width: 100%;
+          text-align: center;
+        }
+      }
+
+      .filter-text {
+        color: dimgray;
+        font-size: 1rem;
+      }
+
+      .filter-range {
+        grid-column: span 2;
+      }
+
+      .filter-infinity,
+      .filter-week,
+      .filter-year {
+        border-right: 1px solid lightgray;
+      }
+
+      .filter-infinity,
+      .filter-week,
+      .filter-year,
+      .filter-day,
+      .filter-today,
+      .filter-month {
+        border-top: 1px solid lightgray;
+      }
+
+      .filter-icons {
+        display: flex;
+        justify-content: center;
+        font-size: 1.2rem;
+
+        .filter-icons_year {
+          width: 50px;
+        }
+
+        div {
+          background-color: lightgray;
+          width: 35px;
+          border-radius: 4px;
+          padding: 3px;
+          color: dimgray;
+          font-family: 'Roboto Slab', serif;
+          font-size: 1.2rem;
+        }
+      }
+
+      .date {
+        font-size: small;
+      }
     }
   }
 }

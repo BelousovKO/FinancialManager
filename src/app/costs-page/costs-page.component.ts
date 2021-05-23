@@ -5,6 +5,7 @@ import {CreateCostService} from '../services/create-cost.service';
 import {DateService} from '../services/date.service';
 import * as moment from 'moment';
 import 'moment/locale/ru';
+import {ModalDataService} from '../services/modal-data.service';
 
 @Component({
   selector: 'app-costs-page',
@@ -16,8 +17,8 @@ export class CostsPageComponent implements OnInit {
   constructor(public data: UserDataService,
               public changeInterface: ChangeInterface,
               public createCost: CreateCostService,
-              public dateService: DateService) {
-  }
+              public dateService: DateService,
+              public modalData: ModalDataService) {  }
 
   public costsData = this.data.costs;
   public costsDataFiltered = [];
@@ -34,12 +35,12 @@ export class CostsPageComponent implements OnInit {
   public modalCreateExpenseCategory = false;
   public inputValue = '';
   public inputValueNotes = '';
-  public modalCreateCost = false;
+  public modalCreateCost = this.modalData.modalCreateCost;
   public modalChangeIcon = false;
   public modalDateFilter = false;
   public modalChoiceDay = false;
   public modalChooseRange = false;
-  private indexCostCategory: number;
+  public indexCostCategory: number;
   public colorCost = '';
   public colorNewExpenseCategory = '';
   public iconNewExpenseCategory = '';
@@ -51,6 +52,7 @@ export class CostsPageComponent implements OnInit {
   public firstDayWeek: moment.Moment;
   public lastDayWeek: moment.Moment;
   public lastDayMonth: moment.Moment;
+  public yesterday = moment().clone().add(-1, 'day');
   public tempTitleCategory = '';
   public tempColorCategory = '';
   public tempIconCategory = '';
@@ -106,7 +108,7 @@ export class CostsPageComponent implements OnInit {
     this.firstDayWeek = now.clone().startOf('week');
     this.lastDayWeek = now.clone().endOf('week');
     this.lastDayMonth = now.clone().endOf('month');
-    if (this.dateFilter !== 'r') {
+    /*if (this.dateFilter !== 'r') {
       const difference = now.startOf('day').diff(moment().startOf('day'), 'day');
       if (difference === 0) {
         this.dateCost = moment();
@@ -114,6 +116,9 @@ export class CostsPageComponent implements OnInit {
       if (difference > 0) {
         switch (this.dateFilter) {
           case 't':
+            this.dateCost = now.clone().startOf('day');
+            break;
+          case 'd':
             this.dateCost = now.clone().startOf('day');
             break;
           case 'w':
@@ -130,6 +135,9 @@ export class CostsPageComponent implements OnInit {
       if (difference < 0) {
         switch (this.dateFilter) {
           case 't':
+            this.dateCost = now.clone().endOf('day');
+            break;
+          case 'd':
             this.dateCost = now.clone().endOf('day');
             break;
           case 'w':
@@ -155,7 +163,7 @@ export class CostsPageComponent implements OnInit {
       if (differenceFirstDay < 0 && differenceLastDay < 0) {
         this.dateCost = this.data.choiceLastDay.endOf('day');
       }
-    }
+    }*/
 
     this.strokeDasharray = [];
     this.strokeDashoffset = [25];
@@ -164,6 +172,14 @@ export class CostsPageComponent implements OnInit {
     switch (this.dateFilter) {
 
       case 't':
+        this.costsData.forEach(e => {
+          if (e.date.substr(0, 10) === now.format('YYYY-MM-DD')) {
+            this.costsDataFiltered.push(e);
+          }
+        });
+        break;
+
+      case 'd':
         this.costsData.forEach(e => {
           if (e.date.substr(0, 10) === now.format('YYYY-MM-DD')) {
             this.costsDataFiltered.push(e);
@@ -260,15 +276,8 @@ export class CostsPageComponent implements OnInit {
     this.colorNewExpenseCategory = `background-color: ${event.target.value}`;
   }
 
-  inputHandlerCost(event: any): any {
-    this.inputValue = event.target.value;
-  }
-
-  inputHandlerNotes(event: any): any {
-    this.inputValueNotes = event.target.value;
-  }
-
   openModalCreateExpenseCategory(idx): void {
+    this.tempTitleCategory = '';
     this.tempColorCategory = this.colorsExpense[idx];
     this.modalCreateExpenseCategory = true;
     this.colorNewExpenseCategory = `background-color: ${this.colorsExpense[idx]}`;
@@ -343,36 +352,13 @@ export class CostsPageComponent implements OnInit {
     this.tempIconCategory = this.iconExpense[i];
   }
 
-  createNewCost(): void {
-    const newCost = Number(this.inputValue);
-    const token = localStorage.getItem('token');
-    const body = {
-      userId: this.data.userId,
-      title: this.inputValueNotes,
-      date: this.dateCost.format('YYYY-MM-DD:HH:mm:ss'),
-      category: this.indexCostCategory,
-      amount: newCost,
-      token
-    };
-    this.createCost.create(body)
-      .subscribe(
-        response => {
-          if (response.status === 'OK') {
-            this.costsData = response.data;
-            this.data.costs = response.data;
-            this.costs = [];
-            this.ngOnInit();
-          }
-        },
-        error => console.error('Error! ', error)
-      );
-    this.modalCreateCost = false;
-  }
-
   go(dir: number): void {
 
     switch (this.dateFilter) {
       case 't':
+        this.dateService.changeDay(dir);
+        break;
+      case 'd':
         this.dateService.changeDay(dir);
         break;
       case 'w':
@@ -389,31 +375,18 @@ export class CostsPageComponent implements OnInit {
         this.ngOnInit();
         break;
     }
-
-    if (this.dateFilter === 'm') {
-
-    }
-
-    if (this.dateFilter === 't') {
-
-    }
-
-    if (this.dateFilter === 'w') {
-
-    }
-
-    if (this.dateFilter === 'y') {
-
-    }
-
-    if (this.dateFilter === 'r') {
-
-    }
   }
 
   clearChoiceDate(): void {
     this.data.choiceFirstDay = moment();
     this.data.choiceLastDay = moment();
+  }
+
+  createdTransaction(): any {
+    this.costsData = this.data.costs;
+    this.costs = [];
+    this.backToNowDate();
+    this.ngOnInit();
   }
 
   closeAllModal(): void {
