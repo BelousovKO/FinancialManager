@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import * as moment from 'moment';
 import 'moment/locale/ru';
-import {ModalDataService} from '../services/modal-data.service';
 import {UserDataService} from '../services/user-data.service';
 import {DateService} from '../services/date.service';
 import {CreateCostService} from '../services/create-cost.service';
@@ -24,17 +23,17 @@ export class ModalTransactionComponent implements OnInit {
   @Input() tempTitleCategory: string;
   @Input() typeTransactionColor: string;
   @Input() tempIconCategory: string;
+  @Input() transactionType: string;
   @Output() closeModalTransaction: EventEmitter<any> = new EventEmitter();
   @Output() transactionCreated: EventEmitter<any> = new EventEmitter();
 
   public buttonValues = [7, 8, 9, 'mdi:backspace', 4, 5, 6, 1, 2, 3, '', 0, '.'];
-  public color = this.data.color;
+  public color = 'width';
   public textColor = `color: ${this.color}`;
   public backgroundColor = `background-color: ${this.color}`;
-  public transactionType = this.data.transactionType;
-  public transactionCategory = this.data.transactionCategory;
+  public transactionCategory: string;
   public transactionSum = '0';
-  public transactionTitle = this.data.transactionTitle;
+  public transactionTitle = '';
   public tempTransactionTitle = 'Заметки...';
   public transactionDate = moment();
   public modalNote = false;
@@ -43,8 +42,7 @@ export class ModalTransactionComponent implements OnInit {
   public today = moment();
   public modalCalendar = false;
 
-  constructor(public data: ModalDataService,
-              public createCost: CreateCostService,
+  constructor(public createCost: CreateCostService,
               public userData: UserDataService,
               public dateService: DateService) {
   }

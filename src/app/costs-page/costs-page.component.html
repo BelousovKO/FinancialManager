@@ -6,7 +6,8 @@
       <span class="date-filter-title">{{ dateService.date | async | moment }}</span>
       <i class="material-icons">arrow_drop_down</i>
     </span>
-    <span class="modal-button" *ngIf="dateFilter === 't' || dateFilter === 'd'" (click)="modalDateFilter = true; backToNowDate()">
+    <span class="modal-button" *ngIf="dateFilter === 't' || dateFilter === 'd'"
+          (click)="modalDateFilter = true; backToNowDate()">
       <span class="filter-icons"><span>1</span></span>
       <span class="date-filter-title">{{ dateService.date | async | moment: 'ddd DD MMMM y' }}</span>
       <i class="material-icons">arrow_drop_down</i>
@@ -73,7 +74,7 @@
             check
           </button>
         </div>
-        <div class="input-container mb-3">
+        <div class="input-container mb-4">
           <label>
             <input type="text" (input)="inputHandlerCategory($event)" [value]="tempTitleCategory"
                    placeholder="Название категории"/>
@@ -81,6 +82,10 @@
           <div class="costs new-icon material-icons" style="{{colorNewExpenseCategory}}"
                (click)="modalChangeIcon = true">{{iconNewExpenseCategory}}
           </div>
+        </div>
+        <div class="del-category">
+          <span class="iconify del-icon" data-icon="mdi:delete" data-inline="false"></span>
+          <span class="del-title">удалить категорию</span>
         </div>
       </div>
     </div>
@@ -110,6 +115,7 @@
                              [lastDayMonth]="lastDayMonth"
                              [lastDayWeek]="lastDayWeek"
                              [tempTitleCategory]="tempTitleCategory"
+                             [transactionType]="transactionType"
                              [typeTransactionColor]="typeTransactionColor"
                              [tempIconCategory]="tempIconCategory"
                              [tempColorCategory]="tempColorCategory"
@@ -212,62 +218,67 @@
       </ul>
     </div>
 
-    <div class="modal-choice-day" *ngIf="modalChoiceDay === true">
-      <div class="buttons-container mb-2">
-        <button class="btn create material-icons"
-                (click)="modalChoiceDay = false;
-                ngOnInit()">
-          check
-        </button>
-        <div class="total-date">{{ dateService.date | async | moment: 'DD.MM.Y' }}</div>
-      </div>
-      <div class="choice-interface">
-        <div class="change-month">
-          <i class="material-icons" (click)="dateFilter = 'm';
+    <div class="modal-choice-day-container" *ngIf="modalChoiceDay === true">
+      <div class="shadow" (click)="modalChoiceDay = false"></div>
+      <div class="modal-choice-day">
+        <div class="buttons-container mb-2">
+          <button class="btn create material-icons"
+                  (click)="modalChoiceDay = false;
+                  ngOnInit()">
+            check
+          </button>
+          <div class="total-date">{{ dateService.date | async | moment: 'DD.MM.Y' }}</div>
+        </div>
+        <div class="choice-interface">
+          <div class="change-month">
+            <i class="material-icons" (click)="dateFilter = 'm';
                                              go(-1);
                                              dateFilter = 't';
                                              data.dateFilter = 't'">
-            arrow_left
-          </i>
-          <span>{{ dateService.date | async | moment: 'MMMM' }}</span>
-          <i class="material-icons" (click)="dateFilter = 'm';
+              arrow_left
+            </i>
+            <span>{{ dateService.date | async | moment: 'MMMM' }}</span>
+            <i class="material-icons" (click)="dateFilter = 'm';
                                              go(1);
                                              dateFilter = 't';
                                              data.dateFilter = 't'">
-            arrow_right
-          </i>
-        </div>
-        <div class="change-year">
-          <i class="material-icons" (click)="dateFilter = 'y';
+              arrow_right
+            </i>
+          </div>
+          <div class="change-year">
+            <i class="material-icons" (click)="dateFilter = 'y';
                                              go(-1);
                                               dateFilter = 't';
                                               data.dateFilter = 't'">
-            arrow_left
-          </i>
-          <span>{{ dateService.date | async | moment: 'Y' }}</span>
-          <i class="material-icons" (click)="dateFilter = 'y';
+              arrow_left
+            </i>
+            <span>{{ dateService.date | async | moment: 'Y' }}</span>
+            <i class="material-icons" (click)="dateFilter = 'y';
                                     go(1);
                                     dateFilter = 't';
                                     data.dateFilter = 't'">
-            arrow_right
-          </i>
+              arrow_right
+            </i>
+          </div>
         </div>
+        <app-calendar></app-calendar>
       </div>
-      <app-calendar></app-calendar>
     </div>
 
-
-    <div class="modal-choose-range" *ngIf="modalChooseRange === true">
-      <div class="buttons-container mb-2">
-        <button class="btn create material-icons" (click)="modalChooseRange = false;
+    <div class="modal-choose-range-container" *ngIf="modalChooseRange === true">
+      <div class="shadow" (click)="modalChooseRange = false"></div>
+      <div class="modal-choose-range">
+        <div class="buttons-container mb-3">
+          <button class="btn create material-icons" (click)="modalChooseRange = false;
                                                   dateFilter = 'r';
                                                   data.dateFilter = 'r';
                                                   ngOnInit()">
-          check
-        </button>
-        <span>Выбрать диапазон</span>
+            check
+          </button>
+          <span>Выбрать диапазон</span>
+        </div>
+        <app-choose-range></app-choose-range>
       </div>
-      <app-choose-range></app-choose-range>
     </div>
 
   </div>

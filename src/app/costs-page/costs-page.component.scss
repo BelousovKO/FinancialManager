@@ -102,13 +102,13 @@
     background-color: white;
     width: 200px;
     height: 200px;
-    color: dimgray;
+    color: lightgray;
 
     .buttons-container {
       display: flex;
       justify-content: space-between;
       border-radius: 5px;
-      background-color: dimgray;
+      background-color: #4646b0;
 
       .btn {
         color: white;
@@ -152,12 +152,21 @@
       input {
         border-bottom: 1px solid lightgray;
       }
+
+      .del-category {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #961818;
+        padding-right: 8px;
+        margin-top: 10px;
+      }
     }
   }
 
   .modal-choice-day {
     height: 400px;
-    top: 10px;
+    top: 200px;
     left: calc(50% - 200px);
     width: 400px;
 
@@ -267,20 +276,31 @@
     }
   }
 
-  .modal-choose-range {
-    .container {
-      padding: 0;
-    }
+  .modal-choose-range-container {
+    .modal-choose-range {
+      color: dimgray;
+      top: 200px;
+      width: 300px;
+      left: calc(50% - 150px);
 
-    width: 300px;
-    left: calc(50% - 150px);
+      .container {
+        padding: 0;
+      }
 
-    .buttons-container span {
-      margin: 5px 15px;
+      .buttons-container {
+
+        span {
+          margin: 5px 15px;
+          color: lightgray;
+        }
+      }
     }
   }
 
-  .modal-date-filter-container {
+
+  .modal-date-filter-container,
+  .modal-choice-day-container,
+  .modal-choose-range-container {
     position: absolute;
     width: 100%;
     height: 100vh;
@@ -309,7 +329,7 @@
       color: dimgray;
 
       .choice {
-        background-color: #4444b7;
+        background-color: #4646b0;
         color: white;
         border-radius: 4px;
 
