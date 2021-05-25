@@ -14,7 +14,7 @@ export class ModalTransactionComponent implements OnInit {
 
   @Input() dateFilter: string;
   @Input() tempColorCategory: string;
-  @Input() indexCostCategory: number;
+  @Input() indexCategory: number;
   @Input() dateServiceDate: any;
   @Input() firstDayWeek: moment.Moment;
   @Input() lastDayWeek: moment.Moment;
@@ -212,7 +212,7 @@ export class ModalTransactionComponent implements OnInit {
         userId: this.userData.userId,
         title: this.transactionTitle,
         date: this.transactionDate.format('YYYY-MM-DD:HH:mm:ss'),
-        category: this.indexCostCategory,
+        category: this.indexCategory,
         amount: Number(this.transactionSum),
         token
       };
@@ -220,7 +220,7 @@ export class ModalTransactionComponent implements OnInit {
         .subscribe(
           response => {
             if (response.status === 'OK') {
-              this.userData.costs = response.data;
+              this.userData.transaction = response.data;
               this.transactionCreated.emit();
               this.closeModalTransaction.emit();
             }

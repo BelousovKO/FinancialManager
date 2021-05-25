@@ -52,14 +52,14 @@
           stroke-width="3" [attr.stroke-dasharray]="data.strokeDasharray[11]"
           [attr.stroke-dashoffset]="data.strokeDashoffset[11]"></circle>
   <g class="diagram-text">
-    <text x="50%" y="50%" class="costs-label">
+    <text x="50%" y="50%" class="costs-label" (click)="data.toggleTypeTransaction()">
       Расходы
     </text>
-    <text x="50%" y="50%" class="costs-number" fill="#B51515" stroke="#B51515" stroke-width="0.1">
+    <text x="50%" y="50%" class="costs-number" fill="#B51515" stroke="#B51515" stroke-width="0.1" (click)="sey()">
       {{ data.costsAll | number | pointReplacer | pointReplacer }} ₽
     </text>
     <text x="50%" y="50%" class="income-number" fill="#14802D">
-      {{ income | number | pointReplacer | pointReplacer }} ₽
+      {{ incomeAll | number | pointReplacer | pointReplacer }} ₽
     </text>
   </g>
 </svg>

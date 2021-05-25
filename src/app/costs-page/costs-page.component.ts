@@ -18,33 +18,31 @@ export class CostsPageComponent implements OnInit {
               public createCost: CreateCostService,
               public dateService: DateService) {  }
 
-  public costsData = this.data.costs;
+  public transactionData = this.data.transaction;
   public costsDataFiltered = [];
   public costs = this.data.sumCosts;
-  public costsColor = [];
+  public colors = [];
   public backgroundColors = [];
-  public colorsExpense = this.data.expenseColors;
-  public titlesExpense = [];
-  public iconExpense = [];
-  public dataInterfaceExpense = this.data.dataInterfaceExpense;
+  public colorsTransactions = this.data.expenseColors;
+  public titlesTransactions = [];
+  public iconTransactions = [];
+  public dataInterfaceTransactions = this.data.dataInterfaceExpense;
   public dateFilter = this.data.dateFilter;
   private temp: number;
-  public indexNewExpenseCategory: number;
-  public modalCreateExpenseCategory = false;
+  public modalCreateCategory = false;
   public inputValue = '';
-  public inputValueNotes = '';
   public modalCreateCost: boolean;
   public modalChangeIcon = false;
   public modalDateFilter = false;
   public modalChoiceDay = false;
   public modalChooseRange = false;
-  public indexCostCategory: number;
-  public colorCost = '';
-  public colorNewExpenseCategory = '';
-  public iconNewExpenseCategory = '';
+  public indexCategory: number;
+  public colorNewCategory = '';
+  public iconNewCategory = '';
+  public countCategories: number;
   private token = localStorage.getItem('token');
-  public dateCost: moment.Moment;
   public costsAll = 0;
+  public incomeAll = 0;
   public strokeDasharray = [];
   public strokeDashoffset = [25];
   public firstDayWeek: moment.Moment;
@@ -74,17 +72,17 @@ export class CostsPageComponent implements OnInit {
     'savings', 'movie_creation', 'account_balance', 'attach_money'];
 
   ngOnInit(): void {
-    this.dateCost = moment();
+    this.data.typeTransaction.value === 'cost' ? this.countCategories = 12 : this.countCategories = 6;
     this.dateService.date.subscribe(this.generateDate.bind(this));
     this.strokeDasharray = [];
     this.strokeDashoffset = [25];
     this.costs = [];
-    this.data.dataInterfaceExpense.forEach((e, idx) => {
-      this.colorsExpense.push(e.color);
-      this.titlesExpense.push(e.title);
-      this.iconExpense.push(e.icon);
-      this.backgroundColors.push(`background-color: ${this.colorsExpense[idx]}`);
-      this.costsColor.push(`color: ${this.colorsExpense[idx]}`);
+    this.dataInterfaceTransactions.forEach((e, idx) => {
+      this.colorsTransactions.push(e.color);
+      this.titlesTransactions.push(e.title);
+      this.iconTransactions.push(e.icon);
+      this.backgroundColors.push(`background-color: ${this.colorsTransactions[idx]}`);
+      this.colors.push(`color: ${this.colorsTransactions[idx]}`);
       this.temp = 0;
       this.costsDataFiltered.forEach((elem) => {
         if (elem.category === idx) {
@@ -93,7 +91,7 @@ export class CostsPageComponent implements OnInit {
       });
       this.costs.push(this.temp);
     });
-    this.data.icons = this.iconExpense;
+    this.data.icons = this.iconTransactions;
     this.data.sumCosts = this.costs;
     this.createDataDonut();
   }
@@ -114,7 +112,7 @@ export class CostsPageComponent implements OnInit {
     switch (this.dateFilter) {
 
       case 't':
-        this.costsData.forEach(e => {
+        this.transactionData.forEach(e => {
           if (e.date.substr(0, 10) === now.format('YYYY-MM-DD')) {
             this.costsDataFiltered.push(e);
           }
@@ -122,7 +120,7 @@ export class CostsPageComponent implements OnInit {
         break;
 
       case 'd':
-        this.costsData.forEach(e => {
+        this.transactionData.forEach(e => {
           if (e.date.substr(0, 10) === now.format('YYYY-MM-DD')) {
             this.costsDataFiltered.push(e);
           }
@@ -132,7 +130,7 @@ export class CostsPageComponent implements OnInit {
       case 'w':
         const fdw = Number(this.firstDayWeek.format('x'));
         const ldw = Number(this.lastDayWeek.format('x'));
-        this.costsData.forEach(e => {
+        this.transactionData.forEach(e => {
           if (Number(Date.parse(e.date)) >= fdw && Number(Date.parse(e.date)) <= ldw) {
             this.costsDataFiltered.push(e);
           }
@@ -140,7 +138,7 @@ export class CostsPageComponent implements OnInit {
         break;
 
       case 'm':
-        this.costsData.forEach(e => {
+        this.transactionData.forEach(e => {
           if (e.date.substr(0, 7) === now.format('YYYY-MM')) {
             this.costsDataFiltered.push(e);
           }
@@ -148,7 +146,7 @@ export class CostsPageComponent implements OnInit {
         break;
 
       case 'y':
-        this.costsData.forEach(e => {
+        this.transactionData.forEach(e => {
           if (e.date.substr(0, 4) === now.format('YYYY')) {
             this.costsDataFiltered.push(e);
           }
@@ -156,13 +154,13 @@ export class CostsPageComponent implements OnInit {
         break;
 
       case 'i':
-        this.costsDataFiltered = this.costsData;
+        this.costsDataFiltered = this.transactionData;
         break;
 
       case 'r':
         const fdr = Number(this.data.choiceFirstDay.startOf('day').format('x'));
         const ldr = Number(this.data.choiceLastDay.endOf('day').format('x'));
-        this.costsData.forEach(e => {
+        this.transactionData.forEach(e => {
           if (Number(Date.parse(e.date)) >= fdr && Number(Date.parse(e.date)) <= ldr) {
             this.costsDataFiltered.push(e);
           }
@@ -171,7 +169,7 @@ export class CostsPageComponent implements OnInit {
     }
 
     this.costs = [];
-    this.data.dataInterfaceExpense.forEach((e, idx) => {
+    this.dataInterfaceTransactions.forEach((e, idx) => {
       this.temp = 0;
       this.costsDataFiltered.forEach((elem) => {
         if (elem.category === idx) {
@@ -186,6 +184,7 @@ export class CostsPageComponent implements OnInit {
 
   createDataDonut(): void {
     this.costsAll = 0;
+    this.incomeAll = 0;
     this.costsAll = this.data.sumCosts.reduce((total, amount) => {
       return total + amount;
     });
@@ -215,62 +214,61 @@ export class CostsPageComponent implements OnInit {
 
   inputHandlerColor(event: any): any {
     this.tempColorCategory = event.target.value;
-    this.colorNewExpenseCategory = `background-color: ${event.target.value}`;
+    this.colorNewCategory = `background-color: ${event.target.value}`;
   }
 
   openModalCreateExpenseCategory(idx): void {
     this.tempTitleCategory = '';
-    this.tempColorCategory = this.colorsExpense[idx];
-    this.modalCreateExpenseCategory = true;
-    this.colorNewExpenseCategory = `background-color: ${this.colorsExpense[idx]}`;
-    this.iconNewExpenseCategory = this.iconExpense[idx];
-    this.indexNewExpenseCategory = idx;
+    this.tempColorCategory = this.colorsTransactions[idx];
+    this.modalCreateCategory = true;
+    this.colorNewCategory = `background-color: ${this.colorsTransactions[idx]}`;
+    this.iconNewCategory = this.iconTransactions[idx];
   }
 
   changeIcon(): void {
     this.modalChangeIcon = false;
   }
 
-  createExpenseCategory(): void {
+  createCategory(): void {
     if (!this.data.editState) {
-      let temp = 12;
-      this.data.dataInterfaceExpense.forEach((e, idx) => {
+      let temp = this.countCategories;
+      this.dataInterfaceTransactions.forEach((e, idx) => {
         if (!e.title && temp > idx) {
           temp = idx;
-          this.data.dataInterfaceExpense[idx].title = this.inputValue;
-          this.data.dataInterfaceExpense[idx].icon = this.iconNewExpenseCategory;
-          this.titlesExpense[idx] = this.inputValue;
-          this.iconExpense[idx] = this.iconNewExpenseCategory;
+          this.dataInterfaceTransactions[idx].title = this.inputValue;
+          this.dataInterfaceTransactions[idx].icon = this.iconNewCategory;
+          this.titlesTransactions[idx] = this.inputValue;
+          this.iconTransactions[idx] = this.iconNewCategory;
           if (this.tempColorCategory) {
-            this.data.dataInterfaceExpense[idx].color = this.tempColorCategory;
+            this.dataInterfaceTransactions[idx].color = this.tempColorCategory;
             this.data.expenseColors[idx] = this.tempColorCategory;
-            this.colorsExpense[idx] = this.tempColorCategory;
+            this.colorsTransactions[idx] = this.tempColorCategory;
             this.backgroundColors[idx] = `background-color: ${this.tempColorCategory}`;
-            this.costsColor[idx] = `color: ${this.tempColorCategory}`;
+            this.colors[idx] = `color: ${this.tempColorCategory}`;
           }
         }
       });
     } else {
       if (this.inputValue) {
-        this.data.dataInterfaceExpense[this.indexCostCategory].title = this.inputValue;
-        this.titlesExpense[this.indexCostCategory] = this.inputValue;
+        this.dataInterfaceTransactions[this.indexCategory].title = this.inputValue;
+        this.titlesTransactions[this.indexCategory] = this.inputValue;
       } else {
-        this.inputValue = this.data.dataInterfaceExpense[this.indexCostCategory].title;
+        this.inputValue = this.dataInterfaceTransactions[this.indexCategory].title;
       }
-      this.data.dataInterfaceExpense[this.indexCostCategory].icon = this.iconNewExpenseCategory;
-      this.iconExpense[this.indexCostCategory] = this.iconNewExpenseCategory;
+      this.dataInterfaceTransactions[this.indexCategory].icon = this.iconNewCategory;
+      this.iconTransactions[this.indexCategory] = this.iconNewCategory;
 
       if (this.tempColorCategory) {
-        this.data.dataInterfaceExpense[this.indexCostCategory].color = this.tempColorCategory;
-        this.data.expenseColors[this.indexCostCategory] = this.tempColorCategory;
-        this.colorsExpense[this.indexCostCategory] = this.tempColorCategory;
-        this.backgroundColors[this.indexCostCategory] = `background-color: ${this.tempColorCategory}`;
-        this.costsColor[this.indexCostCategory] = `color: ${this.tempColorCategory}`;
+        this.dataInterfaceTransactions[this.indexCategory].color = this.tempColorCategory;
+        this.data.expenseColors[this.indexCategory] = this.tempColorCategory;
+        this.colorsTransactions[this.indexCategory] = this.tempColorCategory;
+        this.backgroundColors[this.indexCategory] = `background-color: ${this.tempColorCategory}`;
+        this.colors[this.indexCategory] = `color: ${this.tempColorCategory}`;
       }
     }
-    this.modalCreateExpenseCategory = false;
+    this.modalCreateCategory = false;
     this.tempTitleCategory = '';
-    const body = {userId: this.data.userId, expense: this.data.dataInterfaceExpense, token: this.token};
+    const body = {userId: this.data.userId, expense: this.dataInterfaceTransactions, token: this.token};
     this.changeInterface.change(body)
       .subscribe(
         response => {
@@ -284,14 +282,13 @@ export class CostsPageComponent implements OnInit {
   }
 
   openModalCreateCost(i): void {
-    this.tempColorCategory = this.colorsExpense[i];
-    this.tempTitleCategory = this.data.dataInterfaceExpense[i].title;
-    this.indexCostCategory = i;
-    this.colorCost = `background-color: ${this.colorsExpense[i]}`;
-    this.data.editState ? this.modalCreateExpenseCategory = true : this.modalCreateCost = true;
-    this.colorNewExpenseCategory = `background-color: ${this.colorsExpense[i]}`;
-    this.iconNewExpenseCategory = this.iconExpense[i];
-    this.tempIconCategory = this.iconExpense[i];
+    this.tempColorCategory = this.colorsTransactions[i];
+    this.tempTitleCategory = this.dataInterfaceTransactions[i].title;
+    this.indexCategory = i;
+    this.data.editState ? this.modalCreateCategory = true : this.modalCreateCost = true;
+    this.colorNewCategory = `background-color: ${this.colorsTransactions[i]}`;
+    this.iconNewCategory = this.iconTransactions[i];
+    this.tempIconCategory = this.iconTransactions[i];
   }
 
   go(dir: number): void {
@@ -326,7 +323,7 @@ export class CostsPageComponent implements OnInit {
   }
 
   createdTransaction(): any {
-    this.costsData = this.data.costs;
+    this.transactionData = this.data.transaction;
     this.costs = [];
     this.backToNowDate();
     this.ngOnInit();
@@ -337,6 +334,6 @@ export class CostsPageComponent implements OnInit {
     this.modalChoiceDay = false;
     this.modalChooseRange = false;
     this.modalCreateCost = false;
-    this.modalCreateExpenseCategory = false;
+    this.modalCreateCategory = false;
   }
 }

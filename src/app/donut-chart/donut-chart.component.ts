@@ -11,14 +11,13 @@ export class DonutChartComponent implements OnInit {
   constructor(public data: UserDataService) {
   }
 
-  public costsData = this.data.costs;
   public dataInterfaceExpense = this.data.dataInterfaceExpense;
-  public income = 0;
+  public incomeAll = this.data.incomeAll;
   public costs = this.data.sumCosts;
   public costsAll = this.data.costsAll;
-  public strokeDasharray = this.data.strokeDasharray;
   public strokeDashoffset = this.data.strokeDashoffset;
   public stroke = this.data.expenseColors;
 
   ngOnInit(): void { }
+
 }

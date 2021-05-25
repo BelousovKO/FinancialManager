@@ -43,15 +43,15 @@
     <ul>
 
       <li *ngFor="let elem of data.dataInterfaceExpense; let idx = index">
-        <div *ngIf="titlesExpense[idx]" (click)="closeAllModal();
+        <div *ngIf="titlesTransactions[idx]" (click)="closeAllModal();
                                         this.modalDateFilter = false;
                                         openModalCreateCost(idx)"
              [ngClass]="{opacity03: costs[idx] === 0}">
-          <h2>{{titlesExpense[idx]}}</h2>
-          <div class="costs material-icons" style="{{backgroundColors[idx]}}">{{iconExpense[idx]}}</div>
-          <div class="sum" style="{{costsColor[idx]}}">{{costs[idx]}} ₽</div>
+          <h2>{{titlesTransactions[idx]}}</h2>
+          <div class="costs material-icons" style="{{backgroundColors[idx]}}">{{iconTransactions[idx]}}</div>
+          <div class="sum" style="{{colors[idx]}}">{{costs[idx]}} ₽</div>
         </div>
-        <div *ngIf="!titlesExpense[idx] && titlesExpense[idx - 1]" (click)="closeAllModal();
+        <div *ngIf="!titlesTransactions[idx] && titlesTransactions[idx - 1]" (click)="closeAllModal();
                                                                             openModalCreateExpenseCategory(idx);
                                                                             this.modalDateFilter = false;">
           <div class="costs new-cost material-icons" [ngClass]="{hidden: data.editState}">add</div>
@@ -64,13 +64,13 @@
 
     </ul>
 
-    <div class="modal-create-expense-category-container" *ngIf="modalCreateExpenseCategory">
+    <div class="modal-create-expense-category-container" *ngIf="modalCreateCategory">
       <div class="shadow" (click)="closeAllModal()"></div>
       <div class="modal-create-expense-category">
-        <div class="buttons-container mb-2" style="{{colorNewExpenseCategory}}">
-          <button class="btn cancel material-icons" (click)="modalCreateExpenseCategory = false">close</button>
+        <div class="buttons-container mb-2" style="{{colorNewCategory}}">
+          <button class="btn cancel material-icons" (click)="modalCreateCategory = false">close</button>
           <button class="btn create material-icons" [disabled]="!inputValue && !data.editState"
-                  (click)="createExpenseCategory()">
+                  (click)="createCategory()">
             check
           </button>
         </div>
@@ -79,8 +79,8 @@
             <input type="text" (input)="inputHandlerCategory($event)" [value]="tempTitleCategory"
                    placeholder="Название категории"/>
           </label>
-          <div class="costs new-icon material-icons" style="{{colorNewExpenseCategory}}"
-               (click)="modalChangeIcon = true">{{iconNewExpenseCategory}}
+          <div class="costs new-icon material-icons" style="{{colorNewCategory}}"
+               (click)="modalChangeIcon = true">{{iconNewCategory}}
           </div>
         </div>
         <div class="del-category">
@@ -91,12 +91,12 @@
     </div>
 
     <div class="modal-change-icon" *ngIf="modalChangeIcon">
-      <div class="buttons-container" style="{{colorNewExpenseCategory}}">
+      <div class="buttons-container" style="{{colorNewCategory}}">
         <button class="btn cancel material-icons" (click)="modalChangeIcon = false">arrow_back</button>
       </div>
       <div class="container-input-color">
-        <div class="costs material-icons" style="{{colorNewExpenseCategory}}">
-          {{iconNewExpenseCategory}}
+        <div class="costs material-icons" style="{{colorNewCategory}}">
+          {{iconNewCategory}}
         </div>
         <label>
           <input type="color" (input)="inputHandlerColor($event)" [value]="tempColorCategory"/>
@@ -104,7 +104,7 @@
       </div>
       <ul class="list-icons">
         <li class="material-icons" *ngFor="let elem of listIcon; let idx = index"
-            (click)="iconNewExpenseCategory = listIcon[idx]">{{elem}}</li>
+            (click)="iconNewCategory = listIcon[idx]">{{elem}}</li>
       </ul>
     </div>
 
@@ -120,7 +120,7 @@
                              [tempIconCategory]="tempIconCategory"
                              [tempColorCategory]="tempColorCategory"
                              [yesterday]="yesterday"
-                             [indexCostCategory]="indexCostCategory"
+                             [indexCategory]="indexCategory"
                              [dateServiceDate]="dateService.date"
                              (closeModalTransaction)="modalCreateCost = false"
                              (transactionCreated)="createdTransaction()">

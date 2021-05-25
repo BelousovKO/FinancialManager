@@ -4,7 +4,6 @@ import {LogInService} from '../services/log-in.service';
 import {AuthorizationService} from '../services/authorization.service';
 import {AuthenticationService} from '../services/authentication.service';
 import {UserDataService} from '../services/user-data.service';
-import {DonutChartComponent} from '../donut-chart/donut-chart.component';
 
 @Component({
   selector: 'app-log-in-form',
@@ -41,7 +40,7 @@ export class LogInFormComponent implements OnInit {
             this.statusLogin = response.status;
             if (response.status === 'OK') {
               this.data.userData = response.userData;
-              this.data.costs = response.userData.costs;
+              this.data.transaction = response.userData.costs;
               this.data.dataInterfaceExpense = response.userData.interface.expense;
               this.data.userId = response.userData.userId;
               this.authorization.login = true;
@@ -91,7 +90,7 @@ export class LogInFormComponent implements OnInit {
           this.statusLogin = response.status;
           if (response.status === 'OK') {
             this.data.userData = response.userData;
-            this.data.costs = response.userData.costs;
+            this.data.transaction = response.userData.costs;
             this.data.dataInterfaceExpense = response.userData.interface.expense;
             this.data.userId = response.userData.userId;
             this.authorization.login = true;
