@@ -12,12 +12,14 @@ export class UserDataService {
   public transaction = [];
   public costs = [];
   public income = [];
+  public transactionsAll = 0;
   public costsAll = 0;
   public incomeAll = 0;
   public dataInterfaceExpense = [];
   public dataInterfaceIncome = [];
+  public dataInterfaceTransaction = this.dataInterfaceExpense;
   public expenseColors = [];
-  public sumCosts = [];
+  public sumTransaction = [];
   public userId = '';
   public coefficient: number;
   public strokeDasharray = [];
@@ -31,11 +33,6 @@ export class UserDataService {
   constructor() { }
 
   toggleTypeTransaction(): void {
-    this.typeTransaction.next('income');
-    console.log('this.typeTransaction: ', this.typeTransaction.value);
+    this.typeTransaction.value === 'cost' ? this.typeTransaction.next('income') : this.typeTransaction.next('cost');
   }
-
-  // toggleTypeTransaction(): void {
-  //   this.typeTransaction = 'income';
-  // }
 }

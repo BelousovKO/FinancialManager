@@ -16,22 +16,24 @@ export class CostsPageComponent implements OnInit {
   constructor(public data: UserDataService,
               public changeInterface: ChangeInterface,
               public createCost: CreateCostService,
-              public dateService: DateService) {  }
+              public dateService: DateService) {
+
+  }
 
   public transactionData = this.data.transaction;
-  public costsDataFiltered = [];
-  public costs = this.data.sumCosts;
+  public transactionDataFiltered = [];
+  public transactions = [];
   public colors = [];
   public backgroundColors = [];
   public colorsTransactions = this.data.expenseColors;
   public titlesTransactions = [];
   public iconTransactions = [];
-  public dataInterfaceTransactions = this.data.dataInterfaceExpense;
+  public dataInterfaceTransactions = this.data.dataInterfaceTransaction;
   public dateFilter = this.data.dateFilter;
   private temp: number;
   public modalCreateCategory = false;
   public inputValue = '';
-  public modalCreateCost: boolean;
+  public modalCreateTransaction: boolean;
   public modalChangeIcon = false;
   public modalDateFilter = false;
   public modalChoiceDay = false;
@@ -41,8 +43,9 @@ export class CostsPageComponent implements OnInit {
   public iconNewCategory = '';
   public countCategories: number;
   private token = localStorage.getItem('token');
-  public costsAll = 0;
-  public incomeAll = 0;
+  public transactionsAll = 0;
+ /* public costsAll = 0;
+  public incomeAll = 0;*/
   public strokeDasharray = [];
   public strokeDashoffset = [25];
   public firstDayWeek: moment.Moment;
@@ -72,11 +75,12 @@ export class CostsPageComponent implements OnInit {
     'savings', 'movie_creation', 'account_balance', 'attach_money'];
 
   ngOnInit(): void {
+    this.data.typeTransaction.subscribe(this.toggleTypeTransactions.bind(this));
     this.data.typeTransaction.value === 'cost' ? this.countCategories = 12 : this.countCategories = 6;
     this.dateService.date.subscribe(this.generateDate.bind(this));
     this.strokeDasharray = [];
     this.strokeDashoffset = [25];
-    this.costs = [];
+    this.transactions = [];
     this.dataInterfaceTransactions.forEach((e, idx) => {
       this.colorsTransactions.push(e.color);
       this.titlesTransactions.push(e.title);
@@ -84,15 +88,15 @@ export class CostsPageComponent implements OnInit {
       this.backgroundColors.push(`background-color: ${this.colorsTransactions[idx]}`);
       this.colors.push(`color: ${this.colorsTransactions[idx]}`);
       this.temp = 0;
-      this.costsDataFiltered.forEach((elem) => {
+      this.transactionDataFiltered.forEach((elem) => {
         if (elem.category === idx) {
           this.temp += elem.amount;
         }
       });
-      this.costs.push(this.temp);
+      this.transactions.push(this.temp);
     });
     this.data.icons = this.iconTransactions;
-    this.data.sumCosts = this.costs;
+    this.data.sumTransaction = this.transactions;
     this.createDataDonut();
   }
 
@@ -107,14 +111,14 @@ export class CostsPageComponent implements OnInit {
     this.lastDayMonth = now.clone().endOf('month');
     this.strokeDasharray = [];
     this.strokeDashoffset = [25];
-    this.costsDataFiltered = [];
+    this.transactionDataFiltered = [];
 
     switch (this.dateFilter) {
 
       case 't':
         this.transactionData.forEach(e => {
           if (e.date.substr(0, 10) === now.format('YYYY-MM-DD')) {
-            this.costsDataFiltered.push(e);
+            this.transactionDataFiltered.push(e);
           }
         });
         break;
@@ -122,7 +126,7 @@ export class CostsPageComponent implements OnInit {
       case 'd':
         this.transactionData.forEach(e => {
           if (e.date.substr(0, 10) === now.format('YYYY-MM-DD')) {
-            this.costsDataFiltered.push(e);
+            this.transactionDataFiltered.push(e);
           }
         });
         break;
@@ -132,7 +136,7 @@ export class CostsPageComponent implements OnInit {
         const ldw = Number(this.lastDayWeek.format('x'));
         this.transactionData.forEach(e => {
           if (Number(Date.parse(e.date)) >= fdw && Number(Date.parse(e.date)) <= ldw) {
-            this.costsDataFiltered.push(e);
+            this.transactionDataFiltered.push(e);
           }
         });
         break;
@@ -140,7 +144,7 @@ export class CostsPageComponent implements OnInit {
       case 'm':
         this.transactionData.forEach(e => {
           if (e.date.substr(0, 7) === now.format('YYYY-MM')) {
-            this.costsDataFiltered.push(e);
+            this.transactionDataFiltered.push(e);
           }
         });
         break;
@@ -148,13 +152,13 @@ export class CostsPageComponent implements OnInit {
       case 'y':
         this.transactionData.forEach(e => {
           if (e.date.substr(0, 4) === now.format('YYYY')) {
-            this.costsDataFiltered.push(e);
+            this.transactionDataFiltered.push(e);
           }
         });
         break;
 
       case 'i':
-        this.costsDataFiltered = this.transactionData;
+        this.transactionDataFiltered = this.transactionData;
         break;
 
       case 'r':
@@ -162,45 +166,45 @@ export class CostsPageComponent implements OnInit {
         const ldr = Number(this.data.choiceLastDay.endOf('day').format('x'));
         this.transactionData.forEach(e => {
           if (Number(Date.parse(e.date)) >= fdr && Number(Date.parse(e.date)) <= ldr) {
-            this.costsDataFiltered.push(e);
+            this.transactionDataFiltered.push(e);
           }
         });
         break;
     }
 
-    this.costs = [];
+    this.transactions = [];
     this.dataInterfaceTransactions.forEach((e, idx) => {
       this.temp = 0;
-      this.costsDataFiltered.forEach((elem) => {
+      this.transactionDataFiltered.forEach((elem) => {
         if (elem.category === idx) {
           this.temp += elem.amount;
         }
       });
-      this.costs.push(this.temp);
+      this.transactions.push(this.temp);
     });
-    this.data.sumCosts = this.costs;
+    this.data.sumTransaction = this.transactions;
     this.createDataDonut();
   }
 
   createDataDonut(): void {
-    this.costsAll = 0;
-    this.incomeAll = 0;
-    this.costsAll = this.data.sumCosts.reduce((total, amount) => {
+    /*this.costsAll = 0;
+    this.incomeAll = 0;*/
+    this.transactionsAll = this.data.sumTransaction.reduce((total, amount) => {
       return total + amount;
     });
-    this.data.costsAll = this.costsAll;
-    this.data.coefficient = 100 / this.costsAll;
-    if (this.costsAll) {
-      this.strokeDasharray = this.costs.map(currentValue =>
+    this.data.transactionsAll = this.transactionsAll;
+    this.data.coefficient = 100 / this.transactionsAll;
+    if (this.transactionsAll) {
+      this.strokeDasharray = this.transactions.map(currentValue =>
         `${currentValue * this.data.coefficient} ${100 - currentValue * this.data.coefficient}`);
-      this.costs.forEach((elem, idx) => {
+      this.transactions.forEach((elem, idx) => {
         if (idx > 0) {
-          this.strokeDashoffset.push(this.strokeDashoffset[idx - 1] + this.costs[idx] * this.data.coefficient);
+          this.strokeDashoffset.push(this.strokeDashoffset[idx - 1] + this.transactions[idx] * this.data.coefficient);
         }
       });
     } else {
-      this.strokeDasharray = this.costs.map(() => `0 100`);
-      this.costs.forEach(() => {
+      this.strokeDasharray = this.transactions.map(() => `0 100`);
+      this.transactions.forEach(() => {
         this.strokeDashoffset.push(25);
       });
     }
@@ -285,7 +289,7 @@ export class CostsPageComponent implements OnInit {
     this.tempColorCategory = this.colorsTransactions[i];
     this.tempTitleCategory = this.dataInterfaceTransactions[i].title;
     this.indexCategory = i;
-    this.data.editState ? this.modalCreateCategory = true : this.modalCreateCost = true;
+    this.data.editState ? this.modalCreateCategory = true : this.modalCreateTransaction = true;
     this.colorNewCategory = `background-color: ${this.colorsTransactions[i]}`;
     this.iconNewCategory = this.iconTransactions[i];
     this.tempIconCategory = this.iconTransactions[i];
@@ -324,7 +328,7 @@ export class CostsPageComponent implements OnInit {
 
   createdTransaction(): any {
     this.transactionData = this.data.transaction;
-    this.costs = [];
+    this.transactions = [];
     this.backToNowDate();
     this.ngOnInit();
   }
@@ -333,7 +337,11 @@ export class CostsPageComponent implements OnInit {
     this.modalChangeIcon = false;
     this.modalChoiceDay = false;
     this.modalChooseRange = false;
-    this.modalCreateCost = false;
+    this.modalCreateTransaction = false;
     this.modalCreateCategory = false;
+  }
+
+  toggleTypeTransactions(): any {
+    console.log('this.data.typeTransaction in costs: ', this.data.typeTransaction.value);
   }
 }

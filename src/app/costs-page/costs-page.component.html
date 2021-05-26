@@ -42,14 +42,14 @@
   <div class="main-costs-page">
     <ul>
 
-      <li *ngFor="let elem of data.dataInterfaceExpense; let idx = index">
+      <li *ngFor="let elem of dataInterfaceTransactions; let idx = index">
         <div *ngIf="titlesTransactions[idx]" (click)="closeAllModal();
                                         this.modalDateFilter = false;
                                         openModalCreateCost(idx)"
-             [ngClass]="{opacity03: costs[idx] === 0}">
+             [ngClass]="{opacity03: transactions[idx] === 0}">
           <h2>{{titlesTransactions[idx]}}</h2>
           <div class="costs material-icons" style="{{backgroundColors[idx]}}">{{iconTransactions[idx]}}</div>
-          <div class="sum" style="{{colors[idx]}}">{{costs[idx]}} ₽</div>
+          <div class="sum" style="{{colors[idx]}}">{{transactions[idx]}} ₽</div>
         </div>
         <div *ngIf="!titlesTransactions[idx] && titlesTransactions[idx - 1]" (click)="closeAllModal();
                                                                             openModalCreateExpenseCategory(idx);
@@ -59,7 +59,7 @@
       </li>
 
       <li class="donut-chart">
-        <app-donut-chart></app-donut-chart>
+        <app-donut-chart (click)="data.toggleTypeTransaction()"></app-donut-chart>
       </li>
 
     </ul>
@@ -108,8 +108,8 @@
       </ul>
     </div>
 
-    <div class="modal-transaction" *ngIf="modalCreateCost">
-      <div class="modal-transaction-shadow" (click)="modalCreateCost = false"></div>
+    <div class="modal-transaction" *ngIf="modalCreateTransaction">
+      <div class="modal-transaction-shadow" (click)="modalCreateTransaction = false"></div>
       <app-modal-transaction [dateFilter]="dateFilter"
                              [firstDayWeek]="firstDayWeek"
                              [lastDayMonth]="lastDayMonth"
@@ -122,7 +122,7 @@
                              [yesterday]="yesterday"
                              [indexCategory]="indexCategory"
                              [dateServiceDate]="dateService.date"
-                             (closeModalTransaction)="modalCreateCost = false"
+                             (closeModalTransaction)="modalCreateTransaction = false"
                              (transactionCreated)="createdTransaction()">
       </app-modal-transaction>
     </div>

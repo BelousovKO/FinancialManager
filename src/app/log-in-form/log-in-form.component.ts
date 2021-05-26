@@ -41,7 +41,11 @@ export class LogInFormComponent implements OnInit {
             if (response.status === 'OK') {
               this.data.userData = response.userData;
               this.data.transaction = response.userData.costs;
+              this.data.costs = response.userData.costs;
+              this.data.income = response.userData.income;
+              this.data.dataInterfaceTransaction = response.userData.interface.expense;
               this.data.dataInterfaceExpense = response.userData.interface.expense;
+              this.data.dataInterfaceIncome = response.userData.interface.income;
               this.data.userId = response.userData.userId;
               this.authorization.login = true;
               this.authorization.username = response.data;
@@ -91,7 +95,10 @@ export class LogInFormComponent implements OnInit {
           if (response.status === 'OK') {
             this.data.userData = response.userData;
             this.data.transaction = response.userData.costs;
+            this.data.costs = response.userData.costs;
+            this.data.income = response.userData.income;
             this.data.dataInterfaceExpense = response.userData.interface.expense;
+            this.data.dataInterfaceIncome = response.userData.interface.income;
             this.data.userId = response.userData.userId;
             this.authorization.login = true;
             this.authorization.username = this.logInForm.controls.userName.value;
@@ -110,8 +117,8 @@ export class LogInFormComponent implements OnInit {
     this.authorization.login = false;
     this.authorization.username = '';
     localStorage.removeItem('token');
-    this.data.costsAll = 0;
-    this.data.sumCosts = [];
+    this.data.transactionsAll = 0;
+    this.data.sumTransaction = [];
   }
 }
 
