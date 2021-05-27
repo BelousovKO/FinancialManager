@@ -210,6 +210,7 @@ export class ModalTransactionComponent implements OnInit {
       const token = localStorage.getItem('token');
       const body = {
         userId: this.userData.userId,
+        typeTransaction: this.userData.typeTransaction.value,
         title: this.transactionTitle,
         date: this.transactionDate.format('YYYY-MM-DD:HH:mm:ss'),
         category: this.indexCategory,
@@ -220,7 +221,11 @@ export class ModalTransactionComponent implements OnInit {
         .subscribe(
           response => {
             if (response.status === 'OK') {
-              this.userData.transaction = response.data;
+              if (this.userData.typeTransaction.value === 'cost') {
+                this.userData.costs.push(response.data);
+              } else {
+                this.userData.income.push(response.data);
+              }
               this.transactionCreated.emit();
               this.closeModalTransaction.emit();
             }

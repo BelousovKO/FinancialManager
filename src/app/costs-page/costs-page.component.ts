@@ -22,10 +22,12 @@ export class CostsPageComponent implements OnInit {
 
   public transactionData = this.data.transaction;
   public transactionDataFiltered = [];
+  public costDataFiltered = [];
+  public incomeDataFiltered = [];
   public transactions = [];
   public colors = [];
   public backgroundColors = [];
-  public colorsTransactions = this.data.expenseColors;
+  public colorsTransactions = this.data.transactionColors;
   public titlesTransactions = [];
   public iconTransactions = [];
   public dataInterfaceTransactions = this.data.dataInterfaceTransaction;
@@ -44,8 +46,8 @@ export class CostsPageComponent implements OnInit {
   public countCategories: number;
   private token = localStorage.getItem('token');
   public transactionsAll = 0;
- /* public costsAll = 0;
-  public incomeAll = 0;*/
+  public costsAll = 0;
+  public incomeAll = 0;
   public strokeDasharray = [];
   public strokeDashoffset = [25];
   public firstDayWeek: moment.Moment;
@@ -76,27 +78,9 @@ export class CostsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.data.typeTransaction.subscribe(this.toggleTypeTransactions.bind(this));
-    this.data.typeTransaction.value === 'cost' ? this.countCategories = 12 : this.countCategories = 6;
+
     this.dateService.date.subscribe(this.generateDate.bind(this));
-    this.strokeDasharray = [];
-    this.strokeDashoffset = [25];
-    this.transactions = [];
-    this.dataInterfaceTransactions.forEach((e, idx) => {
-      this.colorsTransactions.push(e.color);
-      this.titlesTransactions.push(e.title);
-      this.iconTransactions.push(e.icon);
-      this.backgroundColors.push(`background-color: ${this.colorsTransactions[idx]}`);
-      this.colors.push(`color: ${this.colorsTransactions[idx]}`);
-      this.temp = 0;
-      this.transactionDataFiltered.forEach((elem) => {
-        if (elem.category === idx) {
-          this.temp += elem.amount;
-        }
-      });
-      this.transactions.push(this.temp);
-    });
-    this.data.icons = this.iconTransactions;
-    this.data.sumTransaction = this.transactions;
+
     this.createDataDonut();
   }
 
@@ -112,6 +96,8 @@ export class CostsPageComponent implements OnInit {
     this.strokeDasharray = [];
     this.strokeDashoffset = [25];
     this.transactionDataFiltered = [];
+    this.incomeDataFiltered = [];
+    this.costDataFiltered = [];
 
     switch (this.dateFilter) {
 
@@ -121,12 +107,32 @@ export class CostsPageComponent implements OnInit {
             this.transactionDataFiltered.push(e);
           }
         });
+        this.data.costs.forEach(e => {
+          if (e.date.substr(0, 10) === now.format('YYYY-MM-DD')) {
+            this.costDataFiltered.push(e);
+          }
+        });
+        this.data.income.forEach(e => {
+          if (e.date.substr(0, 10) === now.format('YYYY-MM-DD')) {
+            this.incomeDataFiltered.push(e);
+          }
+        });
         break;
 
       case 'd':
         this.transactionData.forEach(e => {
           if (e.date.substr(0, 10) === now.format('YYYY-MM-DD')) {
             this.transactionDataFiltered.push(e);
+          }
+        });
+        this.data.costs.forEach(e => {
+          if (e.date.substr(0, 10) === now.format('YYYY-MM-DD')) {
+            this.costDataFiltered.push(e);
+          }
+        });
+        this.data.income.forEach(e => {
+          if (e.date.substr(0, 10) === now.format('YYYY-MM-DD')) {
+            this.incomeDataFiltered.push(e);
           }
         });
         break;
@@ -139,12 +145,32 @@ export class CostsPageComponent implements OnInit {
             this.transactionDataFiltered.push(e);
           }
         });
+        this.data.costs.forEach(e => {
+          if (Number(Date.parse(e.date)) >= fdw && Number(Date.parse(e.date)) <= ldw) {
+            this.costDataFiltered.push(e);
+          }
+        });
+        this.data.income.forEach(e => {
+          if (Number(Date.parse(e.date)) >= fdw && Number(Date.parse(e.date)) <= ldw) {
+            this.incomeDataFiltered.push(e);
+          }
+        });
         break;
 
       case 'm':
         this.transactionData.forEach(e => {
           if (e.date.substr(0, 7) === now.format('YYYY-MM')) {
             this.transactionDataFiltered.push(e);
+          }
+        });
+        this.data.costs.forEach(e => {
+          if (e.date.substr(0, 7) === now.format('YYYY-MM')) {
+            this.costDataFiltered.push(e);
+          }
+        });
+        this.data.income.forEach(e => {
+          if (e.date.substr(0, 7) === now.format('YYYY-MM')) {
+            this.incomeDataFiltered.push(e);
           }
         });
         break;
@@ -155,10 +181,22 @@ export class CostsPageComponent implements OnInit {
             this.transactionDataFiltered.push(e);
           }
         });
+        this.data.costs.forEach(e => {
+          if (e.date.substr(0, 4) === now.format('YYYY')) {
+            this.costDataFiltered.push(e);
+          }
+        });
+        this.data.income.forEach(e => {
+          if (e.date.substr(0, 4) === now.format('YYYY')) {
+            this.incomeDataFiltered.push(e);
+          }
+        });
         break;
 
       case 'i':
         this.transactionDataFiltered = this.transactionData;
+        this.costDataFiltered = this.data.costs;
+        this.incomeDataFiltered = this.data.income;
         break;
 
       case 'r':
@@ -167,6 +205,16 @@ export class CostsPageComponent implements OnInit {
         this.transactionData.forEach(e => {
           if (Number(Date.parse(e.date)) >= fdr && Number(Date.parse(e.date)) <= ldr) {
             this.transactionDataFiltered.push(e);
+          }
+        });
+        this.data.costs.forEach(e => {
+          if (Number(Date.parse(e.date)) >= fdr && Number(Date.parse(e.date)) <= ldr) {
+            this.costDataFiltered.push(e);
+          }
+        });
+        this.data.income.forEach(e => {
+          if (Number(Date.parse(e.date)) >= fdr && Number(Date.parse(e.date)) <= ldr) {
+            this.incomeDataFiltered.push(e);
           }
         });
         break;
@@ -183,12 +231,47 @@ export class CostsPageComponent implements OnInit {
       this.transactions.push(this.temp);
     });
     this.data.sumTransaction = this.transactions;
+    this.incomeAll = 0;
+    this.incomeDataFiltered.forEach((elem) => {
+      this.incomeAll += elem.amount;
+    });
+    this.data.incomeAll = this.incomeAll;
+    this.costsAll = 0;
+    this.costDataFiltered.forEach((elem) => {
+      this.costsAll += elem.amount;
+    });
+    this.data.costsAll = this.costsAll;
+
     this.createDataDonut();
   }
 
   createDataDonut(): void {
-    /*this.costsAll = 0;
-    this.incomeAll = 0;*/
+
+    this.strokeDasharray = [];
+    this.strokeDashoffset = [25];
+    this.transactions = [];
+    this.colorsTransactions = [];
+    this.titlesTransactions = [];
+    this.iconTransactions = [];
+    this.backgroundColors = [];
+    this.colors = [];
+    this.dataInterfaceTransactions.forEach((e, idx) => {
+      this.colorsTransactions.push(e.color);
+      this.titlesTransactions.push(e.title);
+      this.iconTransactions.push(e.icon);
+      this.backgroundColors.push(`background-color: ${this.colorsTransactions[idx]}`);
+      this.colors.push(`color: ${this.colorsTransactions[idx]}`);
+      this.temp = 0;
+      this.transactionDataFiltered.forEach((elem) => {
+        if (elem.category === idx) {
+          this.temp += elem.amount;
+        }
+      });
+      this.transactions.push(this.temp);
+    });
+    this.data.icons = this.iconTransactions;
+    this.data.sumTransaction = this.transactions;
+    this.transactionsAll = 0;
     this.transactionsAll = this.data.sumTransaction.reduce((total, amount) => {
       return total + amount;
     });
@@ -210,6 +293,7 @@ export class CostsPageComponent implements OnInit {
     }
     this.data.strokeDasharray = this.strokeDasharray;
     this.data.strokeDashoffset = this.strokeDashoffset;
+    this.data.transactionColors = this.colorsTransactions;
   }
 
   inputHandlerCategory(event: any): any {
@@ -245,7 +329,7 @@ export class CostsPageComponent implements OnInit {
           this.iconTransactions[idx] = this.iconNewCategory;
           if (this.tempColorCategory) {
             this.dataInterfaceTransactions[idx].color = this.tempColorCategory;
-            this.data.expenseColors[idx] = this.tempColorCategory;
+            this.data.transactionColors[idx] = this.tempColorCategory;
             this.colorsTransactions[idx] = this.tempColorCategory;
             this.backgroundColors[idx] = `background-color: ${this.tempColorCategory}`;
             this.colors[idx] = `color: ${this.tempColorCategory}`;
@@ -264,7 +348,7 @@ export class CostsPageComponent implements OnInit {
 
       if (this.tempColorCategory) {
         this.dataInterfaceTransactions[this.indexCategory].color = this.tempColorCategory;
-        this.data.expenseColors[this.indexCategory] = this.tempColorCategory;
+        this.data.transactionColors[this.indexCategory] = this.tempColorCategory;
         this.colorsTransactions[this.indexCategory] = this.tempColorCategory;
         this.backgroundColors[this.indexCategory] = `background-color: ${this.tempColorCategory}`;
         this.colors[this.indexCategory] = `color: ${this.tempColorCategory}`;
@@ -272,7 +356,15 @@ export class CostsPageComponent implements OnInit {
     }
     this.modalCreateCategory = false;
     this.tempTitleCategory = '';
-    const body = {userId: this.data.userId, expense: this.dataInterfaceTransactions, token: this.token};
+
+    if (this.data.typeTransaction.value === 'cost') {
+      this.data.dataInterface.expense = this.dataInterfaceTransactions;
+    } else {
+      this.data.dataInterface.income = this.dataInterfaceTransactions;
+    }
+
+
+    const body = {userId: this.data.userId, interface: this.data.dataInterface, token: this.token};
     this.changeInterface.change(body)
       .subscribe(
         response => {
@@ -342,6 +434,20 @@ export class CostsPageComponent implements OnInit {
   }
 
   toggleTypeTransactions(): any {
-    console.log('this.data.typeTransaction in costs: ', this.data.typeTransaction.value);
+    if (this.data.typeTransaction.value === 'cost') {
+      this.countCategories = 12;
+      this.data.transaction = this.data.costs;
+      this.transactionData = this.data.transaction;
+      this.data.dataInterfaceTransaction = this.data.dataInterfaceExpense;
+      this.dataInterfaceTransactions = this.data.dataInterfaceExpense;
+    } else {
+      this.countCategories = 6;
+      this.data.transaction = this.data.income;
+      this.transactionData = this.data.transaction;
+      this.data.dataInterfaceTransaction = this.data.dataInterfaceIncome;
+      this.dataInterfaceTransactions = this.data.dataInterfaceIncome;
+    }
+    this.dateService.date.subscribe(this.generateDate.bind(this));
+    this.createDataDonut();
   }
 }

@@ -15,10 +15,11 @@ export class UserDataService {
   public transactionsAll = 0;
   public costsAll = 0;
   public incomeAll = 0;
+  public dataInterface = {expense: [], income: []};
   public dataInterfaceExpense = [];
   public dataInterfaceIncome = [];
   public dataInterfaceTransaction = this.dataInterfaceExpense;
-  public expenseColors = [];
+  public transactionColors = [];
   public sumTransaction = [];
   public userId = '';
   public coefficient: number;

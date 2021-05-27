@@ -43,6 +43,9 @@ export class LogInFormComponent implements OnInit {
               this.data.transaction = response.userData.costs;
               this.data.costs = response.userData.costs;
               this.data.income = response.userData.income;
+              this.data.dataInterface = response.userData.interface;
+              this.data.dataInterface.expense = response.userData.interface.expense;
+              this.data.dataInterface.income = response.userData.interface.income;
               this.data.dataInterfaceTransaction = response.userData.interface.expense;
               this.data.dataInterfaceExpense = response.userData.interface.expense;
               this.data.dataInterfaceIncome = response.userData.interface.income;
