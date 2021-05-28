@@ -64,9 +64,9 @@
 
     </ul>
 
-    <div class="modal-create-expense-category-container" *ngIf="modalCreateCategory">
+    <div class="modal-create-category-container" *ngIf="modalCreateCategory">
       <div class="shadow" (click)="closeAllModal()"></div>
-      <div class="modal-create-expense-category">
+      <div class="modal-create-category">
         <div class="buttons-container mb-2" style="{{colorNewCategory}}">
           <button class="btn cancel material-icons" (click)="modalCreateCategory = false">close</button>
           <button class="btn create material-icons" [disabled]="!inputValue && !data.editState"
@@ -82,10 +82,6 @@
           <div class="costs new-icon material-icons" style="{{colorNewCategory}}"
                (click)="modalChangeIcon = true">{{iconNewCategory}}
           </div>
-        </div>
-        <div class="del-category">
-          <span class="iconify del-icon" data-icon="mdi:delete" data-inline="false"></span>
-          <span class="del-title">удалить категорию</span>
         </div>
       </div>
     </div>

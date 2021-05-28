@@ -12,10 +12,10 @@ import {UserDataService} from '../services/user-data.service';
 })
 export class LogInFormComponent implements OnInit {
 
-  submitted = false;
-  statusLogin = '';
+  public submitted = false;
+  public statusLogin = '';
 
-  logInForm: FormGroup;
+  public logInForm: FormGroup;
 
   constructor(private fb: FormBuilder,
               private _logInService: LogInService,
@@ -116,12 +116,12 @@ export class LogInFormComponent implements OnInit {
       );
   }
 
-  exit(): any {
+  /*exit(): any {
     this.authorization.login = false;
     this.authorization.username = '';
     localStorage.removeItem('token');
     this.data.transactionsAll = 0;
     this.data.sumTransaction = [];
-  }
+  }*/
 }
 

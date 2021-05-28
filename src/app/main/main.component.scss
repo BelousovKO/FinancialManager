@@ -1,0 +1,16 @@
+.buttons-container {
+  width: 40%;
+  margin: 0 auto;
+  display: flex;
+
+  .buttons {
+    display: grid;
+    width: 50%;
+
+    i, span {
+      text-align: center;
+      margin: 0 35%;
+      cursor: pointer;
+    }
+  }
+}

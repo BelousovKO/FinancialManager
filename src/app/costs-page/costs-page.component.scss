@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 50px 0 30px 0;
+  margin: 5px 0 30px 0;
 
   .modal-button {
     font-weight: 500;
@@ -89,7 +89,7 @@
     color: black;
   }
 
-  .modal-create-expense-category,
+  .modal-create-category,
   .modal-create-cost,
   .modal-change-icon,
   .modal-date-filter,
@@ -132,7 +132,7 @@
     }
   }
 
-  .modal-create-expense-category-container {
+  .modal-create-category-container {
     position: absolute;
     top: -202px;
     left: 0;
@@ -146,20 +146,11 @@
       opacity: .6;
     }
 
-    .modal-create-expense-category {
+    .modal-create-category {
       top: 255px;
 
       input {
         border-bottom: 1px solid lightgray;
-      }
-
-      .del-category {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #961818;
-        padding-right: 8px;
-        margin-top: 10px;
       }
     }
   }

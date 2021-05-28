@@ -242,6 +242,8 @@ export class CostsPageComponent implements OnInit {
     });
     this.data.costsAll = this.costsAll;
 
+    this.data.balance.next(this.data.incomeAll - this.data.costsAll);
+
     this.createDataDonut();
   }
 

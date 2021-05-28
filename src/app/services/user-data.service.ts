@@ -7,6 +7,7 @@ import {BehaviorSubject} from 'rxjs';
 })
 export class UserDataService {
   public typeTransaction = new BehaviorSubject('cost');
+  public balance = new BehaviorSubject(0);
 
   public userData = [];
   public transaction = [];

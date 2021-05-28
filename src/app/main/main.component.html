@@ -1,2 +1,12 @@
-<app-costs-page></app-costs-page>
+<app-costs-page *ngIf="content === 'category'"></app-costs-page>
+<div class="buttons-container">
+  <div class="buttons">
+    <i class="material-icons">donut_large</i>
+    <span>Категории</span>
+  </div>
+  <div class="buttons">
+    <i class="material-icons">receipt</i>
+    <span>Операции</span>
+  </div>
+</div>
 

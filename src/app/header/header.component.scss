@@ -1,0 +1,24 @@
+.header {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  .exit {
+    margin-left: 20px;
+  }
+
+  .title-balance,
+  .balance {
+  text-align: center;
+  }
+
+  .edit-menu {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+
+    .edit-menu-content {
+      display: flex;
+    }
+  }
+}
