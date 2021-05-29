@@ -8,6 +8,7 @@ import {BehaviorSubject} from 'rxjs';
 export class UserDataService {
   public typeTransaction = new BehaviorSubject('cost');
   public balance = new BehaviorSubject(0);
+  public dateFilter = new BehaviorSubject('m');
 
   public userData = [];
   public transaction = [];
@@ -27,7 +28,7 @@ export class UserDataService {
   public strokeDasharray = [];
   public strokeDashoffset = [];
   public icons = [];
-  public dateFilter = 'm';
+
   public choiceFirstDay = moment();
   public choiceLastDay = moment();
   public editState = false;

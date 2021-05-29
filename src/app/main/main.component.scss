@@ -1,6 +1,6 @@
 .buttons-container {
   width: 40%;
-  margin: 0 auto;
+  margin: 80px auto 0;
   display: flex;
 
   .buttons {
@@ -9,7 +9,6 @@
 
     i, span {
       text-align: center;
-      margin: 0 35%;
       cursor: pointer;
     }
   }

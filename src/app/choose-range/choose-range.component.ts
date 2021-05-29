@@ -45,7 +45,7 @@ export class ChooseRangeComponent implements OnInit {
 
   go(dir: number): void {
 
-    switch (this.userData.dateFilter) {
+    switch (this.userData.dateFilter.value) {
       case 't':
         this.dateService.changeDay(dir);
         break;

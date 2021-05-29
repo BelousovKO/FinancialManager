@@ -20,6 +20,8 @@ import {CalendarComponent} from './calendar/calendar.component';
 import {ChooseRangeComponent} from './choose-range/choose-range.component';
 import {ModalTransactionComponent} from './modal-transaction/modal-transaction.component';
 import { HeaderComponent } from './header/header.component';
+import { DateControlComponent } from './date-control/date-control.component';
+import { ModalDateFilterComponent } from './modal-date-filter/modal-date-filter.component';
 
 const appRoutes: Routes = [
   {path: '', component: MainComponent},
@@ -48,6 +50,8 @@ const appRoutes: Routes = [
     ChooseRangeComponent,
     ModalTransactionComponent,
     HeaderComponent,
+    DateControlComponent,
+    ModalDateFilterComponent,
   ],
   imports: [
     BrowserModule,

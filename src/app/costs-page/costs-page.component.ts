@@ -31,7 +31,6 @@ export class CostsPageComponent implements OnInit {
   public titlesTransactions = [];
   public iconTransactions = [];
   public dataInterfaceTransactions = this.data.dataInterfaceTransaction;
-  public dateFilter = this.data.dateFilter;
   private temp: number;
   public modalCreateCategory = false;
   public inputValue = '';
@@ -79,7 +78,8 @@ export class CostsPageComponent implements OnInit {
   ngOnInit(): void {
     this.data.typeTransaction.subscribe(this.toggleTypeTransactions.bind(this));
 
-    this.dateService.date.subscribe(this.generateDate.bind(this));
+    this.dateService.date.subscribe(this.generateDate());
+    this.data.dateFilter.subscribe(this.generateDate());
 
     this.createDataDonut();
   }
@@ -88,8 +88,10 @@ export class CostsPageComponent implements OnInit {
     this.dateService.backToToday();
   }
 
-  generateDate(now: moment.Moment): void {
+  generateDate(): any {
+    const now = this.dateService.date.value;
     moment.locale('ru');
+    console.log(this.data.dateFilter.value);
     this.firstDayWeek = now.clone().startOf('week');
     this.lastDayWeek = now.clone().endOf('week');
     this.lastDayMonth = now.clone().endOf('month');
@@ -99,7 +101,7 @@ export class CostsPageComponent implements OnInit {
     this.incomeDataFiltered = [];
     this.costDataFiltered = [];
 
-    switch (this.dateFilter) {
+    switch (this.data.dateFilter.value) {
 
       case 't':
         this.transactionData.forEach(e => {
@@ -391,7 +393,7 @@ export class CostsPageComponent implements OnInit {
 
   go(dir: number): void {
 
-    switch (this.dateFilter) {
+    switch (this.data.dateFilter.value) {
       case 't':
         this.dateService.changeDay(dir);
         break;

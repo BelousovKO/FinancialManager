@@ -1,0 +1,44 @@
+<div class="container-date-filter" [ngClass]="{hidden: data.editState}">
+  <i class="material-icons" *ngIf="data.dateFilter.value !== 'i'" (click)="go(-1)">arrow_left</i>
+  <span class="modal-button" *ngIf="data.dateFilter.value === 'm'" (click)="modalDateFilter = true">
+      <span class="filter-icons"><span>{{lastDayMonth | moment: 'DD' }}</span></span>
+      <span class="date-filter-title">{{ dateService.date | async | moment }}</span>
+      <i class="material-icons">arrow_drop_down</i>
+    </span>
+  <span class="modal-button" *ngIf="data.dateFilter.value === 't' || data.dateFilter.value === 'd'"
+        (click)="modalDateFilter = true; backToNowDate()">
+      <span class="filter-icons"><span>1</span></span>
+      <span class="date-filter-title">{{ dateService.date | async | moment: 'ddd DD MMMM y' }}</span>
+      <i class="material-icons">arrow_drop_down</i>
+    </span>
+  <span class="modal-button" *ngIf="data.dateFilter.value === 'w'" (click)="modalDateFilter = true">
+      <span class="filter-icons"><span>7</span></span>
+      <span class="date-filter-title">
+        {{ firstDayWeek | moment: 'D' }} - {{ lastDayWeek | moment: 'D MMMM y'}}
+      </span>
+      <i class="material-icons">arrow_drop_down</i>
+    </span>
+  <span class="modal-button" *ngIf="data.dateFilter.value === 'y'" (click)="modalDateFilter = true">
+      <span class="filter-icons_year"><span>365</span></span>
+      <span class="date-filter-title">{{ dateService.date | async | moment: 'y' }} ГОД</span>
+      <i class="material-icons">arrow_drop_down</i>
+    </span>
+  <span class="modal-button" *ngIf="data.dateFilter.value === 'i'" (click)="modalDateFilter = true">
+      <span class="material-icons">all_inclusive</span>
+      <span class="date-filter-title">ВСЁ ВРЕМЯ</span>
+      <i class="material-icons">arrow_drop_down</i>
+    </span>
+  <span class="modal-button" *ngIf="data.dateFilter.value === 'r'" (click)="modalDateFilter = true; clearChoiceDate()">
+      <span class="material-icons">date_range</span>
+      <span class="date-filter-title">{{ data.choiceFirstDay | moment: 'DD.MM.Y' }} -
+        {{ data.choiceLastDay | moment: 'DD.MM.Y' }}
+      </span>
+      <i class="material-icons">arrow_drop_down</i>
+    </span>
+  <i class="material-icons" *ngIf="data.dateFilter.value !== 'i'" (click)="go(1)">arrow_right</i>
+</div>
+
+<div class="modal-date-filter-container" *ngIf="modalDateFilter">
+  <div class="shadow" (click)="modalDateFilter = false"></div>
+  <app-modal-date-filter [modalDateFilter]="modalDateFilter"></app-modal-date-filter>
+</div>

@@ -1,0 +1,73 @@
+<ul class="modal-date-filter">
+  <li class="filter-range filter-date-btn"
+      [ngClass]="{choice: data.dateFilter.value === 'r'}"
+      (click)="data.dateFilter.next('r');
+              modalChooseRange = true">
+    <div class="material-icons">date_range</div>
+    <div class="filter-text">Выбрать диапазон</div>
+    <div class="date">{{ dateService.date | async | moment }}</div>
+  </li>
+  <li class="filter-infinity filter-date-btn"
+      [ngClass]="{choice: data.dateFilter.value === 'i'}"
+      (click)="data.dateFilter.next('i')">
+    <div class="material-icons">all_inclusive</div>
+    <div class="filter-text">Всё время</div>
+  </li>
+  <li class="filter-day filter-date-btn"
+      [ngClass]="{choice: data.dateFilter.value === 'd'}"
+      (click)="modalDateFilter = false;
+            modalChoiceDay = true;
+            data.dateFilter.next('d');
+            dateService.backToToday()">
+    <div class="filter-icons">
+      <div>1</div>
+    </div>
+    <div class="filter-text">Выбрать день</div>
+  </li>
+  <li class="filter-week filter-date-btn"
+      [ngClass]="{choice: data.dateFilter.value === 'w'}"
+      (click)="modalDateFilter = false;
+            data.dateFilter.next('w');
+            dateService.backToToday()">
+    <div class="filter-icons">
+      <div>7</div>
+    </div>
+    <div class="filter-text">Неделя</div>
+    <div class="date">
+      {{ today.firstDayOfWeek }} -
+      {{ today.lastDayOfWeek }}
+    </div>
+  </li>
+  <li class="filter-today filter-date-btn"
+      [ngClass]="{choice: data.dateFilter.value === 't'}"
+      (click)="modalDateFilter = false;
+            data.dateFilter.next('t');
+            dateService.backToToday()">
+    <div class="material-icons">today</div>
+    <div class="filter-text">Сегодня</div>
+    <div class="date">{{ today.today }}</div>
+  </li>
+  <li class="filter-year filter-date-btn"
+      [ngClass]="{choice: data.dateFilter.value === 'y'}"
+      (click)="modalDateFilter = false;
+            data.dateFilter.next('y');
+            dateService.backToToday()">
+    <div class="filter-icons">
+      <div class="filter-icons_year">365</div>
+    </div>
+    <div class="filter-text">Год</div>
+    <div class="date">{{ today.year }} год</div>
+  </li>
+  <li class="filter-month filter-date-btn"
+      [ngClass]="{choice: data.dateFilter.value === 'm'}"
+      (click)="modalDateFilter = false;
+            data.dateFilter.next('m');
+            dateService.backToToday()">
+    <div class="filter-icons">
+      <div>{{today.lastDayOfMonth }}</div>
+    </div>
+    <div class="filter-text">Месяц</div>
+    <div class="date">{{ today.month }}</div>
+  </li>
+</ul>
+
