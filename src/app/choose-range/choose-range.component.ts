@@ -42,22 +42,4 @@ export class ChooseRangeComponent implements OnInit {
     this.lastDayRange = this.ChoiceDayRange.clone();
     this.userData.choiceLastDay = this.lastDayRange;
   }
-
-  go(dir: number): void {
-
-    switch (this.userData.dateFilter.value) {
-      case 't':
-        this.dateService.changeDay(dir);
-        break;
-      case 'w':
-        this.dateService.changeWeek(dir);
-        break;
-      case 'm':
-        this.dateService.changeMonth(dir);
-        break;
-      case 'y':
-        this.dateService.changeYear(dir);
-        break;
-    }
-  }
 }

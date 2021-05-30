@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import * as moment from 'moment';
 import {UserDataService} from '../services/user-data.service';
 import {DateService} from '../services/date.service';
@@ -10,13 +10,14 @@ import {DateService} from '../services/date.service';
 })
 export class ModalDateFilterComponent implements OnInit {
 
-  @Input() modalDateFilter: boolean;
+  @Output() closeModalDataFilter: EventEmitter<any> = new EventEmitter();
 
   constructor(public data: UserDataService,
               public dateService: DateService) { }
 
   public modalChooseRange = false;
   public modalChoiceDay = false;
+  public modalDateFilter = true;
   public today = {
     today: moment().format('DD MMMM Y'),
     firstDayOfWeek: moment().startOf('week').format('D'),
@@ -26,11 +27,5 @@ export class ModalDateFilterComponent implements OnInit {
     year: moment().format('Y')
   };
 
-  ngOnInit(): void {
-    this.data.dateFilter.subscribe(this.iii());
-  }
-
-  iii(): any {
-    console.log('DF in modal-data filter: ', this.data.dateFilter.value);
-  }
+  ngOnInit(): void { }
 }

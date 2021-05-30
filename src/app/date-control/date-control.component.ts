@@ -31,31 +31,6 @@ export class DateControlComponent implements OnInit {
     this.lastDayMonth = now.clone().endOf('month');
   }
 
-  go(dir: number): void {
-
-    switch (this.data.dateFilter.value) {
-      case 't':
-        this.dateService.changeDay(dir);
-        break;
-      case 'd':
-        this.dateService.changeDay(dir);
-        break;
-      case 'w':
-        this.dateService.changeWeek(dir);
-        break;
-      case 'm':
-        this.dateService.changeMonth(dir);
-        break;
-      case 'y':
-        this.dateService.changeYear(dir);
-        break;
-      case 'r':
-        this.dateService.changeRange(dir);
-        this.ngOnInit();
-        break;
-    }
-  }
-
   backToNowDate(): void {
     this.dateService.backToToday();
   }

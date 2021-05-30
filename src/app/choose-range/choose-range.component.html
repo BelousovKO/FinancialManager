@@ -35,14 +35,30 @@
 
   <div class="choice-interface">
     <div class="change-month">
-      <i class="material-icons" (click)="userData.dateFilter = 'm'; go(-1); userData.dateFilter = 't'">arrow_left</i>
+      <i class="material-icons" (click)="userData.dateFilter.next('m');
+                                         dateService.go(-1);
+                                         userData.dateFilter.next('t')">
+        arrow_left
+      </i>
       <span>{{ dateService.date | async | moment: 'MMMM' }}</span>
-      <i class="material-icons" (click)="userData.dateFilter = 'm'; go(1); userData.dateFilter = 't'">arrow_right</i>
+      <i class="material-icons" (click)="userData.dateFilter.next('m');
+                                         dateService.go(1);
+                                         userData.dateFilter.next('t')">
+        arrow_right
+      </i>
     </div>
     <div class="change-year">
-      <i class="material-icons" (click)="userData.dateFilter = 'y'; go(-1); userData.dateFilter = 't'">arrow_left</i>
+      <i class="material-icons" (click)="userData.dateFilter.next('y');
+                                         dateService.go(-1);
+                                         userData.dateFilter.next('t')">
+        arrow_left
+      </i>
       <span>{{ dateService.date | async | moment: 'Y' }}</span>
-      <i class="material-icons" (click)="userData.dateFilter = 'y'; go(1); userData.dateFilter = 't'">arrow_right</i>
+      <i class="material-icons" (click)="userData.dateFilter.next('y');
+                                         dateService.go(1);
+                                         userData.dateFilter.next('t')">
+        arrow_right
+      </i>
     </div>
   </div>
   <app-calendar></app-calendar>

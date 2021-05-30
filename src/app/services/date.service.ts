@@ -12,6 +12,32 @@ export class DateService {
   constructor(private data: UserDataService) {
   }
 
+  go(dir: number): void {
+
+    switch (this.data.dateFilter.value) {
+      case 't':
+        this.changeDay(dir);
+        break;
+      case 'd':
+        this.changeDay(dir);
+        break;
+      case 'w':
+        this.changeWeek(dir);
+        break;
+      case 'm':
+        this.changeMonth(dir);
+        break;
+      case 'y':
+        this.changeYear(dir);
+        break;
+      case 'r':
+        this.changeRange(dir);
+        this.data.toggleTypeTransaction();
+        this.data.toggleTypeTransaction();
+        break;
+    }
+  }
+
   backToToday(): void {
     const difference = moment().startOf('day').diff(this.date.value.startOf('day'), 'day');
     const value = this.date.value.add(difference, 'day');

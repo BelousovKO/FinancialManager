@@ -58,14 +58,6 @@ export class CostsPageComponent implements OnInit {
   public tempIconCategory = '';
   public typeTransactionColor = `color: red`;
   public transactionType = 'Расход';
-  public today = {
-    today: moment().format('DD MMMM Y'),
-    firstDayOfWeek: moment().startOf('week').format('D'),
-    lastDayOfWeek: moment().endOf('week').format('D MMMM'),
-    lastDayOfMonth: moment().endOf('month').format('D'),
-    month: moment().format('MMMM Y'),
-    year: moment().format('Y')
-  };
   public listIcon = ['favorite_border', 'language', 'pets', 'work', 'supervisor_account', 'flight_takeoff', 'settings_phone',
     'build', 'bookmark_add', 'commute', 'theaters', 'anchor', 'camera_enhance', 'rowing', 'maps_home_work', 'content_cut', 'biotech',
     'build', 'weekend', 'school', 'public', 'construction', 'sentiment_very_satisfied', 'emoji_events', 'cake', 'coronavirus',
@@ -91,7 +83,6 @@ export class CostsPageComponent implements OnInit {
   generateDate(): any {
     const now = this.dateService.date.value;
     moment.locale('ru');
-    console.log(this.data.dateFilter.value);
     this.firstDayWeek = now.clone().startOf('week');
     this.lastDayWeek = now.clone().endOf('week');
     this.lastDayMonth = now.clone().endOf('month');

@@ -28,7 +28,6 @@ export class UserDataService {
   public strokeDasharray = [];
   public strokeDashoffset = [];
   public icons = [];
-
   public choiceFirstDay = moment();
   public choiceLastDay = moment();
   public editState = false;

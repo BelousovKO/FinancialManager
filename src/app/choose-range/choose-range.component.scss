@@ -36,16 +36,18 @@
     display: flex;
     justify-content: space-between;
     border-radius: 5px;
+    background-color: #4646b0;
 
     .btn {
-      color: dimgray;
+      color: white;
     }
-  }
 
-  .total-date {
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
+    .total-date {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+      color: lightgray;
+    }
   }
 
   .choice-interface {

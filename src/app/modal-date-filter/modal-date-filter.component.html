@@ -1,24 +1,28 @@
-<ul class="modal-date-filter">
+<ul class="modal-date-filter" *ngIf="modalDateFilter === true">
   <li class="filter-range filter-date-btn"
       [ngClass]="{choice: data.dateFilter.value === 'r'}"
       (click)="data.dateFilter.next('r');
-              modalChooseRange = true">
+               modalDateFilter = false;
+               modalChooseRange = true">
     <div class="material-icons">date_range</div>
     <div class="filter-text">Выбрать диапазон</div>
     <div class="date">{{ dateService.date | async | moment }}</div>
   </li>
   <li class="filter-infinity filter-date-btn"
       [ngClass]="{choice: data.dateFilter.value === 'i'}"
-      (click)="data.dateFilter.next('i')">
+      (click)="data.dateFilter.next('i');
+               data.toggleTypeTransaction();
+               data.toggleTypeTransaction();
+               closeModalDataFilter.emit()">
     <div class="material-icons">all_inclusive</div>
     <div class="filter-text">Всё время</div>
   </li>
   <li class="filter-day filter-date-btn"
       [ngClass]="{choice: data.dateFilter.value === 'd'}"
-      (click)="modalDateFilter = false;
-            modalChoiceDay = true;
-            data.dateFilter.next('d');
-            dateService.backToToday()">
+      (click)="modalChoiceDay = true;
+               modalDateFilter = false;
+               data.dateFilter.next('d');
+               dateService.backToToday()">
     <div class="filter-icons">
       <div>1</div>
     </div>
@@ -26,9 +30,9 @@
   </li>
   <li class="filter-week filter-date-btn"
       [ngClass]="{choice: data.dateFilter.value === 'w'}"
-      (click)="modalDateFilter = false;
-            data.dateFilter.next('w');
-            dateService.backToToday()">
+      (click)="data.dateFilter.next('w');
+               dateService.backToToday();
+               closeModalDataFilter.emit()">
     <div class="filter-icons">
       <div>7</div>
     </div>
@@ -40,18 +44,18 @@
   </li>
   <li class="filter-today filter-date-btn"
       [ngClass]="{choice: data.dateFilter.value === 't'}"
-      (click)="modalDateFilter = false;
-            data.dateFilter.next('t');
-            dateService.backToToday()">
+      (click)="data.dateFilter.next('t');
+               dateService.backToToday();
+               closeModalDataFilter.emit()">
     <div class="material-icons">today</div>
     <div class="filter-text">Сегодня</div>
     <div class="date">{{ today.today }}</div>
   </li>
   <li class="filter-year filter-date-btn"
       [ngClass]="{choice: data.dateFilter.value === 'y'}"
-      (click)="modalDateFilter = false;
-            data.dateFilter.next('y');
-            dateService.backToToday()">
+      (click)="data.dateFilter.next('y');
+               dateService.backToToday();
+               closeModalDataFilter.emit()">
     <div class="filter-icons">
       <div class="filter-icons_year">365</div>
     </div>
@@ -60,9 +64,9 @@
   </li>
   <li class="filter-month filter-date-btn"
       [ngClass]="{choice: data.dateFilter.value === 'm'}"
-      (click)="modalDateFilter = false;
-            data.dateFilter.next('m');
-            dateService.backToToday()">
+      (click)="data.dateFilter.next('m');
+               dateService.backToToday();
+               closeModalDataFilter.emit()">
     <div class="filter-icons">
       <div>{{today.lastDayOfMonth }}</div>
     </div>
@@ -70,4 +74,66 @@
     <div class="date">{{ today.month }}</div>
   </li>
 </ul>
+
+<div class="modal-choice-day-container" *ngIf="modalChoiceDay === true">
+  <div class="shadow" (click)="modalChoiceDay = false;
+                               closeModalDataFilter.emit()"></div>
+  <div class="modal-choice-day">
+    <div class="buttons-container mb-2">
+      <button class="btn create material-icons"
+              (click)="modalChoiceDay = false;
+                       closeModalDataFilter.emit()">
+        check
+      </button>
+      <div class="total-date">{{ dateService.date | async | moment: 'DD.MM.Y' }}</div>
+    </div>
+    <div class="choice-interface">
+      <div class="change-month">
+        <i class="material-icons" (click)="data.dateFilter.next('m');
+                                             dateService.go(-1);
+                                             data.dateFilter.next('t')">
+          arrow_left
+        </i>
+        <span>{{ dateService.date | async | moment: 'MMMM' }}</span>
+        <i class="material-icons" (click)="data.dateFilter.next('m');
+                                             dateService.go(1);
+                                              data.dateFilter.next('t')">
+          arrow_right
+        </i>
+      </div>
+      <div class="change-year">
+        <i class="material-icons" (click)="data.dateFilter.next('y');
+                                             dateService.go(-1);
+                                               data.dateFilter.next('t')">
+          arrow_left
+        </i>
+        <span>{{ dateService.date | async | moment: 'Y' }}</span>
+        <i class="material-icons" (click)="data.dateFilter.next('y');
+                                    dateService.go(1);
+                                     data.dateFilter.next('t')">
+          arrow_right
+        </i>
+      </div>
+    </div>
+    <app-calendar></app-calendar>
+  </div>
+</div>
+
+<div class="modal-choose-range-container" *ngIf="modalChooseRange === true">
+  <div class="shadow" (click)="modalChooseRange = false;
+                              closeModalDataFilter.emit()"></div>
+  <div class="modal-choose-range">
+    <div class="buttons-container mb-3">
+      <button class="btn create material-icons" (click)="modalChooseRange = false;
+                                                         data.dateFilter.next('r');
+                                                         data.toggleTypeTransaction();
+                                                         data.toggleTypeTransaction();
+                                                         closeModalDataFilter.emit()">
+        check
+      </button>
+      <span>Выбрать диапазон</span>
+    </div>
+    <app-choose-range></app-choose-range>
+  </div>
+</div>
 
