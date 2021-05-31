@@ -1,11 +1,15 @@
-<app-date-control></app-date-control>
+<app-date-control [ngClass]="{hidden: data.editState}"></app-date-control>
 <app-costs-page *ngIf="content === 'category'"></app-costs-page>
+<app-transaction-list *ngIf="content === 'transactions'"></app-transaction-list>
+<hr>
 <div class="buttons-container">
-  <div class="buttons">
+  <div class="buttons" (click)="content = 'category'"  [ngClass]="{active: content === 'category',
+                                                                   noActive: content === 'transactions'}">
     <i class="material-icons">donut_large</i>
     <span>Категории</span>
   </div>
-  <div class="buttons">
+  <div class="buttons" (click)="content = 'transactions'" [ngClass]="{active: content === 'transactions',
+                                                                      noActive: content === 'category'}">
     <i class="material-icons">receipt</i>
     <span>Операции</span>
   </div>

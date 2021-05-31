@@ -1,8 +1,15 @@
+.temp-block {
+  background-color: #b5caee;
+  height: 55px;
+}
+
 .container-date-filter {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 5px 0 30px 0;
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+  background-color: #b5caee;
 
   .modal-button {
     font-weight: 500;

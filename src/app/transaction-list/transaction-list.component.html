@@ -1,0 +1,8 @@
+<div class="transaction-list-container">
+  <ul>
+    <li *ngFor="let elem of transaction; let idx = index">
+      {{elem | json}}
+    </li>
+  </ul>
+</div>
+

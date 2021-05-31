@@ -2,6 +2,7 @@
   <li class="filter-range filter-date-btn"
       [ngClass]="{choice: data.dateFilter.value === 'r'}"
       (click)="data.dateFilter.next('r');
+               data.forList.next('r');
                modalDateFilter = false;
                modalChooseRange = true">
     <div class="material-icons">date_range</div>
@@ -13,6 +14,7 @@
       (click)="data.dateFilter.next('i');
                data.toggleTypeTransaction();
                data.toggleTypeTransaction();
+               data.forList.next('i');
                closeModalDataFilter.emit()">
     <div class="material-icons">all_inclusive</div>
     <div class="filter-text">Всё время</div>
@@ -22,6 +24,7 @@
       (click)="modalChoiceDay = true;
                modalDateFilter = false;
                data.dateFilter.next('d');
+               data.forList.next('d');
                dateService.backToToday()">
     <div class="filter-icons">
       <div>1</div>
@@ -32,6 +35,7 @@
       [ngClass]="{choice: data.dateFilter.value === 'w'}"
       (click)="data.dateFilter.next('w');
                dateService.backToToday();
+               data.forList.next('w');
                closeModalDataFilter.emit()">
     <div class="filter-icons">
       <div>7</div>
@@ -46,6 +50,7 @@
       [ngClass]="{choice: data.dateFilter.value === 't'}"
       (click)="data.dateFilter.next('t');
                dateService.backToToday();
+               data.forList.next('t');
                closeModalDataFilter.emit()">
     <div class="material-icons">today</div>
     <div class="filter-text">Сегодня</div>
@@ -55,6 +60,7 @@
       [ngClass]="{choice: data.dateFilter.value === 'y'}"
       (click)="data.dateFilter.next('y');
                dateService.backToToday();
+               data.forList.next('y');
                closeModalDataFilter.emit()">
     <div class="filter-icons">
       <div class="filter-icons_year">365</div>
@@ -66,6 +72,7 @@
       [ngClass]="{choice: data.dateFilter.value === 'm'}"
       (click)="data.dateFilter.next('m');
                dateService.backToToday();
+               data.forList.next('m');
                closeModalDataFilter.emit()">
     <div class="filter-icons">
       <div>{{today.lastDayOfMonth }}</div>
@@ -126,6 +133,7 @@
     <div class="buttons-container mb-3">
       <button class="btn create material-icons" (click)="modalChooseRange = false;
                                                          data.dateFilter.next('r');
+                                                         data.forList.next('r');
                                                          data.toggleTypeTransaction();
                                                          data.toggleTypeTransaction();
                                                          closeModalDataFilter.emit()">

@@ -1,4 +1,4 @@
-<div class="container-date-filter" [ngClass]="{hidden: data.editState}">
+<div class="container-date-filter">
   <i class="material-icons" *ngIf="data.dateFilter.value !== 'i'" (click)="dateService.go(-1)">arrow_left</i>
   <span class="modal-button" *ngIf="data.dateFilter.value === 'm'" (click)="modalDateFilter = true">
       <span class="filter-icons"><span>{{lastDayMonth | moment: 'DD' }}</span></span>

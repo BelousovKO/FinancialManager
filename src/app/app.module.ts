@@ -22,6 +22,7 @@ import {ModalTransactionComponent} from './modal-transaction/modal-transaction.c
 import { HeaderComponent } from './header/header.component';
 import { DateControlComponent } from './date-control/date-control.component';
 import { ModalDateFilterComponent } from './modal-date-filter/modal-date-filter.component';
+import { TransactionListComponent } from './transaction-list/transaction-list.component';
 
 const appRoutes: Routes = [
   {path: '', component: MainComponent},
@@ -52,6 +53,7 @@ const appRoutes: Routes = [
     HeaderComponent,
     DateControlComponent,
     ModalDateFilterComponent,
+    TransactionListComponent,
   ],
   imports: [
     BrowserModule,

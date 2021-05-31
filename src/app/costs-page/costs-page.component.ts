@@ -250,6 +250,7 @@ export class CostsPageComponent implements OnInit {
     this.iconTransactions = [];
     this.backgroundColors = [];
     this.colors = [];
+    this.data.transactionDataFiltered = this.transactionDataFiltered;
     this.dataInterfaceTransactions.forEach((e, idx) => {
       this.colorsTransactions.push(e.color);
       this.titlesTransactions.push(e.title);
@@ -380,31 +381,6 @@ export class CostsPageComponent implements OnInit {
     this.colorNewCategory = `background-color: ${this.colorsTransactions[i]}`;
     this.iconNewCategory = this.iconTransactions[i];
     this.tempIconCategory = this.iconTransactions[i];
-  }
-
-  go(dir: number): void {
-
-    switch (this.data.dateFilter.value) {
-      case 't':
-        this.dateService.changeDay(dir);
-        break;
-      case 'd':
-        this.dateService.changeDay(dir);
-        break;
-      case 'w':
-        this.dateService.changeWeek(dir);
-        break;
-      case 'm':
-        this.dateService.changeMonth(dir);
-        break;
-      case 'y':
-        this.dateService.changeYear(dir);
-        break;
-      case 'r':
-        this.dateService.changeRange(dir);
-        this.ngOnInit();
-        break;
-    }
   }
 
   clearChoiceDate(): void {
