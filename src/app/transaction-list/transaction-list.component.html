@@ -1,7 +1,22 @@
 <div class="transaction-list-container">
   <ul>
-    <li *ngFor="let elem of transaction; let idx = index">
-      {{elem | json}}
+    <li *ngFor="let elem of days, let idx = index">
+      <header>
+        <div class="big-day">
+          {{momentDays[idx] | moment: 'DD'}}
+        </div>
+        <div class="week-day">
+          {{momentDays[idx] | moment: 'dddd'}}
+        </div>
+        <div class="small-date">
+          {{momentDays[idx] | moment: 'DD MMMM YYYY'}}
+        </div>
+      </header>
+      <ul>
+        <li *ngFor="let e of elem.transactions" class="transaction-container">
+          {{e | json}}
+        </li>
+      </ul>
     </li>
   </ul>
 </div>

@@ -1,4 +1,14 @@
 .transaction-list-container {
   height: 449px;
   overflow-y: scroll;
+
+  header {
+    background-color: lightgray;
+    padding-left: 30px;
+  }
+
+  .transaction-container {
+    margin: 30px;
+    list-style: none;
+  }
 }

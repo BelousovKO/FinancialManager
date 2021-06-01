@@ -14,6 +14,8 @@ export class TransactionListComponent implements OnInit {
   public costs = [];
   public income = [];
   public transactionDataFiltered = [];
+  public days = [];
+  public momentDays = [];
 
   constructor(public data: UserDataService,
               public dateService: DateService) {
@@ -26,6 +28,8 @@ export class TransactionListComponent implements OnInit {
   }
 
   filteredData(): any {
+    this.days = [];
+    this.momentDays = [];
     this.transactionDataFiltered = [];
     const now = this.dateService.date.value;
     moment.locale('ru');
@@ -90,7 +94,29 @@ export class TransactionListComponent implements OnInit {
         });
         break;
     }
-    console.log('this.transactionDataFiltered: ', this.transactionDataFiltered);
+    this.transactionDataFiltered.sort((a: any, b: any): any => a.dateX < b.dateX ? 1 : -1);
+    if (this.transactionDataFiltered[0]) {
+      this.days[0] = [moment(this.transactionDataFiltered[0].date, 'YYYY-MM-DD:HH:mm:ss').format('DD.MM.YYYY')];
+      this.transactionDataFiltered.forEach(elem => {
+        if (moment(this.days[0], 'DD.MM.YYYY').startOf('day').format('x') >
+          moment(elem.date, 'YYYY-MM-DD:HH:mm:ss').startOf('day').format('x') &&
+          moment(elem.date, 'YYYY-MM-DD:HH:mm:ss').startOf('day').format('x') !==
+          moment(this.days[this.days.length - 1], 'DD.MM.YYYY').startOf('day').format('x')) {
+          this.days.push([moment(elem.date, 'YYYY-MM-DD:HH:mm:ss').format('DD.MM.YYYY')]);
+        }
+      });
+      this.days.forEach(elem => {
+        this.momentDays.push(moment(elem[0], 'DD.MM.YYYY'));
+        elem.transactions = [];
+        this.transactionDataFiltered.forEach(e => {
+          if (moment(e.date, 'YYYY-MM-DD:HH:mm:ss').startOf('day').format('x') ===
+            moment(elem, 'DD.MM.YYYY').startOf('day').format('x')) {
+            elem.transactions.push(e);
+          }
+        });
+      });
+
+    }
   }
 
 
@@ -104,6 +130,8 @@ export class TransactionListComponent implements OnInit {
       elem.typeTransaction = 'income';
     });
     this.transaction = [...this.costs, ...this.income];
-    console.log('createData(): ', this.transaction);
+    this.transaction.forEach(elem => {
+      elem.dateX = moment(elem.date, 'YYYY-MM-DD:HH:mm:ss').format('x');
+    });
   }
 }
