@@ -55,10 +55,10 @@
     </text>
     <text x="50%" y="50%" class="transaction-number" [attr.fill]="transactionNumberColor"
           [attr.stroke]="transactionNumberColor" stroke-width="0.1">
-      {{ data.transactionsAll | number | pointReplacer | pointReplacer }} ₽
+      {{ data.transactionsAll | number | pointReplacer }} ₽
     </text>
     <text x="50%" y="50%" class="transaction-inverse-number" [attr.fill]="transactionInverseNumberColor">
-      {{ transactionInverseNumber | number | pointReplacer | pointReplacer }} ₽
+      {{ transactionInverseNumber | number | pointReplacer}} ₽
     </text>
   </g>
 </svg>

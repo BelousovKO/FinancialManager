@@ -3,9 +3,15 @@
     <div>Вход выполнен. {{this.authorization.username}} привет!</div>
     <button class="btn btn-primary" (click)="exit()">Выход</button>
   </div>
-  <div *ngIf="!data.editState" class="balance-container" [style]="colorBalance">
-    <div class="title-balance">Баланс:</div>
-    <div class="balance">{{balance | number | pointReplacer | pointReplacer }} ₽</div>
+  <div *ngIf="!data.editState" class="balance-container">
+    <div class="title-balance"
+         [ngClass]="{'green-balance': balance >= 0, 'red-balance': balance < 0}">
+      Баланс:
+    </div>
+    <div class="balance"
+         [ngClass]="{'green-balance': balance >= 0, 'red-balance': balance < 0}">
+      {{balance | number | pointReplacer }} ₽
+    </div>
   </div>
   <div *ngIf="!data.editState" (click)="data.editState = true" class="edit-menu">
     <i class="material-icons">edit</i>

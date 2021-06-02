@@ -2,16 +2,35 @@
   display: grid;
   justify-content: center;
   grid-template-columns: 1fr 1fr 1fr;
-  background-color: #b5caee;
-  padding-bottom: 5px;
+  background-color: #4646b0;
+  padding: 14px 0 15px;
+  color: white;
 
   .exit {
     margin-left: 20px;
+
+    button {
+      background-color: dimgray;
+      color: white;
+      border: none;
+    }
   }
 
-  .title-balance,
-  .balance {
-  text-align: center;
+  .balance-container {
+
+    .title-balance,
+    .balance {
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .red-balance {
+      color: #dd7e7e;
+    }
+
+    .green-balance {
+      color: #7dc87d;
+    }
   }
 
   .edit-menu {

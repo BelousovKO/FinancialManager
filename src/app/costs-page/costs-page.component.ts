@@ -70,8 +70,8 @@ export class CostsPageComponent implements OnInit {
   ngOnInit(): void {
     this.data.typeTransaction.subscribe(this.toggleTypeTransactions.bind(this));
 
-    this.dateService.date.subscribe(this.generateDate());
-    this.data.dateFilter.subscribe(this.generateDate());
+    this.dateService.date.subscribe(this.generateDate.bind(this));
+    this.data.dateFilter.subscribe(this.generateDate.bind(this));
 
     this.createDataDonut();
   }
@@ -241,7 +241,6 @@ export class CostsPageComponent implements OnInit {
   }
 
   createDataDonut(): void {
-
     this.strokeDasharray = [];
     this.strokeDashoffset = [25];
     this.transactions = [];

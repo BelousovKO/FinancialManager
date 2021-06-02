@@ -9,7 +9,6 @@ export class UserDataService {
   public typeTransaction = new BehaviorSubject('cost');
   public balance = new BehaviorSubject(0);
   public dateFilter = new BehaviorSubject('m');
-  public forList = new BehaviorSubject('m');
 
   public userData = [];
   public transaction = [];

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UserDataService} from '../services/user-data.service';
 import {AuthorizationService} from '../services/authorization.service';
+import {debounceTime} from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -16,12 +17,12 @@ export class HeaderComponent implements OnInit {
               public authorization: AuthorizationService) { }
 
   ngOnInit(): void {
-    this.data.balance.subscribe(this.changeColorBalance.bind(this));
+    this.data.balance.pipe(debounceTime(0)).subscribe(this.changeColorBalance.bind(this));
   }
 
   changeColorBalance(): any {
     this.balance = this.data.balance.value;
-    this.data.balance.value >= 0 ? this.colorBalance = 'color: green' : this.colorBalance = 'color: red';
+    this.data.balance.value >= 0 ? this.colorBalance = 'color: #7cbc7c' : this.colorBalance = 'color: #e58181';
   }
 
   exit(): any {

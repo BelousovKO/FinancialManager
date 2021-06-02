@@ -2,7 +2,7 @@
 <app-costs-page *ngIf="content === 'category'"></app-costs-page>
 <app-transaction-list *ngIf="content === 'transactions'"></app-transaction-list>
 <hr>
-<div class="buttons-container">
+<div class="buttons-container" [ngClass]="{hidden: data.editState}">
   <div class="buttons" (click)="content = 'category'"  [ngClass]="{active: content === 'category',
                                                                    noActive: content === 'transactions'}">
     <i class="material-icons">donut_large</i>
