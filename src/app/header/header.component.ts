@@ -10,19 +10,17 @@ import {debounceTime} from 'rxjs/operators';
 })
 export class HeaderComponent implements OnInit {
 
-  public colorBalance = 'color: black';
-  public balance = 0;
+  public balance = this.data.balance.value;
 
   constructor(public data: UserDataService,
               public authorization: AuthorizationService) { }
 
   ngOnInit(): void {
-    this.data.balance.pipe(debounceTime(0)).subscribe(this.changeColorBalance.bind(this));
+    this.data.balance.pipe(debounceTime(0)).subscribe(this.changeBalance.bind(this));
   }
 
-  changeColorBalance(): any {
+  changeBalance(): any {
     this.balance = this.data.balance.value;
-    this.data.balance.value >= 0 ? this.colorBalance = 'color: #7cbc7c' : this.colorBalance = 'color: #e58181';
   }
 
   exit(): any {

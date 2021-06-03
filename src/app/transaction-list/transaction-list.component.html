@@ -2,19 +2,33 @@
   <ul>
     <li *ngFor="let elem of days, let idx = index">
       <header>
-        <div class="big-day">
+        <div class="big-day day-title">
           {{momentDays[idx] | moment: 'DD'}}
         </div>
-        <div class="week-day">
-          {{momentDays[idx] | moment: 'dddd'}}
+        <div class="week-small-date">
+          <div class="week-day day-title">
+            {{momentDays[idx] | moment: 'dddd'}}
+          </div>
+          <div class="small-date-container">
+            <div class="small-date day-title">
+              {{momentDays[idx] | moment: 'DD MMMM YYYY'}}
+            </div>
+          </div>
         </div>
-        <div class="small-date">
-          {{momentDays[idx] | moment: 'DD MMMM YYYY'}}
-        </div>
+        <div class="day-amount">2342</div>
       </header>
       <ul>
         <li *ngFor="let e of elem.transactions" class="transaction-container">
-          {{e | json}}
+          <div class="icon material-icons" [style]="backgroundColor(e.typeTransaction, e.category)">
+            {{icon(e.typeTransaction, e.category)}}
+          </div>
+          <div class="text-container">
+            <div class="category">{{category(e.typeTransaction, e.category)}}</div>
+            <div class="title">{{ e.title }}</div>
+          </div>
+          <div class="amount" [style]="colorAmount(e.typeTransaction)">
+            {{ symbolAmount(e.typeTransaction) }}{{ e.amount }} ₽
+          </div>
         </li>
       </ul>
     </li>

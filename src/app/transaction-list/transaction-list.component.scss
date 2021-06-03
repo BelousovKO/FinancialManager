@@ -4,11 +4,64 @@
 
   header {
     background-color: lightgray;
-    padding-left: 30px;
+    padding-left: 20px;
+    height: 50px;
+    display: grid;
+    grid-template-columns: 50px 1fr auto;
+
+    .day-title {
+      text-transform: uppercase;
+      font-weight: 500;
+      color: dimgray;
+    }
+
+    .big-day {
+      font-size: 2rem;
+      justify-content: center;
+    }
+
+    .week-small-date {
+      .week-day {
+        opacity: .6;
+      }
+
+      .small-date-container {
+        position: relative;
+        overflow: hidden;
+        height: 25px;
+
+        .small-date {
+          height: 25px;
+          position: absolute;
+          top: 0;
+          left: -22px;
+        }
+      }
+    }
+
+    .day-amount {
+      margin-right: 30px;
+      display: flex;
+      align-items: center;
+    }
   }
 
   .transaction-container {
     margin: 30px;
     list-style: none;
+    display: grid;
+    grid-template-columns: 75px 1fr auto;
+    height: 75px;
+    border-bottom: 1px solid lightgray;
+
+    .icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      height: 60%;
+      width: 60%;
+      color: white;
+    }
   }
 }

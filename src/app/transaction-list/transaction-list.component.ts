@@ -119,7 +119,6 @@ export class TransactionListComponent implements OnInit {
     }
   }
 
-
   createData(): any {
     this.costs = [...this.data.costs];
     this.costs.forEach(elem => {
@@ -133,5 +132,45 @@ export class TransactionListComponent implements OnInit {
     this.transaction.forEach(elem => {
       elem.dateX = moment(elem.date, 'YYYY-MM-DD:HH:mm:ss').format('x');
     });
+  }
+
+  category(type: string, idx: number): string {
+    if (type === 'cost') {
+      return `${this.data.dataInterfaceExpense[idx].title}`;
+    } else {
+      return `${this.data.dataInterfaceIncome[idx].title}`;
+    }
+  }
+
+  icon(type: string, idx: number): string {
+    if (type === 'cost') {
+      return `${this.data.dataInterfaceExpense[idx].icon}`;
+    } else {
+      return `${this.data.dataInterfaceIncome[idx].icon}`;
+    }
+  }
+
+  backgroundColor(type: string, idx: number): string {
+    if (type === 'cost') {
+      return `background-color: ${this.data.dataInterfaceExpense[idx].color}`;
+    } else {
+      return `background-color: ${this.data.dataInterfaceIncome[idx].color}`;
+    }
+  }
+
+  symbolAmount(type: string): string {
+    if (type === 'cost') {
+      return '-';
+    } else {
+      return '+';
+    }
+  }
+
+  colorAmount(type: string): string {
+    if (type === 'cost') {
+      return 'color: red';
+    } else {
+      return 'color: green';
+    }
   }
 }
