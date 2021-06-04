@@ -405,12 +405,16 @@ export class CostsPageComponent implements OnInit {
 
   toggleTypeTransactions(): any {
     if (this.data.typeTransaction.value === 'cost') {
+      this.typeTransactionColor = `color: red`;
+      this.transactionType = 'Расход';
       this.countCategories = 12;
       this.data.transaction = this.data.costs;
       this.transactionData = this.data.transaction;
       this.data.dataInterfaceTransaction = this.data.dataInterfaceExpense;
       this.dataInterfaceTransactions = this.data.dataInterfaceExpense;
     } else {
+      this.typeTransactionColor = `color: green`;
+      this.transactionType = 'Доход';
       this.countCategories = 6;
       this.data.transaction = this.data.income;
       this.transactionData = this.data.transaction;

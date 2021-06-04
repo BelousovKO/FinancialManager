@@ -16,6 +16,7 @@ export class TransactionListComponent implements OnInit {
   public transactionDataFiltered = [];
   public days = [];
   public momentDays = [];
+  public modalCreateTransaction = false;
 
   constructor(public data: UserDataService,
               public dateService: DateService) {
@@ -134,43 +135,59 @@ export class TransactionListComponent implements OnInit {
     });
   }
 
+  dayAmount(dataDay): string {
+    let amount = 0;
+    dataDay.forEach(elem => {
+      if (elem.typeTransaction === 'cost') {
+        amount -= elem.amount;
+      } else {
+        amount += elem.amount;
+      }
+    });
+    if (amount <= 0) {
+      return `${amount}`;
+    }
+    return `+${amount}`;
+  }
+
   category(type: string, idx: number): string {
     if (type === 'cost') {
       return `${this.data.dataInterfaceExpense[idx].title}`;
-    } else {
-      return `${this.data.dataInterfaceIncome[idx].title}`;
     }
+    return `${this.data.dataInterfaceIncome[idx].title}`;
   }
 
   icon(type: string, idx: number): string {
     if (type === 'cost') {
       return `${this.data.dataInterfaceExpense[idx].icon}`;
-    } else {
-      return `${this.data.dataInterfaceIncome[idx].icon}`;
     }
+    return `${this.data.dataInterfaceIncome[idx].icon}`;
   }
 
   backgroundColor(type: string, idx: number): string {
     if (type === 'cost') {
       return `background-color: ${this.data.dataInterfaceExpense[idx].color}`;
-    } else {
-      return `background-color: ${this.data.dataInterfaceIncome[idx].color}`;
     }
+    return `background-color: ${this.data.dataInterfaceIncome[idx].color}`;
   }
 
-  symbolAmount(type: string): string {
-    if (type === 'cost') {
-      return '-';
-    } else {
-      return '+';
+  transactionAmount(transaction): string {
+    if (transaction.typeTransaction === 'cost') {
+      return `-${transaction.amount}`;
     }
+    return `+${transaction.amount}`;
   }
 
-  colorAmount(type: string): string {
-    if (type === 'cost') {
+  colorAmount(arg): string {
+    if (arg === 'cost') {
       return 'color: red';
-    } else {
+    }
+    if (arg === 'income') {
       return 'color: green';
     }
+    if (this.dayAmount(arg).includes('-')) {
+      return 'color: red';
+    }
+    return 'color: green';
   }
 }

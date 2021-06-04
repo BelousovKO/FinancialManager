@@ -43,6 +43,7 @@
       margin-right: 30px;
       display: flex;
       align-items: center;
+      font-size: 1.7rem;
     }
   }
 
@@ -53,15 +54,48 @@
     grid-template-columns: 75px 1fr auto;
     height: 75px;
     border-bottom: 1px solid lightgray;
+    cursor: pointer;
 
     .icon {
       display: flex;
       justify-content: center;
       align-items: center;
       border-radius: 50%;
-      height: 60%;
-      width: 60%;
+      height: 75%;
+      width: 75%;
       color: white;
+      font-size: 2rem;
     }
+
+    .category {
+      font-size: 1.5rem;
+    }
+
+    .title {
+      color: dimgray;
+      font-style: italic;
+    }
+
+    .amount {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.modal-transaction {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+
+  .modal-transaction-shadow {
+    background-color: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: .6;
+    height: 100vh;
+    width: 100%;
   }
 }

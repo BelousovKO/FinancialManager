@@ -15,7 +15,6 @@ export class ModalTransactionComponent implements OnInit {
   @Input() dateFilter: string;
   @Input() tempColorCategory: string;
   @Input() indexCategory: number;
-  @Input() dateServiceDate: any;
   @Input() firstDayWeek: moment.Moment;
   @Input() lastDayWeek: moment.Moment;
   @Input() lastDayMonth: moment.Moment;
@@ -49,7 +48,6 @@ export class ModalTransactionComponent implements OnInit {
 
   onChanges(): void {
     this.ngOnInit();
-
   }
 
   ngOnInit(): void {
@@ -65,50 +63,50 @@ export class ModalTransactionComponent implements OnInit {
 
   generateDate(): void {
     moment.locale('ru');
-    this.transactionDate = this.dateServiceDate.value;
-    this.firstDayWeek = this.dateServiceDate.value.clone().startOf('week');
-    this.lastDayWeek = this.dateServiceDate.value.clone().endOf('week');
-    this.lastDayMonth = this.dateServiceDate.value.clone().endOf('month');
+    this.transactionDate = this.dateService.date.value;
+    this.firstDayWeek = this.dateService.date.value.clone().startOf('week');
+    this.lastDayWeek = this.dateService.date.value.clone().endOf('week');
+    this.lastDayMonth = this.dateService.date.value.clone().endOf('month');
     if (this.dateFilter !== 'r') {
-      const difference = this.dateServiceDate.value.startOf('day').diff(moment().startOf('day'), 'day');
+      const difference = this.dateService.date.value.startOf('day').diff(moment().startOf('day'), 'day');
       if (difference === 0) {
         this.transactionDate = moment();
       }
       if (difference > 0) {
         switch (this.dateFilter) {
           case 't':
-            this.transactionDate = this.dateServiceDate.value.clone().startOf('day');
+            this.transactionDate = this.dateService.date.value.clone().startOf('day');
             break;
           case 'd':
-            this.transactionDate = this.dateServiceDate.value.clone().startOf('day');
+            this.transactionDate = this.dateService.date.value.clone().startOf('day');
             break;
           case 'w':
-            this.transactionDate = this.dateServiceDate.value.clone().startOf('week');
+            this.transactionDate = this.dateService.date.value.clone().startOf('week');
             break;
           case 'm':
-            this.transactionDate = this.dateServiceDate.value.clone().startOf('month');
+            this.transactionDate = this.dateService.date.value.clone().startOf('month');
             break;
           case 'y':
-            this.transactionDate = this.dateServiceDate.value.clone().startOf('year');
+            this.transactionDate = this.dateService.date.value.clone().startOf('year');
             break;
         }
       }
       if (difference < 0) {
         switch (this.dateFilter) {
           case 't':
-            this.transactionDate = this.dateServiceDate.value.clone().endOf('day');
+            this.transactionDate = this.dateService.date.value.clone().endOf('day');
             break;
           case 'd':
-            this.transactionDate = this.dateServiceDate.value.clone().endOf('day');
+            this.transactionDate = this.dateService.date.value.clone().endOf('day');
             break;
           case 'w':
-            this.transactionDate = this.dateServiceDate.value.clone().endOf('week');
+            this.transactionDate = this.dateService.date.value.clone().endOf('week');
             break;
           case 'm':
-            this.transactionDate = this.dateServiceDate.value.clone().endOf('month');
+            this.transactionDate = this.dateService.date.value.clone().endOf('month');
             break;
           case 'y':
-            this.transactionDate = this.dateServiceDate.value.clone().endOf('year');
+            this.transactionDate = this.dateService.date.value.clone().endOf('year');
             break;
         }
       }

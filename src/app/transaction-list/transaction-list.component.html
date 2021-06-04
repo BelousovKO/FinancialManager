@@ -15,10 +15,10 @@
             </div>
           </div>
         </div>
-        <div class="day-amount">2342</div>
+        <div class="day-amount" [style]="colorAmount(elem.transactions)">{{dayAmount(elem.transactions)}} ₽</div>
       </header>
       <ul>
-        <li *ngFor="let e of elem.transactions" class="transaction-container">
+        <li *ngFor="let e of elem.transactions" class="transaction-container" (click)="modalCreateTransaction = true">
           <div class="icon material-icons" [style]="backgroundColor(e.typeTransaction, e.category)">
             {{icon(e.typeTransaction, e.category)}}
           </div>
@@ -27,7 +27,7 @@
             <div class="title">{{ e.title }}</div>
           </div>
           <div class="amount" [style]="colorAmount(e.typeTransaction)">
-            {{ symbolAmount(e.typeTransaction) }}{{ e.amount }} ₽
+            {{ transactionAmount(e) }} ₽
           </div>
         </li>
       </ul>
@@ -35,3 +35,20 @@
   </ul>
 </div>
 
+<div class="modal-transaction" *ngIf="modalCreateTransaction">
+  <div class="modal-transaction-shadow" (click)="modalCreateTransaction = false"></div>
+  <app-modal-transaction [dateFilter]="data.dateFilter.value"
+                         [firstDayWeek]="dateService.date.value.clone().startOf('week')"
+                         [lastDayMonth]="dateService.date.value.clone().endOf('month')"
+                         [lastDayWeek]="dateService.date.value.clone().endOf('week')"
+                         [tempTitleCategory]="tempTitleCategory"
+                         [transactionType]="transactionType"
+                         [typeTransactionColor]="typeTransactionColor"
+                         [tempIconCategory]="tempIconCategory"
+                         [tempColorCategory]="tempColorCategory"
+                         [yesterday]="yesterday"
+                         [indexCategory]="indexCategory"
+                         (closeModalTransaction)="modalCreateTransaction = false"
+                         (transactionCreated)="createdTransaction()">
+  </app-modal-transaction>
+</div>
