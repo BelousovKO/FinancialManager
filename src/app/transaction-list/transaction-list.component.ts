@@ -17,6 +17,12 @@ export class TransactionListComponent implements OnInit {
   public days = [];
   public momentDays = [];
   public modalCreateTransaction = false;
+  public tempCategory = '';
+  public transactionType = '';
+  public tempIconCategory = '';
+  public tempColorCategory = '';
+  public indexCategory: number;
+  public idTransaction: '';
 
   constructor(public data: UserDataService,
               public dateService: DateService) {
@@ -164,11 +170,15 @@ export class TransactionListComponent implements OnInit {
     return `${this.data.dataInterfaceIncome[idx].icon}`;
   }
 
-  backgroundColor(type: string, idx: number): string {
+  color(type: string, idx: number): string {
     if (type === 'cost') {
-      return `background-color: ${this.data.dataInterfaceExpense[idx].color}`;
+      return `${this.data.dataInterfaceExpense[idx].color}`;
     }
-    return `background-color: ${this.data.dataInterfaceIncome[idx].color}`;
+    return `${this.data.dataInterfaceIncome[idx].color}`;
+  }
+
+  backgroundColor(type: string, idx: number): string {
+    return `background-color: ${this.color(type, idx)}`;
   }
 
   transactionAmount(transaction): string {

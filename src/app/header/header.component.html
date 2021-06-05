@@ -1,6 +1,6 @@
 <div class="header">
   <div class="exit">
-    <div>Вход выполнен. {{this.authorization.username}} привет!</div>
+    <div>{{this.authorization.username}} привет!</div>
     <button class="btn btn-primary" (click)="exit()">Выход</button>
   </div>
   <div *ngIf="!data.editState" class="balance-container">

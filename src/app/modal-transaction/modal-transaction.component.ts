@@ -4,6 +4,7 @@ import 'moment/locale/ru';
 import {UserDataService} from '../services/user-data.service';
 import {DateService} from '../services/date.service';
 import {CreateCostService} from '../services/create-cost.service';
+import {EditTransactionService} from '../services/edit-transaction.service';
 
 @Component({
   selector: 'app-modal-transaction',
@@ -13,6 +14,7 @@ import {CreateCostService} from '../services/create-cost.service';
 export class ModalTransactionComponent implements OnInit {
 
   @Input() dateFilter: string;
+  @Input() idTransaction: string;
   @Input() tempColorCategory: string;
   @Input() indexCategory: number;
   @Input() firstDayWeek: moment.Moment;
@@ -20,7 +22,6 @@ export class ModalTransactionComponent implements OnInit {
   @Input() lastDayMonth: moment.Moment;
   @Input() yesterday: moment.Moment;
   @Input() tempTitleCategory: string;
-  @Input() typeTransactionColor: string;
   @Input() tempIconCategory: string;
   @Input() transactionType: string;
   @Output() closeModalTransaction: EventEmitter<any> = new EventEmitter();
@@ -40,8 +41,10 @@ export class ModalTransactionComponent implements OnInit {
   public tempValueInput: string;
   public today = moment();
   public modalCalendar = false;
+  public typeTransactionColor: string;
 
-  constructor(public createCost: CreateCostService,
+  constructor(public createTransaction: CreateCostService,
+              public editTransaction: EditTransactionService,
               public userData: UserDataService,
               public dateService: DateService) {
   }
@@ -57,6 +60,7 @@ export class ModalTransactionComponent implements OnInit {
     this.backgroundColor = `background-color: ${this.color}`;
     this.textColor = `color: ${this.color}`;
     this.transactionCategory = this.tempTitleCategory;
+    this.transactionType === 'cost' || this.transactionType === 'Расход' ? this.transactionType = 'Расход' : this.transactionType = 'Доход';
     this.transactionType === 'Расход' ? this.typeTransactionColor = `color: #B51515` : this.typeTransactionColor = `color: #14802D`;
     this.transactionTitle ? this.tempValueInput = this.transactionTitle : this.tempValueInput = '';
   }
@@ -207,6 +211,7 @@ export class ModalTransactionComponent implements OnInit {
     if (this.transactionSum !== '0') {
       const token = localStorage.getItem('token');
       const body = {
+        id: '',
         userId: this.userData.userId,
         typeTransaction: this.userData.typeTransaction.value,
         title: this.transactionTitle,
@@ -215,21 +220,43 @@ export class ModalTransactionComponent implements OnInit {
         amount: Number(this.transactionSum),
         token
       };
-      this.createCost.create(body)
-        .subscribe(
-          response => {
-            if (response.status === 'OK') {
-              if (this.userData.typeTransaction.value === 'cost') {
-                this.userData.costs.push(response.data);
-              } else {
-                this.userData.income.push(response.data);
+      if (this.idTransaction) {
+        body.id = this.idTransaction;
+        if (this.transactionType === 'Расход') {
+          body.typeTransaction = 'cost';
+        } else {
+          body.typeTransaction = 'income';
+        }
+        this.editTransaction.edit(body)
+          .subscribe(
+            response => {
+              if (response.status === 'OK') {
+                console.log('response: ', response);
               }
-              this.transactionCreated.emit();
-              this.closeModalTransaction.emit();
-            }
-          },
-          error => console.error('Error! ', error)
-        );
+            },
+            error => console.error('Error! ', error)
+          );
+        console.log('EDIT', this.transactionSum);
+        this.transactionCreated.emit();
+        this.closeModalTransaction.emit();
+      } else {
+        this.createTransaction.create(body)
+          .subscribe(
+            response => {
+              if (response.status === 'OK') {
+                if (this.userData.typeTransaction.value === 'cost') {
+                  this.userData.costs.push(response.data);
+                } else {
+                  this.userData.income.push(response.data);
+                }
+                this.transactionCreated.emit();
+                this.closeModalTransaction.emit();
+              }
+            },
+            error => console.error('Error! ', error)
+          );
+      }
+
       this.transactionSum = '0';
     }
   }

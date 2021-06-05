@@ -4,14 +4,14 @@ import {HttpClient} from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class CreateCostService {
+export class EditTransactionService {
 
-  _url = 'http://localhost:8080/costs/new';
+  _url = 'http://localhost:8080/costs/edit';
 
   constructor(private _http: HttpClient) {
   }
 
-  create(body): any {
+  edit(body): any {
     return this._http.post<any>(this._url, body);
   }
 }

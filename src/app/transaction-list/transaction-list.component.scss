@@ -1,6 +1,8 @@
 .transaction-list-container {
+  width: 50%;
   height: 449px;
   overflow-y: scroll;
+  margin: 0 auto;
 
   header {
     background-color: lightgray;
@@ -48,13 +50,14 @@
   }
 
   .transaction-container {
-    margin: 30px;
+    margin: 15px 30px;
     list-style: none;
     display: grid;
-    grid-template-columns: 75px 1fr auto;
-    height: 75px;
+    grid-template-columns: 45px 1fr auto;
+    height: 45px;
     border-bottom: 1px solid lightgray;
     cursor: pointer;
+    align-items: center;
 
     .icon {
       display: flex;
@@ -64,20 +67,25 @@
       height: 75%;
       width: 75%;
       color: white;
-      font-size: 2rem;
+      font-size: 1.2rem;
+    }
+
+    .text {
+      margin-left: 20px;
     }
 
     .category {
-      font-size: 1.5rem;
+      font-size: 1rem;
     }
 
     .title {
       color: dimgray;
       font-style: italic;
+      font-size: .8rem;
     }
 
     .amount {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
     }
   }
 }
