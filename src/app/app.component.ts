@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {AuthorizationService} from './services/authorization.service';
 
 @Component({
@@ -7,8 +7,7 @@ import {AuthorizationService} from './services/authorization.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'AppComponent';
 
-  constructor(public stat: AuthorizationService) {
+  constructor(public authorization: AuthorizationService) {
   }
 }

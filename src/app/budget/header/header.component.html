@@ -1,0 +1,25 @@
+<div class="header">
+  <div class="exit">
+    <div>{{this.authorization.username}} привет!</div>
+    <button class="btn btn-primary" (click)="exit()">Выход</button>
+  </div>
+  <div *ngIf="!userData.editState" class="balance-container">
+    <div class="title-balance"
+         [ngClass]="{'green-balance': userData.balance >= 0, 'red-balance': userData.balance < 0}">
+      Баланс:
+    </div>
+    <div class="balance"
+         [ngClass]="{'green-balance': userData.balance >= 0, 'red-balance': userData.balance < 0}">
+      {{userData.balance | number | pointReplacer }} ₽
+    </div>
+  </div>
+  <div *ngIf="!userData.editState" (click)="userData.editState = true" class="edit-menu">
+    <i class="material-icons">edit</i>
+  </div>
+  <div *ngIf="userData.editState" (click)="userData.editState = false" class="edit-menu">
+    <div class="edit-menu-content">
+      <i class="material-icons">arrow_back</i><span>Изменить категории</span>
+    </div>
+  </div>
+  <app-date-control *ngIf="!userData.editState"></app-date-control>
+</div>

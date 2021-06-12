@@ -1,0 +1,51 @@
+.modal-create-category {
+  position: absolute;
+  top: 200px;
+  border-radius: 4px;
+  background-color: white;
+  width: 300px;
+  height: 300px;
+  left: calc(50% - 150px);
+  color: lightgray;
+
+  .buttons-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 4px;
+
+    .btn {
+      color: white;
+    }
+  }
+
+  label {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    input {
+      border: none;
+      outline: none;
+      width: 80%;
+      border-bottom: 1px solid lightgray;
+      margin: 30px auto;
+      font-size: 1.6rem;
+    }
+  }
+
+  .container-icon {
+    display: flex;
+    justify-content: center;
+
+    .costs {
+      border-radius: 50%;
+      font-size: 2.5rem;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      margin: 20px auto;
+      cursor: pointer;
+    }
+  }
+}

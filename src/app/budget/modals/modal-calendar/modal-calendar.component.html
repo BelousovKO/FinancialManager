@@ -1,0 +1,31 @@
+<div class="shadow" (click)="closeModalCalendar.emit(date)"></div>
+<div class="modal-calendar">
+  <div class="buttons-container mb-2" [style]="backgroundColor">
+    <button class="btn create material-icons"
+            (click)="close()">
+      check
+    </button>
+    <div class="total-date">{{ dateService.calendarDate | async | moment: 'DD.MM.Y' }}</div>
+  </div>
+  <div class="choice-interface">
+    <div class="change-month">
+      <i class="material-icons" (click)="dateService.changeMonth(-1, 'cd')">
+        arrow_left
+      </i>
+      <span>{{ dateService.calendarDate | async | moment: 'MMMM' }}</span>
+      <i class="material-icons" (click)="dateService.changeMonth(1, 'cd')">
+        arrow_right
+      </i>
+    </div>
+    <div class="change-year">
+      <i class="material-icons" (click)="dateService.changeYear(-1, 'cd')">
+        arrow_left
+      </i>
+      <span>{{ dateService.calendarDate | async | moment: 'Y' }}</span>
+      <i class="material-icons" (click)="dateService.changeYear(1, 'cd')">
+        arrow_right
+      </i>
+    </div>
+  </div>
+  <app-calendar></app-calendar>
+</div>

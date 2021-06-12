@@ -1,0 +1,22 @@
+<div class="shadow" (click)="closeChoiceDate.emit(transactionDate)"></div>
+<div class="modal-edit-date">
+  <div class="choice-day" (click)="modalCalendar = true; this.dateService.selectDay(transactionDate)">
+    <span class="iconify" data-icon="ic:baseline-today" data-inline="false"></span>
+    <span class="choice-day-title">Выбрать день</span>
+  </div>
+  <div class="choice-yesterday" (click)="closeChoiceDate.emit(yesterday)">
+    <span class="iconify" data-icon="mdi:moon-waning-crescent" data-inline="false"></span>
+    <span class="choice-yesterday-title">Вчера</span>
+    <span class="choice-yesterday-date">{{yesterday | moment: 'D MMMM'}}</span>
+  </div>
+  <div class="choice-today" [style]="backgroundColor" (click)="closeChoiceDate.emit(today)">
+    <span class="iconify" data-icon="mdi:white-balance-sunny" data-inline="false"></span>
+    <span class="choice-today-title">Сегодня</span>
+    <span class="choice-today-date">{{today | moment: 'D MMMM'}}</span>
+  </div>
+</div>
+
+<app-modal-calendar *ngIf="modalCalendar"
+                    (closeModalCalendar)="close($event)"
+                    [date]="transactionDate"
+                    [backgroundColor]="backgroundColor"></app-modal-calendar>

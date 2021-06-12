@@ -11,7 +11,7 @@ export class AuthenticationService {
   constructor(private _http: HttpClient) {
   }
 
-  register(userData): any {
+  auth(userData): any {
     return this._http.post<any>(this._url, userData);
   }
 }

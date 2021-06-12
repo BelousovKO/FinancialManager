@@ -1,0 +1,48 @@
+.modal-calendar {
+  position: absolute;
+  background-color: white;
+  border-radius: 4px;
+  width: 400px;
+  height: 400px;
+  left: calc(50% - 200px);
+  top: 150px;
+  z-index: 1;
+
+  .choice-interface {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 5px;
+
+    div {
+      width: 40%;
+      display: flex;
+      justify-content: space-between;
+      color: #818181;
+      font-size: 1rem;
+
+      i {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .buttons-container {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 3px;
+
+    .btn,
+    .total-date {
+      color: white;
+    }
+
+    .total-date {
+      margin: 0 8px;
+      font-size: 1.5rem;
+    }
+  }
+}
+
+.shadow {
+  z-index: 1;
+}

@@ -1,0 +1,99 @@
+.date-filtering {
+  position: absolute;
+  background-color: white;
+  width: 300px;
+  left: calc(50% - 150px);
+  top: 180px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(4, 1fr);
+  grid-gap: 0;
+  margin: 0;
+  padding: 0;
+  height: 400px;
+  font-size: small;
+  color: dimgray;
+  border-radius: 4px;
+  z-index: 1;
+
+  li {
+    cursor: pointer;
+    margin: 0;
+    padding: 3px;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    align-items: center;
+
+    .material-icons {
+      font-size: 2.2rem;
+    }
+
+    & * {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  .choice {
+    background-color: #4646b0;
+    color: white;
+    border-radius: 4px;
+
+    * {
+      color: white;
+    }
+  }
+
+  .filter-text {
+    color: dimgray;
+    font-size: 1rem;
+  }
+
+  .filter-range {
+    grid-column: span 2;
+  }
+
+  .filter-infinity,
+  .filter-week,
+  .filter-year {
+    border-right: 1px solid lightgray;
+  }
+
+  .filter-infinity,
+  .filter-week,
+  .filter-year,
+  .filter-day,
+  .filter-today,
+  .filter-month {
+    border-top: 1px solid lightgray;
+  }
+
+  .filter-icons {
+    display: flex;
+    justify-content: center;
+    font-size: 1.2rem;
+
+    .filter-icons_year {
+      width: 50px;
+    }
+
+    div {
+      background-color: lightgray;
+      width: 35px;
+      border-radius: 4px;
+      padding: 3px;
+      color: dimgray;
+      font-family: 'Roboto Slab', serif;
+      font-size: 1.2rem;
+    }
+  }
+
+  .date {
+    font-size: small;
+  }
+}
+
+.shadow {
+  z-index: 1;
+}

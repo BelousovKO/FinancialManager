@@ -1,28 +1,34 @@
 import {Injectable} from '@angular/core';
 import * as moment from 'moment';
 import {BehaviorSubject} from 'rxjs';
-import {UserDataService} from './user-data.service';
-
 @Injectable({
   providedIn: 'root'
 })
+
 export class DateService {
+
   public date: BehaviorSubject<moment.Moment> = new BehaviorSubject(moment());
 
-  constructor(private data: UserDataService) {
+  public calendarDate: BehaviorSubject<moment.Moment> = new BehaviorSubject(moment());
+
+  public dateFilter = 'm';
+  public choiceFirstDay = moment();
+  public choiceLastDay = moment();
+  public lastDayMonth = this.date.value.clone().endOf('month');
+
+  constructor() {
   }
 
   go(dir: number): void {
-
-    switch (this.data.dateFilter.value) {
-      case 't':
-        this.changeDay(dir);
-        break;
+    switch (this.dateFilter) {
       case 'd':
-        this.changeDay(dir);
+        this.date.next(this.date.value.add(dir, 'day'));
+        break;
+      case 't':
+        this.date.next(this.date.value.add(dir, 'day'));
         break;
       case 'w':
-        this.changeWeek(dir);
+        this.date.next(this.date.value.add(dir, 'week'));
         break;
       case 'm':
         this.changeMonth(dir);
@@ -32,53 +38,37 @@ export class DateService {
         break;
       case 'r':
         this.changeRange(dir);
-        this.data.toggleTypeTransaction();
-        this.data.toggleTypeTransaction();
         break;
     }
+    this.lastDayMonth = this.date.value.endOf('month');
   }
 
-  backToToday(): void {
-    const difference = moment().startOf('day').diff(this.date.value.startOf('day'), 'day');
-    const value = this.date.value.add(difference, 'day');
-    this.date.next(value);
+  changeMonth(dir: number, typeDate?: string): void {
+    typeDate === 'cd' ?
+      this.calendarDate.next(this.calendarDate.value.add(dir, 'month')) :
+      this.date.next(this.date.value.add(dir, 'month'));
   }
 
-  changeMonth(dir: number): void {
-    const value = this.date.value.add(dir, 'month');
-    this.date.next(value);
-  }
-
-  changeDay(dir: number): void {
-    const value = this.date.value.add(dir, 'day');
-    this.date.next(value);
-  }
-
-  changeYear(dir: number): void {
-    const value = this.date.value.add(dir, 'year');
-    this.date.next(value);
-  }
-
-  changeWeek(dir: number): void {
-    const value = this.date.value.add(dir, 'week');
-    this.date.next(value);
+  changeYear(dir: number, typeDate?: string): void {
+    typeDate === 'cd' ?
+      this.calendarDate.next(this.calendarDate.value.add(dir, 'year')) :
+      this.date.next(this.date.value.add(dir, 'year'));
   }
 
   changeRange(dir: number): void {
-    let difference = this.data.choiceLastDay.startOf('day')
-      .diff(this.data.choiceFirstDay.startOf('day'), 'day');
+    let difference = this.choiceLastDay.startOf('day')
+      .diff(this.choiceFirstDay.startOf('day'), 'day');
     dir > 0 ? difference = difference * dir + 1 : difference = difference * dir - 1;
-    this.data.choiceFirstDay.add(difference, 'day');
-    this.data.choiceLastDay.add(difference, 'day');
-
+    this.choiceFirstDay.add(difference, 'day');
+    this.choiceLastDay.add(difference, 'day');
   }
 
   selectDay(date: moment.Moment): void {
-    const value = this.date.value.set({
+    const value = this.calendarDate.value.set({
       date: date.date(),
       month: date.month(),
       year: date.year()
     });
-    this.date.next(value);
+    this.calendarDate.next(value);
   }
 }

@@ -1,0 +1,44 @@
+.modal-edit-date {
+  position: absolute;
+  top: 200px;
+  left: calc(50% - 150px);
+  height: 200px;
+  width: 300px;
+  background-color: white;
+  border-radius: 4px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+
+  div {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    .iconify {
+      font-size: 2.5rem;
+      margin-top: 3px;
+    }
+
+    span {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  .choice-day {
+    grid-column: span 2;
+    border-bottom: 1px solid lightgray;
+  }
+
+  .choice-today {
+    border-left: 1px solid lightgray;
+    border-bottom-right-radius: 4px;
+    color: white;
+  }
+}

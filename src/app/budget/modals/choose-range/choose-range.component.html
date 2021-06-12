@@ -1,0 +1,25 @@
+<div class="shadow" (click)="closeChooseRange.emit(false)"></div>
+<div class="choose-range">
+  <h2>Выбрать диапазон</h2>
+  <div class="days">
+    <div class="day-range first-day" (click)="date = dateService.choiceFirstDay; modalCalendar = true; day = 'first'">
+      <div class="material-icons">today</div>
+      <div>C</div>
+      <div>{{dateService.choiceFirstDay | moment: 'DD MMMM Y'}}</div>
+    </div>
+    <div class="day-range last-day" (click)="date = dateService.choiceLastDay; modalCalendar = true; day = 'last'">
+      <div class="material-icons">event</div>
+      <div>По</div>
+      <div>{{dateService.choiceLastDay | moment: 'DD MMMM Y'}}</div>
+    </div>
+  </div>
+  <div class="buttons-container">
+    <button class="cancel" (click)="closeChooseRange.emit(false)">отменить</button>
+    <button class="ok" (click)="closeChooseRange.emit(true)">ок</button>
+  </div>
+</div>
+
+<app-modal-calendar *ngIf="modalCalendar"
+                    (closeModalCalendar)="close($event)"
+                    [date]="date"
+                    [backgroundColor]="'background-color: #4646b0'"></app-modal-calendar>

@@ -1,0 +1,23 @@
+<div class="shadow" (click)="closeEditCategory.emit()"></div>
+<div class="modal-create-category">
+  <div class="buttons-container" [style]="backgroundColor()">
+    <button class="btn cancel material-icons" (click)="closeEditCategory.emit()">close</button>
+    <button class="btn create material-icons" [disabled]="!titleCategory" (click)="editCategory()">
+      check
+    </button>
+  </div>
+  <label>
+    <input type="text" (input)="inputHandlerCategory($event)" [value]="titleCategory"
+           placeholder="Название категории"/>
+  </label>
+  <div class="container-icon">
+    <div class="costs new-icon material-icons" [style]="backgroundColor()" (click)="modalChangeIcon = true">
+      {{ iconCategory }}
+    </div>
+  </div>
+</div>
+
+<app-change-icon *ngIf="modalChangeIcon"
+                 [iconCategory]="iconCategory"
+                 [color]="color"
+                 (closeChangeIcon)="changeIcon($event)"></app-change-icon>

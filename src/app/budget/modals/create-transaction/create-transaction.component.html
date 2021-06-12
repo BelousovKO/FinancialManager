@@ -1,0 +1,51 @@
+<div class="shadow" (click)="closeModalTransaction.emit()"></div>
+<div class="modal-transaction">
+  <header [style]="backgroundColor()">
+    <div class="title-category">{{interface[this.indexCategory].title}}</div>
+    <i class="material-icons" [style]="color()">{{interface[this.indexCategory].icon}}</i>
+  </header>
+
+  <div class="info-amount">
+    <div class="transaction-type" [style]="typeTransactionColor()">{{transactionTypeRu}}</div>
+    <div class="transaction-sum" [style]="typeTransactionColor()">{{transactionSum}} ₽</div>
+  </div>
+
+  <div class="note-amount" (click)="modalNote = true">
+    <span *ngIf="!transactionTitle">Заметки...</span>
+    <span *ngIf="transactionTitle">{{transactionTitle}}</span>
+  </div>
+
+  <ul class="container-buttons-amount">
+    <li class="buttons-amount" *ngFor="let elem of buttonValues; let idx = index" (click)="clickButtons(elem)">
+      <span class="iconify" [attr.data-icon]=elem data-inline="false">{{elem}}</span>
+    </li>
+    <li class="buttons-amount button-choice-date" (click)="modalChoiceDate = true">
+      <span class="iconify" data-icon="ic:baseline-today" data-inline="false"></span>
+    </li>
+    <li class="buttons-amount button-done" [style]="backgroundColor()" (click)="makeTransaction()">
+      <span class="iconify" data-icon="ic:baseline-done" data-inline="false"></span>
+    </li>
+  </ul>
+
+  <div class="date-amount">
+    <span *ngIf="transactionDate.format('DD.MM.YYYY') === today">
+      сегодня, {{ transactionDate | moment: 'DD MMMM y' }} года
+    </span>
+    <span *ngIf="transactionDate.format('DD.MM.YYYY') === yesterday">
+      вчера, {{ transactionDate | moment: 'DD MMMM y' }} года
+    </span>
+    <span *ngIf="transactionDate.format('DD.MM.YYYY') !== today &&
+                 transactionDate.format('DD.MM.YYYY') !== yesterday">
+      {{ transactionDate | moment: 'ddd, DD MMMM y' }} года
+    </span>
+  </div>
+</div>
+
+<app-edit-note *ngIf="modalNote"
+               (closeEditNote)="getTransactionTitle($event)"
+               [transactionTitle]="transactionTitle"></app-edit-note>
+
+<app-edit-date-transaction *ngIf="modalChoiceDate"
+                           (closeChoiceDate)="getTransactionDate($event)"
+                           [transactionDate]="transactionDate"
+                           [backgroundColor]="backgroundColor()"></app-edit-date-transaction>

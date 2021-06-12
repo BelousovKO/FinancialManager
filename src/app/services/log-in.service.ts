@@ -11,7 +11,7 @@ export class LogInService {
   constructor(private _http: HttpClient) {
   }
 
-  register(userData): any {
+  login(userData): any {
     return this._http.post<any>(this._url, userData);
   }
 }

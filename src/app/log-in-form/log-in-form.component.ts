@@ -21,7 +21,7 @@ export class LogInFormComponent implements OnInit {
               private _logInService: LogInService,
               public authorization: AuthorizationService,
               private _authentication: AuthenticationService,
-              public data: UserDataService) {
+              public userData: UserDataService) {
   }
 
   ngOnInit(): void {
@@ -34,22 +34,15 @@ export class LogInFormComponent implements OnInit {
         token: ''
       };
       token.token = localStorage.getItem('token');
-      this._authentication.register(token)
+      this._authentication.auth(token)
         .subscribe(
           response => {
             this.statusLogin = response.status;
             if (response.status === 'OK') {
-              this.data.userData = response.userData;
-              this.data.transaction = response.userData.costs;
-              this.data.costs = response.userData.costs;
-              this.data.income = response.userData.income;
-              this.data.dataInterface = response.userData.interface;
-              this.data.dataInterface.expense = response.userData.interface.expense;
-              this.data.dataInterface.income = response.userData.interface.income;
-              this.data.dataInterfaceTransaction = response.userData.interface.expense;
-              this.data.dataInterfaceExpense = response.userData.interface.expense;
-              this.data.dataInterfaceIncome = response.userData.interface.income;
-              this.data.userId = response.userData.userId;
+              this.userData.transactions = response.userData.transactions;
+              this.userData.interfaceCosts = response.userData.interface.expense;
+              this.userData.interfaceIncome = response.userData.interface.income;
+              this.userData.userId = response.userData.userId;
               this.authorization.login = true;
               this.authorization.username = response.data;
             } else {
@@ -91,18 +84,15 @@ export class LogInFormComponent implements OnInit {
     this.logInForm.patchValue({
       password: this.logInForm.controls.password.value.toLowerCase(),
     });
-    this._logInService.register(this.logInForm.value)
+    this._logInService.login(this.logInForm.value)
       .subscribe(
         response => {
           this.statusLogin = response.status;
           if (response.status === 'OK') {
-            this.data.userData = response.userData;
-            this.data.transaction = response.userData.costs;
-            this.data.costs = response.userData.costs;
-            this.data.income = response.userData.income;
-            this.data.dataInterfaceExpense = response.userData.interface.expense;
-            this.data.dataInterfaceIncome = response.userData.interface.income;
-            this.data.userId = response.userData.userId;
+            this.userData.transactions = response.userData.transactions;
+            this.userData.interfaceCosts = response.userData.interface.costs;
+            this.userData.interfaceIncome = response.userData.interface.income;
+            this.userData.userId = response.userData.userId;
             this.authorization.login = true;
             this.authorization.username = this.logInForm.controls.userName.value;
             localStorage.setItem('token', response.token);
@@ -115,13 +105,5 @@ export class LogInFormComponent implements OnInit {
         error => console.error('Error! ', error)
       );
   }
-
-  /*exit(): any {
-    this.authorization.login = false;
-    this.authorization.username = '';
-    localStorage.removeItem('token');
-    this.data.transactionsAll = 0;
-    this.data.sumTransaction = [];
-  }*/
 }
 

@@ -1,0 +1,20 @@
+<div class="shadow" (click)="closeChangeIcon.emit(newValues)"></div>
+<div class="modal-change-icon">
+  <div class="buttons-container" [style]="backgroundColor()">
+    <button class="btn cancel material-icons" (click)="closeChangeIcon.emit(newValues)">
+      arrow_back
+    </button>
+  </div>
+  <div class="container-input-color">
+    <div class="costs material-icons" [style]="backgroundColor()">
+      {{iconCategory}}
+    </div>
+    <label>
+      <input type="color" (input)="inputHandlerColor($event)" [value]="color"/>
+    </label>
+  </div>
+  <ul class="list-icons">
+    <li class="material-icons" *ngFor="let elem of listIcon; let idx = index"
+        (click)="iconCategory = listIcon[idx]; newValues[0] = listIcon[idx]">{{elem}}</li>
+  </ul>
+</div>

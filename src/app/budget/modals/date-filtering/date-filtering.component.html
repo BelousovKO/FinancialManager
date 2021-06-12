@@ -1,0 +1,74 @@
+<div class="shadow" (click)="closeDateFiltering.emit()"></div>
+<ul class="date-filtering">
+  <li class="filter-range filter-date-btn"
+      [ngClass]="{choice: dateService.dateFilter === 'r'}"
+      (click)="closeDateFiltering.emit('range');
+               dateService.date.next(today)">
+    <div class="material-icons">date_range</div>
+    <div class="filter-text">Выбрать диапазон</div>
+    <div class="date">{{ dateService.date | async | moment }}</div>
+  </li>
+  <li class="filter-infinity filter-date-btn"
+      [ngClass]="{choice: dateService.dateFilter === 'i'}"
+      (click)="dateService.dateFilter = 'i';
+               dateService.date.next(today);
+               closeDateFiltering.emit()">
+    <div class="material-icons">all_inclusive</div>
+    <div class="filter-text">Всё время</div>
+  </li>
+  <li class="filter-day filter-date-btn"
+      [ngClass]="{choice: dateService.dateFilter === 'd'}"
+      (click)="closeDateFiltering.emit('calendar');
+               dateService.date.next(today)">
+    <div class="filter-icons">
+      <div>1</div>
+    </div>
+    <div class="filter-text">Выбрать день</div>
+  </li>
+  <li class="filter-week filter-date-btn"
+      [ngClass]="{choice: dateService.dateFilter === 'w'}"
+      (click)="dateService.dateFilter = 'w';
+               dateService.date.next(today);
+               closeDateFiltering.emit()">
+    <div class="filter-icons">
+      <div>7</div>
+    </div>
+    <div class="filter-text">Неделя</div>
+    <div class="date">
+      {{ today.clone().startOf('week').format('D') }} -
+      {{ today.clone().endOf('week').format('D MMMM YYYY') }}
+    </div>
+  </li>
+  <li class="filter-today filter-date-btn"
+      [ngClass]="{choice: dateService.dateFilter === 't'}"
+      (click)="dateService.dateFilter = 't';
+               dateService.date.next(today);
+               closeDateFiltering.emit()">
+    <div class="material-icons">today</div>
+    <div class="filter-text">Сегодня</div>
+    <div class="date">{{ today.clone().format('D MMMM YYYY') }}</div>
+  </li>
+  <li class="filter-year filter-date-btn"
+      [ngClass]="{choice: dateService.dateFilter === 'y'}"
+      (click)="dateService.dateFilter = 'y';
+               dateService.date.next(today);
+               closeDateFiltering.emit()">
+    <div class="filter-icons">
+      <div class="filter-icons_year">365</div>
+    </div>
+    <div class="filter-text">Год</div>
+    <div class="date">{{ today.clone().format('YYYY') }} год</div>
+  </li>
+  <li class="filter-month filter-date-btn"
+      [ngClass]="{choice: dateService.dateFilter === 'm'}"
+      (click)="dateService.dateFilter = 'm';
+               dateService.date.next(today);
+               closeDateFiltering.emit()">
+    <div class="filter-icons">
+      <div>{{ today.clone().endOf('month').format('D') }}</div>
+    </div>
+    <div class="filter-text">Месяц</div>
+    <div class="date">{{ today.format('MMMM YYYY') }}</div>
+  </li>
+</ul>
+

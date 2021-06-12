@@ -1,0 +1,65 @@
+.choose-range {
+  position: absolute;
+  width: 400px;
+  left: calc(50% - 200px);
+  top: 200px;
+  background-color: white;
+  color: dimgray;
+  border-radius: 4px;
+  z-index: 1;
+
+  h2 {
+    color: black;
+    padding: 30px;
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  .days {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    .day-range {
+      padding: 20px 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      border-top: 1px solid gray;
+      border-bottom: 1px solid gray;
+      cursor: pointer;
+
+      div, .material-icons {
+        text-align: center;
+        width: 100%;
+      }
+    }
+
+    .first-day {
+      border-right: 1px solid gray;
+    }
+  }
+
+  .buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+
+    button {
+      background-color: white;
+      border: none;
+      text-transform: uppercase;
+      color: dimgray;
+      font-weight: 500;
+      margin: 30px;
+    }
+
+    .ok {
+      color: #4646b0;
+    }
+  }
+}
+
+.shadow {
+  z-index: 1;
+}
