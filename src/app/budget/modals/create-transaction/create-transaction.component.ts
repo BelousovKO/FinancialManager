@@ -158,6 +158,7 @@ export class CreateTransactionComponent implements OnInit {
   }
 
   makeTransaction(): void {
+    this.userData.loading = true;
     let title;
     this.transactionTitle ? title = this.transactionTitle : title = '';
     if (this.transactionSum !== '0') {
@@ -177,6 +178,7 @@ export class CreateTransactionComponent implements OnInit {
         this.editTransaction.edit(body)
           .subscribe(
             response => {
+              this.userData.loading = false;
               if (response.status === 'OK') {
                 this.userData.transactions = this.userData.transactions.filter(e => e.id !== this.idTransaction);
                 this.userData.transactions.push(response.data);
@@ -190,6 +192,7 @@ export class CreateTransactionComponent implements OnInit {
         this.createdTransaction.create(body)
           .subscribe(
             response => {
+              this.userData.loading = false;
               if (response.status === 'OK') {
                 this.userData.transactions.push(response.data);
                 this.closeModalTransaction.emit();

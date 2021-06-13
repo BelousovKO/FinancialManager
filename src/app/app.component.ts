@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {AuthorizationService} from './services/authorization.service';
+import {UserDataService} from './services/user-data.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,7 @@ import {AuthorizationService} from './services/authorization.service';
 })
 export class AppComponent {
 
-  constructor(public authorization: AuthorizationService) {
+  constructor(public authorization: AuthorizationService,
+              public userData: UserDataService) {
   }
 }

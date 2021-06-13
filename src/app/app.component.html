@@ -2,3 +2,4 @@
 <app-reg-form *ngIf="authorization.reg"></app-reg-form>
 <app-recovery *ngIf="authorization.recovery"></app-recovery>
 <router-outlet *ngIf="authorization.login"></router-outlet>
+<app-loader *ngIf="userData.loading"></app-loader>

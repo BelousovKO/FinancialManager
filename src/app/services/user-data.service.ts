@@ -19,6 +19,7 @@ export class UserDataService {
   public interfaceCosts = [];
   public interfaceIncome = [];
   public editState = false;
+  public loading = false;
 
 
   constructor(public dateService: DateService) {

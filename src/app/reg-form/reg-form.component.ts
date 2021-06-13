@@ -112,12 +112,13 @@ export class RegFormComponent implements OnInit {
   }
 
   onSubmit(): any {
+    this.userData.loading = true;
     this.submitted = true;
     this._registrationService.register(this.registrationForm.value)
       .subscribe(
         response => {
+          this.userData.loading = false;
           if (response.status === 'OK') {
-            console.log('response', response);
             this.userData.updateUserData(response);
             this.authorization.login = true;
             this.authorization.reg = false;

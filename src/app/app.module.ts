@@ -26,6 +26,7 @@ import { EditCategoryComponent } from './budget/modals/edit-category/edit-catego
 import { ChangeIconComponent } from './budget/modals/change-icon/change-icon.component';
 import { ToggleListsComponent } from './budget/toggle-lists/toggle-lists.component';
 import { TransactionListComponent } from './budget/transaction-list/transaction-list.component';
+import { LoaderComponent } from './loader/loader.component';
 
 const appRoutes: Routes = [
   {path: '', component: BudgetComponent},
@@ -56,6 +57,7 @@ const appRoutes: Routes = [
     ChangeIconComponent,
     ToggleListsComponent,
     TransactionListComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,

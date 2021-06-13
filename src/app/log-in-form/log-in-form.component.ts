@@ -78,12 +78,14 @@ export class LogInFormComponent implements OnInit {
   }
 
   onSubmit(): any {
+    this.userData.loading = true;
     this.logInForm.patchValue({
       password: this.logInForm.controls.password.value.toLowerCase(),
     });
     this._logInService.login(this.logInForm.value)
       .subscribe(
         response => {
+          this.userData.loading = false;
           this.statusLogin = response.status;
           if (response.status === 'OK') {
             this.userData.updateUserData(response);

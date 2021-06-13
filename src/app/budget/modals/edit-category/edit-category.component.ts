@@ -42,6 +42,7 @@ export class EditCategoryComponent implements OnInit {
   }
 
   editCategory(): void {
+    this.userData.loading = true;
     let typeCategory: string;
     if (this.interface.length === 6) {
       this.userData.interfaceIncome[this.indexCategory].title = this.titleCategory;
@@ -58,6 +59,7 @@ export class EditCategoryComponent implements OnInit {
     this.changeInterface.change(body)
       .subscribe(
         response => {
+          this.userData.loading = false;
           if (response.status === 'OK') {
             this.closeEditCategory.emit();
           }
