@@ -16,6 +16,7 @@ export class EditDateTransactionComponent implements OnInit {
   public modalCalendar = false;
   public yesterday = moment().add(-1, 'day');
   public today = moment();
+  public dataFilter = this.dateService.dateFilter;
 
   constructor(public dateService: DateService) { }
 
@@ -24,5 +25,6 @@ export class EditDateTransactionComponent implements OnInit {
 
   close(newDate: moment.Moment): void {
     this.closeChoiceDate.emit(newDate);
+    this.dateService.dateFilter = this.dataFilter;
   }
 }

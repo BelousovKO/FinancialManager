@@ -1,0 +1,27 @@
+.toggle-lists {
+  border-top: 1px solid lightgray;
+
+  .buttons-container {
+    width: 40%;
+    margin: 40px auto 0;
+    display: flex;
+
+    .buttons {
+      display: grid;
+      width: 50%;
+
+      i, span {
+        text-align: center;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.active {
+  color: #4646b0;
+}
+
+.noActive {
+  color: dimgray;
+}

@@ -24,6 +24,8 @@ import { DateFilteringComponent } from './budget/modals/date-filtering/date-filt
 import { ChooseRangeComponent } from './budget/modals/choose-range/choose-range.component';
 import { EditCategoryComponent } from './budget/modals/edit-category/edit-category.component';
 import { ChangeIconComponent } from './budget/modals/change-icon/change-icon.component';
+import { ToggleListsComponent } from './budget/toggle-lists/toggle-lists.component';
+import { TransactionListComponent } from './budget/transaction-list/transaction-list.component';
 
 const appRoutes: Routes = [
   {path: '', component: BudgetComponent},
@@ -52,6 +54,8 @@ const appRoutes: Routes = [
     ChooseRangeComponent,
     EditCategoryComponent,
     ChangeIconComponent,
+    ToggleListsComponent,
+    TransactionListComponent,
   ],
   imports: [
     BrowserModule,

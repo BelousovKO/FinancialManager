@@ -1,2 +1,4 @@
 <app-header></app-header>
-<app-category-list></app-category-list>
+<app-category-list *ngIf="list === 'category'"></app-category-list>
+<app-transaction-list *ngIf="list === 'transactions'"></app-transaction-list>
+<app-toggle-lists [content]="list" (changeList)="changedList($event)"></app-toggle-lists>

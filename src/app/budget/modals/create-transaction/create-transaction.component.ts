@@ -18,6 +18,7 @@ export class CreateTransactionComponent implements OnInit {
   @Input() amount: number;
   @Input() transactionTitle: string;
   @Input() idTransaction: string;
+  @Input() date: string;
   @Output() closeModalTransaction: EventEmitter<any> = new EventEmitter();
 
   public transactionTypeRu = 'Расход';
@@ -37,8 +38,8 @@ export class CreateTransactionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.date ? this.transactionDate = moment(this.date, 'YYYY-MM-DD') : this.generateDate();
     !this.amount ? this.transactionSum = '0' : this.transactionSum = `${this.amount}`;
-    this.generateDate();
   }
 
   backgroundColor(): string {
@@ -179,6 +180,7 @@ export class CreateTransactionComponent implements OnInit {
               if (response.status === 'OK') {
                 this.userData.transactions = this.userData.transactions.filter(e => e.id !== this.idTransaction);
                 this.userData.transactions.push(response.data);
+                this.dateService.date.next(this.dateService.date.value);
               }
             },
             error => console.error('Error! ', error)

@@ -8,9 +8,15 @@ import {Component, OnInit} from '@angular/core';
 
 export class BudgetComponent implements OnInit {
 
+  public list = 'category';
+
   constructor() {
   }
 
   ngOnInit(): void {
+  }
+
+  changedList(value: string): void {
+    this.list = value;
   }
 }

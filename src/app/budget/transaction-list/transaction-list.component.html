@@ -1,0 +1,47 @@
+<div class="transaction-list-container">
+  <ul>
+    <li *ngFor="let elem of days, let idx = index">
+      <header>
+        <div class="big-day day-title">
+          {{momentDays[idx] | moment: 'DD'}}
+        </div>
+        <div class="week-small-date">
+          <div class="week-day day-title">
+            {{momentDays[idx] | moment: 'dddd'}}
+          </div>
+          <div class="small-date-container">
+            <div class="small-date day-title">
+              {{momentDays[idx] | moment: 'DD MMMM YYYY'}}
+            </div>
+          </div>
+        </div>
+        <div class="day-amount" [style]="colorAmount(elem.transactions)">{{dayAmount(elem.transactions)}} ₽</div>
+      </header>
+      <ul>
+        <li *ngFor="let e of elem.transactions"
+            class="transaction-container"
+            (click)="selectCategory(e)">
+          <div class="icon material-icons" [style]="backgroundColor(e.type, e.category)">
+            {{icon(e.type, e.category)}}
+          </div>
+          <div class="text-container">
+            <div class="category text">{{category(e.type, e.category)}}</div>
+            <div class="title text">{{ e.title }}</div>
+          </div>
+          <div class="amount" [style]="colorAmount(e.type)">
+            {{ transactionAmount(e) }} ₽
+          </div>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<app-create-transaction *ngIf="modalCreateTransaction"
+                        (closeModalTransaction)="modalCreateTransaction = false;"
+                        [interface]="interface"
+                        [amount]="amountTransaction"
+                        [idTransaction]="idTransaction"
+                        [transactionTitle]="transactionTitle"
+                        [date]="dateTransaction"
+                        [indexCategory]="indexCategory"></app-create-transaction>

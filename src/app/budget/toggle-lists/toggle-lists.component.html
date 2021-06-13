@@ -1,0 +1,14 @@
+<div class="toggle-lists">
+  <div class="buttons-container" [ngClass]="{hidden: userData.editState}">
+    <div class="buttons" (click)="changeList.emit('category')" [ngClass]="{active: content === 'category',
+                                                                   noActive: content === 'transactions'}">
+      <i class="material-icons">donut_large</i>
+      <span>Категории</span>
+    </div>
+    <div class="buttons" (click)="changeList.emit('transactions')" [ngClass]="{active: content === 'transactions',
+                                                                      noActive: content === 'category'}">
+      <i class="material-icons">receipt</i>
+      <span>Операции</span>
+    </div>
+  </div>
+</div>
