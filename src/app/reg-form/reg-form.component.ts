@@ -6,6 +6,7 @@ import {RegistrationService} from '../services/registration.service';
 import {CheckNameService} from '../services/check-name.service';
 import {AuthorizationService} from '../services/authorization.service';
 import {CheckMailService} from '../services/check-mail.service';
+import {UserDataService} from '../services/user-data.service';
 
 @Component({
   selector: 'app-reg-form',
@@ -68,7 +69,8 @@ export class RegFormComponent implements OnInit {
               private _registrationService: RegistrationService,
               private _checkNameService: CheckNameService,
               public authorization: AuthorizationService,
-              public _checkMailService: CheckMailService) {
+              public _checkMailService: CheckMailService,
+              public userData: UserDataService) {
   }
 
   ngOnInit(): void {
@@ -82,40 +84,47 @@ export class RegFormComponent implements OnInit {
   }
 
   checkName(userName): void {
-    this._checkNameService.checking(userName)
-      .subscribe(
-        response => {
-          if (response.status === 'CANCEL') {
-            this.nameIsTaken = true;
-          }
-        },
-        error => console.error('Error! ', error)
-      );
+    if (userName) {
+      this._checkNameService.checking(userName)
+        .subscribe(
+          response => {
+            if (response.status === 'CANCEL') {
+              this.nameIsTaken = true;
+            }
+          },
+          error => console.error('Error! ', error)
+        );
+    }
   }
 
   checkMail(userMail): void {
-    this._checkMailService.checking(userMail)
-      .subscribe(
-        response => {
-          console.log('Success! ', response);
-          if (response.status === 'CANCEL') {
-            this.emailIsTaken = true;
-          }
-        },
-        error => console.error('Error! ', error)
-      );
+    if (userMail) {
+      this._checkMailService.checking(userMail)
+        .subscribe(
+          response => {
+            if (response.status === 'CANCEL') {
+              this.emailIsTaken = true;
+            }
+          },
+          error => console.error('Error! ', error)
+        );
+    }
   }
 
   onSubmit(): any {
     this.submitted = true;
     this._registrationService.register(this.registrationForm.value)
       .subscribe(
-        response => { if (response.status === 'OK'){
-          this.authorization.login = true;
-          this.authorization.reg = false;
-          this.authorization.username = this.registrationForm.controls.userName.value;
-          localStorage.setItem('token', response.token);
-        }},
+        response => {
+          if (response.status === 'OK') {
+            console.log('response', response);
+            this.userData.updateUserData(response);
+            this.authorization.login = true;
+            this.authorization.reg = false;
+            this.authorization.username = this.registrationForm.controls.userName.value;
+            localStorage.setItem('token', response.token);
+          }
+        },
         error => console.error('Error! ', error)
       );
   }

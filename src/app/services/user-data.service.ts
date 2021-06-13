@@ -24,6 +24,13 @@ export class UserDataService {
   constructor(public dateService: DateService) {
   }
 
+  updateUserData(response): void {
+    this.transactions = response.userData.transactions;
+    this.interfaceCosts = response.userData.interface.expense;
+    this.interfaceIncome = response.userData.interface.income;
+    this.userId = response.userData.userId;
+  }
+
   dataGeneration(): void {
     this.costs = [];
     this.income = [];
@@ -48,31 +55,33 @@ export class UserDataService {
         this.filteredTransactions('YYYY');
         break;
       case 'w':
-        this.costs = this.costs.filter(e =>
-          moment(e.date).format('x') >= this.dateService.date.value.startOf('week').format('x') &&
-          moment(e.date).format('x') <= this.dateService.date.value.endOf('week').format('x'));
-        this.income = this.income.filter(e =>
-          moment(e.date).format('x') >= this.dateService.date.value.startOf('week').format('x') &&
-          moment(e.date).format('x') <= this.dateService.date.value.endOf('week').format('x'));
+        this.costs = this.costs.filter(e => this.conditionWeek(e));
+        this.income = this.income.filter(e => this.conditionWeek(e));
         this.balance = this.balanceGenerate();
         break;
       case 'r':
-        this.costs = this.costs.filter(e =>
-          moment(e.date).format('x') >= this.dateService.choiceFirstDay.startOf('day').format('x') &&
-          moment(e.date).format('x') <= this.dateService.choiceLastDay.endOf('day').format('x'));
-        this.income = this.income.filter(e =>
-          moment(e.date).format('x') >= this.dateService.choiceFirstDay.startOf('day').format('x') &&
-          moment(e.date).format('x') <= this.dateService.choiceLastDay.endOf('day').format('x'));
+        this.costs = this.costs.filter(e => this.conditionRange(e));
+        this.income = this.income.filter(e => this.conditionRange(e));
         this.balance = this.balanceGenerate();
         break;
     }
   }
 
+  conditionWeek(e): boolean {
+    return moment(e.date).format('x') >= this.dateService.date.value.clone().startOf('week').format('x') &&
+      moment(e.date).format('x') <= this.dateService.date.value.clone().endOf('week').format('x');
+  }
+
+  conditionRange(e): boolean {
+    return moment(e.date).format('x') >= this.dateService.choiceFirstDay.startOf('day').format('x') &&
+      moment(e.date).format('x') <= this.dateService.choiceLastDay.endOf('day').format('x');
+  }
+
   filteredTransactions(format: string): void {
     this.costs = this.costs.filter(e =>
-      moment(e.date).format(format) === this.dateService.date.value.format(format));
+      moment(e.date).format(format) === this.dateService.date.value.clone().format(format));
     this.income = this.income.filter(e =>
-      moment(e.date).format(format) === this.dateService.date.value.format(format));
+      moment(e.date).format(format) === this.dateService.date.value.clone().format(format));
     this.balance = this.balanceGenerate();
   }
 

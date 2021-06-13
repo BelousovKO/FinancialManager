@@ -39,10 +39,7 @@ export class LogInFormComponent implements OnInit {
           response => {
             this.statusLogin = response.status;
             if (response.status === 'OK') {
-              this.userData.transactions = response.userData.transactions;
-              this.userData.interfaceCosts = response.userData.interface.expense;
-              this.userData.interfaceIncome = response.userData.interface.income;
-              this.userData.userId = response.userData.userId;
+              this.userData.updateUserData(response);
               this.authorization.login = true;
               this.authorization.username = response.data;
             } else {
@@ -89,10 +86,7 @@ export class LogInFormComponent implements OnInit {
         response => {
           this.statusLogin = response.status;
           if (response.status === 'OK') {
-            this.userData.transactions = response.userData.transactions;
-            this.userData.interfaceCosts = response.userData.interface.costs;
-            this.userData.interfaceIncome = response.userData.interface.income;
-            this.userData.userId = response.userData.userId;
+            this.userData.updateUserData(response);
             this.authorization.login = true;
             this.authorization.username = this.logInForm.controls.userName.value;
             localStorage.setItem('token', response.token);

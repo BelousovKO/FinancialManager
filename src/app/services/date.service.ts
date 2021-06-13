@@ -40,7 +40,7 @@ export class DateService {
         this.changeRange(dir);
         break;
     }
-    this.lastDayMonth = this.date.value.endOf('month');
+    this.lastDayMonth = this.date.value.clone().endOf('month');
   }
 
   changeMonth(dir: number, typeDate?: string): void {
@@ -61,6 +61,7 @@ export class DateService {
     dir > 0 ? difference = difference * dir + 1 : difference = difference * dir - 1;
     this.choiceFirstDay.add(difference, 'day');
     this.choiceLastDay.add(difference, 'day');
+    this.date.next(this.choiceFirstDay);
   }
 
   selectDay(date: moment.Moment): void {

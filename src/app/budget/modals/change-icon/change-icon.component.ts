@@ -25,7 +25,6 @@ export class ChangeIconComponent implements OnInit {
 
   ngOnInit(): void {
     this.newValues = [this.iconCategory, this.color];
-    console.log(this.newValues);
   }
 
   backgroundColor(): string {

@@ -27,9 +27,9 @@ export class DonutChartComponent implements OnChanges {
   ngOnChanges(): void {
     this.strokeDasharray = [];
     this.strokeDashoffset = [25];
+    this.typeTransactions === 'cost' ? this.title = 'расходы' : this.title = 'доходы';
     if (this.sumsCategory.reduce((total, amount) => total + amount)) {
       if (this.typeTransactions === 'cost') {
-        this.title = 'расходы';
         this.sumActive = this.userData.sumCosts;
         this.sumDisabled = this.userData.sumIncome;
         this.colorSumActive = '#B51515';
@@ -37,7 +37,6 @@ export class DonutChartComponent implements OnChanges {
         this.coefficient = 100 / this.userData.sumCosts;
         this.strokeDasharray = this.userData.costsCategorySums.map(e => `${e * this.coefficient} ${100 - e * this.coefficient}`);
       } else {
-        this.title = 'доходы';
         this.sumActive = this.userData.sumIncome;
         this.sumDisabled = this.userData.sumCosts;
         this.colorSumActive = '#14802D';
