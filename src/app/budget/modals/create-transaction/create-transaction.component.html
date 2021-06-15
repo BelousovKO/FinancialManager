@@ -1,21 +1,21 @@
 <div class="shadow" (click)="closeModalTransaction.emit()"></div>
 <div class="modal-transaction">
-  <header [style]="backgroundColor()">
+  <header [style]="backgroundColor()" (click)="edit=false; modalSelectCategories = true">
     <div class="title-category">{{interface[this.indexCategory].title}}</div>
     <i class="material-icons" [style]="color()">{{interface[this.indexCategory].icon}}</i>
   </header>
 
-  <div class="info-amount">
+  <div class="info-amount" (click)="edit=false">
     <div class="transaction-type" [style]="typeTransactionColor()">{{transactionTypeRu}}</div>
     <div class="transaction-sum" [style]="typeTransactionColor()">{{transactionSum}} ₽</div>
   </div>
 
-  <div class="note-amount" (click)="modalNote = true">
+  <div class="note-amount" (click)="modalNote = true; edit=false">
     <span *ngIf="!transactionTitle">Заметки...</span>
     <span *ngIf="transactionTitle">{{transactionTitle}}</span>
   </div>
 
-  <ul class="container-buttons-amount">
+  <ul class="container-buttons-amount" *ngIf="!edit">
     <li class="buttons-amount" *ngFor="let elem of buttonValues; let idx = index" (click)="clickButtons(elem)">
       <span class="iconify" [attr.data-icon]=elem data-inline="false">{{elem}}</span>
     </li>
@@ -39,6 +39,26 @@
       {{ transactionDate | moment: 'ddd, DD MMMM y' }} года
     </span>
   </div>
+
+  <div class="edit-transaction" *ngIf="edit">
+    <div class="button" (click)="modalDelete = true">
+      <div class="delete icon-circle">
+        <div class="material-icons">delete</div>
+      </div>
+      <span class="title">Удалить</span>
+    </div>
+    <div class="button" (click)="modalChoiceDate = true">
+      <div class="edit-date icon-circle">
+        <div class="material-icons">event</div>
+      </div>
+      <span class="title">Дата</span>
+    </div>
+    <div class="button duplication-button" (click)="edit = false; idTransaction = ''">
+      <div class="duplication" [style]="backgroundColor()"></div>
+      <div class="material-icons duplication-icon" [style]="color()">content_copy</div>
+      <span class="title">Дублировать</span>
+    </div>
+  </div>
 </div>
 
 <app-edit-note *ngIf="modalNote"
@@ -46,6 +66,17 @@
                [transactionTitle]="transactionTitle"></app-edit-note>
 
 <app-edit-date-transaction *ngIf="modalChoiceDate"
-                           (closeChoiceDate)="getTransactionDate($event)"
+                           (closeChoiceDate)="getTransactionDate($event); edit = false"
                            [transactionDate]="transactionDate"
                            [backgroundColor]="backgroundColor()"></app-edit-date-transaction>
+
+<app-delete-transaction *ngIf="modalDelete"
+                        [id]="idTransaction"
+                        (closeModalDelete)="modalDelete = false"
+                        (deleteTransaction)="closeModalTransaction.emit()"></app-delete-transaction>
+
+<app-select-categories *ngIf="modalSelectCategories"
+                       [interface]="interface"
+                       [indexCategory]="indexCategory"
+                       (selectedCategories)="SelectedCategory($event)"
+                       (closeSelectCategories)="modalSelectCategories = false"></app-select-categories>

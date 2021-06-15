@@ -1,5 +1,5 @@
 <div class="transaction-list-container">
-  <ul>
+  <ul class="transaction-list-content">
     <li *ngFor="let elem of days, let idx = index">
       <header>
         <div class="big-day day-title">
@@ -35,13 +35,20 @@
       </ul>
     </li>
   </ul>
+  <button class="material-icons add" (click)="modalSelectCategories = true">add</button>
 </div>
 
 <app-create-transaction *ngIf="modalCreateTransaction"
-                        (closeModalTransaction)="modalCreateTransaction = false;"
+                        (closeModalTransaction)="modalCreateTransaction = false; edit = true"
                         [interface]="interface"
                         [amount]="amountTransaction"
                         [idTransaction]="idTransaction"
                         [transactionTitle]="transactionTitle"
                         [date]="dateTransaction"
+                        [edit]="edit"
                         [indexCategory]="indexCategory"></app-create-transaction>
+
+<app-select-categories *ngIf="modalSelectCategories"
+                       [interface]="userData.interfaceCosts"
+                       (selectedCategories)="openCreateTransaction($event)"
+                       (closeSelectCategories)="modalSelectCategories = false"></app-select-categories>

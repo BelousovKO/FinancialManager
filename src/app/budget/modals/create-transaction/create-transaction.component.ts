@@ -4,7 +4,6 @@ import * as moment from 'moment';
 import 'moment/locale/ru';
 import {UserDataService} from '../../../services/user-data.service';
 import {EditTransactionService} from '../../../services/edit-transaction.service';
-import {CreateTransactionService} from '../../../services/create-transaction.service';
 
 @Component({
   selector: 'app-create-transaction',
@@ -18,6 +17,7 @@ export class CreateTransactionComponent implements OnInit {
   @Input() amount: number;
   @Input() transactionTitle: string;
   @Input() idTransaction: string;
+  @Input() edit: boolean;
   @Input() date: string;
   @Output() closeModalTransaction: EventEmitter<any> = new EventEmitter();
 
@@ -26,6 +26,8 @@ export class CreateTransactionComponent implements OnInit {
   public transactionSum: string;
   public modalNote = false;
   public modalChoiceDate = false;
+  public modalDelete = false;
+  public modalSelectCategories = false;
   public buttonValues = [7, 8, 9, 'mdi:backspace', 4, 5, 6, 1, 2, 3, '', 0, '.'];
   public transactionDate: moment.Moment;
   public today = moment().format('DD.MM.YYYY');
@@ -33,8 +35,7 @@ export class CreateTransactionComponent implements OnInit {
 
   constructor(public dateService: DateService,
               public userData: UserDataService,
-              private editTransaction: EditTransactionService,
-              private createdTransaction: CreateTransactionService) {
+              private editTransaction: EditTransactionService) {
   }
 
   ngOnInit(): void {
@@ -56,6 +57,8 @@ export class CreateTransactionComponent implements OnInit {
       this.transactionType = 'income';
       return 'color: #14802D';
     }
+    this.transactionTypeRu = 'Расход';
+    this.transactionType = 'cost';
     return 'color: #B51515';
   }
 
@@ -189,13 +192,14 @@ export class CreateTransactionComponent implements OnInit {
           );
         this.closeModalTransaction.emit();
       } else {
-        this.createdTransaction.create(body)
+        this.editTransaction.create(body)
           .subscribe(
             response => {
               this.userData.loading = false;
               if (response.status === 'OK') {
                 this.userData.transactions.push(response.data);
                 this.closeModalTransaction.emit();
+                this.dateService.date.next(this.dateService.date.value);
               }
             },
             error => console.error('Error! ', error)
@@ -203,5 +207,13 @@ export class CreateTransactionComponent implements OnInit {
       }
       this.transactionSum = '0';
     }
+  }
+
+  SelectedCategory([newInterface, category]): void {
+    if (newInterface && category !== undefined) {
+      this.interface = newInterface;
+      this.indexCategory = category;
+    }
+    this.modalSelectCategories = false;
   }
 }

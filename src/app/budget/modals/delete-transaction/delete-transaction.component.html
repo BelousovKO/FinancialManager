@@ -1,0 +1,9 @@
+<div class="shadow" (click)="closeModalDelete.emit()"></div>
+<div class="delete-transaction">
+  <h2 class="title">Удалить операцию?</h2>
+  <p class="alert">Операция будет удалена. Действие невозможно будет отменить</p>
+  <div class="button-container">
+    <button class="cancel" (click)="closeModalDelete.emit()">Отменить</button>
+    <button class="delete" (click)="delete()">Удалить</button>
+  </div>
+</div>

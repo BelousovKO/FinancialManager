@@ -27,6 +27,8 @@ import { ChangeIconComponent } from './budget/modals/change-icon/change-icon.com
 import { ToggleListsComponent } from './budget/toggle-lists/toggle-lists.component';
 import { TransactionListComponent } from './budget/transaction-list/transaction-list.component';
 import { LoaderComponent } from './loader/loader.component';
+import { DeleteTransactionComponent } from './budget/modals/delete-transaction/delete-transaction.component';
+import { SelectCategoriesComponent } from './budget/modals/select-categories/select-categories.component';
 
 const appRoutes: Routes = [
   {path: '', component: BudgetComponent},
@@ -58,6 +60,8 @@ const appRoutes: Routes = [
     ToggleListsComponent,
     TransactionListComponent,
     LoaderComponent,
+    DeleteTransactionComponent,
+    SelectCategoriesComponent,
   ],
   imports: [
     BrowserModule,

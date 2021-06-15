@@ -15,12 +15,14 @@ export class TransactionListComponent implements OnInit {
   public days = [];
   public momentDays = [];
   public modalCreateTransaction = false;
+  public modalSelectCategories = false;
   public idTransaction: string;
   public indexCategory: number;
   public interface: any;
   public amountTransaction: number;
   public transactionTitle: string;
   public dateTransaction: string;
+  public edit = true;
 
   constructor(public userData: UserDataService,
               public dateService: DateService) {
@@ -196,6 +198,16 @@ export class TransactionListComponent implements OnInit {
     } else {
       this.interface = this.userData.interfaceIncome;
     }
+    this.modalCreateTransaction = true;
+  }
+
+  openCreateTransaction([newInterface, category]): void {
+    if (newInterface && category !== undefined) {
+      this.interface = newInterface;
+      this.indexCategory = category;
+    }
+    this.modalSelectCategories = false;
+    this.edit = false;
     this.modalCreateTransaction = true;
   }
 }

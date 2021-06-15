@@ -1,0 +1,19 @@
+<div class="shadow" (click)="closeSelectCategories.emit()"></div>
+<div class="select-categories">
+  <div class="interface-tabs">
+    <div class="tab" [ngClass]="{activeInterface: interface.length === 12}"
+                     (click)="toggleInterface(12)">Расходы</div>
+    <div class="tab" [ngClass]="{activeInterface: interface.length === 6}"
+                     (click)="toggleInterface(6)">Доходы</div>
+  </div>
+  <div class="category">
+    <div class="category-container"
+         *ngFor="let elem of interface; let idx = index"
+         [ngClass]="{activeCategory: idx === indexCategory && lengthActiveInterface === interface.length}"
+         (click)="selectedCategories.emit([interface, idx])">
+      <div class="title" *ngIf="elem.title">{{elem.title}}</div>
+      <div class="icon material-icons" [style]="backgroundColor(idx)" *ngIf="elem.title">{{elem.icon}}</div>
+      <div class="amount" [style]="color(idx)" *ngIf="elem.title">{{categoriesSums[idx]}} ₽</div>
+    </div>
+  </div>
+</div>
