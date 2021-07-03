@@ -24,6 +24,16 @@ export class DeleteTransactionComponent implements OnInit {
 
   delete(): void {
     this.userData.loading = true;
+    if (this.userData.demo) {
+      this.userData.transactions = this.userData.transactions.filter(e => e.id !== this.id);
+      const demoData = JSON.parse(localStorage.getItem('demoData'));
+      demoData.userData.transactions = this.userData.transactions;
+      localStorage.setItem('demoData', JSON.stringify(demoData));
+      this.dateService.date.next(this.dateService.date.value);
+      this.deleteTransaction.emit();
+      this.userData.loading = false;
+      return;
+    }
     const token = localStorage.getItem('token');
     const body = {
       id: this.id,
@@ -39,9 +49,8 @@ export class DeleteTransactionComponent implements OnInit {
             this.dateService.date.next(this.dateService.date.value);
           }
         },
-        error => console.error('Error! ', error)
+        // error => console.error('Error! ', error)
       );
     this.deleteTransaction.emit();
-    /*this.transactionSum = '0';*/
   }
 }

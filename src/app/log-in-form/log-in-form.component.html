@@ -33,3 +33,5 @@
     </div>
   </form>
 </div>
+
+<app-demo *ngIf="serverError" (closeDemo)="serverError = false"></app-demo>

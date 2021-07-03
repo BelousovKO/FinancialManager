@@ -14,6 +14,7 @@ export class LogInFormComponent implements OnInit {
 
   public submitted = false;
   public statusLogin = '';
+  public serverError = false;
 
   public logInForm: FormGroup;
 
@@ -25,6 +26,13 @@ export class LogInFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (localStorage.getItem('demo')) {
+      setTimeout(() => {
+        this.userData.demo = true;
+        this.userData.createDemoData();
+        return;
+      });
+    }
     this.logInForm = this.fb.group({
       userName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]],
       password: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]],
@@ -50,7 +58,10 @@ export class LogInFormComponent implements OnInit {
               localStorage.removeItem('token');
             }
           },
-          error => console.error('Error! ', error)
+          error => {
+            // console.error('Error! ', error);
+            this.serverError = true;
+          }
         );
     }
   }
@@ -98,7 +109,11 @@ export class LogInFormComponent implements OnInit {
             password: '',
           });
         },
-        error => console.error('Error! ', error)
+        error => {
+         // console.error('Error! ', error);
+          this.userData.loading = false;
+          this.serverError = true;
+        }
       );
   }
 }

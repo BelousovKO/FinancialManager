@@ -166,6 +166,14 @@ export class CreateTransactionComponent implements OnInit {
     this.transactionTitle ? title = this.transactionTitle : title = '';
     if (this.transactionSum !== '0') {
       const token = localStorage.getItem('token');
+      const transaction = {
+        id: Math.random().toString(),
+        type: this.transactionType,
+        title,
+        date: this.transactionDate.format('YYYY-MM-DD'),
+        category: this.indexCategory,
+        amount: Number(this.transactionSum)
+      };
       const body = {
         id: '',
         userId: this.userData.userId,
@@ -177,6 +185,12 @@ export class CreateTransactionComponent implements OnInit {
         token
       };
       if (this.idTransaction) {
+        if (this.userData.demo) {
+          transaction.id = this.idTransaction;
+          this.userData.transactions = this.userData.transactions.filter(e => e.id !== this.idTransaction);
+          this.pushTransactionInLocalStorage(transaction);
+          return;
+        }
         body.id = this.idTransaction;
         this.editTransaction.edit(body)
           .subscribe(
@@ -188,25 +202,30 @@ export class CreateTransactionComponent implements OnInit {
                 this.dateService.date.next(this.dateService.date.value);
               }
             },
-            error => console.error('Error! ', error)
+            // error => console.error('Error! ', error)
           );
         this.closeModalTransaction.emit();
-      } else {
-        this.editTransaction.create(body)
-          .subscribe(
-            response => {
-              this.userData.loading = false;
-              if (response.status === 'OK') {
-                this.userData.transactions.push(response.data);
-                this.closeModalTransaction.emit();
-                this.dateService.date.next(this.dateService.date.value);
-              }
-            },
-            error => console.error('Error! ', error)
-          );
+        return;
       }
-      this.transactionSum = '0';
+      if (this.userData.demo) {
+        this.pushTransactionInLocalStorage(transaction);
+        return;
+      }
+      this.editTransaction.create(body)
+        .subscribe(
+          response => {
+            this.userData.loading = false;
+            if (response.status === 'OK') {
+              this.userData.transactions.push(response.data);
+              console.log(response.data);
+              this.closeModalTransaction.emit();
+              this.dateService.date.next(this.dateService.date.value);
+            }
+          },
+        // error => console.error('Error! ', error)
+        );
     }
+    this.transactionSum = '0';
   }
 
   SelectedCategory([newInterface, category]): void {
@@ -215,5 +234,15 @@ export class CreateTransactionComponent implements OnInit {
       this.indexCategory = category;
     }
     this.modalSelectCategories = false;
+  }
+
+  pushTransactionInLocalStorage(transaction): void {
+    this.userData.transactions.push(transaction);
+    const demoData = JSON.parse(localStorage.getItem('demoData'));
+    demoData.userData.transactions = this.userData.transactions;
+    localStorage.setItem('demoData', JSON.stringify(demoData));
+    this.closeModalTransaction.emit();
+    this.dateService.date.next(this.dateService.date.value);
+    this.userData.loading = false;
   }
 }

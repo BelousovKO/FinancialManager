@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
 import * as moment from 'moment';
 import {DateService} from './date.service';
+import {AuthorizationService} from './authorization.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserDataService {
+  public demo = false;
   public userId: string;
   public transactions = [];
   public costs = [];
@@ -20,9 +22,110 @@ export class UserDataService {
   public interfaceIncome = [];
   public editState = false;
   public loading = false;
+  public demoData = {userData: {
+      userId: 'demo',
+      interface: {
+        expense: [
+          {
+            title: 'Продукты',
+            color: '#ce4b99',
+            icon: 'add_shopping_cart'
+          },
+          {
+            title: 'Квартплата',
+            color: '#b1c94e',
+            icon: 'apartment'
+          },
+          {
+            title: 'Досуг',
+            color: '#563227',
+            icon: 'outdoor_grill'
+          },
+          {
+            title: 'Транспорт',
+            color: '#cf7e1a',
+            icon: 'drive_eta'
+          },
+          {
+            title: 'Здоровье',
+            color: '#601480',
+            icon: 'local_hospital'
+          },
+          {
+            title: 'Подарки',
+            color: '#377bbc',
+            icon: 'cake'
+          },
+          {
+            title: 'Семья',
+            color: '#A50606',
+            icon: 'family_restroom'
+          },
+          {
+            title: 'Покупки',
+            color: '#138539',
+            icon: 'local_grocery_store'
+          },
+          {
+            title: '',
+            color: '#00B7C6',
+            icon: 'beach_access'
+          },
+          {
+            title: '',
+            color: '#EA09B9',
+            icon: 'ac_unit'
+          },
+          {
+            title: '',
+            color: '#d0db00',
+            icon: 'fitness_center'
+          },
+          {
+            title: '',
+            color: '#09EA9B',
+            icon: 'hiking'
+          }
+        ],
+        income: [
+          {
+            title: 'Зарплата',
+            color: '#155331',
+            icon: 'account_balance_wallet'
+          },
+          {
+            title: '',
+            color: '#b1c94e',
+            icon: 'paid'
+          },
+          {
+            title: '',
+            color: '#257d7e',
+            icon: 'credit_card'
+          },
+          {
+            title: '',
+            color: '#05a335',
+            icon: 'account_balance'
+          },
+          {
+            title: '',
+            color: '#34d5ba',
+            icon: 'savings'
+          },
+          {
+            title: '',
+            color: '#3ea22a',
+            icon: 'card_giftcard'
+          }
+        ]
+      },
+      transactions: []
+    }};
 
 
-  constructor(public dateService: DateService) {
+  constructor(public dateService: DateService,
+              public authorization: AuthorizationService) {
   }
 
   updateUserData(response): void {
@@ -100,5 +203,16 @@ export class UserDataService {
     this.interfaceIncome.forEach((elem, idx) => {
       this.incomeCategorySums.push(this.income.filter(e => e.category === idx).reduce((total, amount) => total + amount.amount, 0));
     });
+  }
+
+  createDemoData(): void {
+    localStorage.setItem('demo', 'true');
+    this.demo = true;
+    this.authorization.username = 'demo';
+    this.authorization.login = true;
+    localStorage.getItem('demoData') ?
+      this.demoData = JSON.parse(localStorage.getItem('demoData')) :
+      localStorage.setItem('demoData', JSON.stringify(this.demoData));
+    this.updateUserData(this.demoData);
   }
 }

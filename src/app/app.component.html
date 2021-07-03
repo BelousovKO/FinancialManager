@@ -1,5 +1,5 @@
-<app-log-in-form *ngIf="!authorization.reg && !authorization.recovery"></app-log-in-form>
+<app-log-in-form *ngIf="!authorization.reg && !authorization.recovery && !userData.demo"></app-log-in-form>
 <app-reg-form *ngIf="authorization.reg"></app-reg-form>
 <app-recovery *ngIf="authorization.recovery"></app-recovery>
-<router-outlet *ngIf="authorization.login"></router-outlet>
+<router-outlet *ngIf="authorization.login || userData.demo"></router-outlet>
 <app-loader *ngIf="userData.loading"></app-loader>

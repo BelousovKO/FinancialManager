@@ -29,6 +29,7 @@ import { TransactionListComponent } from './budget/transaction-list/transaction-
 import { LoaderComponent } from './loader/loader.component';
 import { DeleteTransactionComponent } from './budget/modals/delete-transaction/delete-transaction.component';
 import { SelectCategoriesComponent } from './budget/modals/select-categories/select-categories.component';
+import { DemoComponent } from './log-in-form/modal/demo/demo.component';
 
 const appRoutes: Routes = [
   {path: '', component: BudgetComponent},
@@ -62,6 +63,7 @@ const appRoutes: Routes = [
     LoaderComponent,
     DeleteTransactionComponent,
     SelectCategoriesComponent,
+    DemoComponent,
   ],
   imports: [
     BrowserModule,

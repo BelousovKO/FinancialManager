@@ -37,7 +37,7 @@
              type="email"
              class="form-control"
              placeholder="Введите e-mail"
-             (blur)="checkMail(registrationForm.controls.email.value)"
+             (blur)="email.invalid || checkMail(registrationForm.controls.email.value)"
              (ngModelChange)="emailIsTaken = false">
     </label>
     <div *ngIf="emailIsTaken && email.valid">
@@ -109,3 +109,4 @@
   <button class="btn btn-secondary" type="button" (click)="authorization.reg = false">Отмена</button>
 </form>
 
+<app-demo *ngIf="serverError" (closeDemo)="serverError = false"></app-demo>

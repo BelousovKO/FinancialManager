@@ -58,3 +58,5 @@
     <button class="btn btn-secondary" type="button" (click)="authorization.recovery = false">Отмена</button>
   </form>
 </div>
+
+<app-demo *ngIf="serverError" (closeDemo)="serverError = false"></app-demo>

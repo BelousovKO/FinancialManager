@@ -17,11 +17,13 @@ export class HeaderComponent implements OnInit {
   }
 
   exit(): void {
+    this.userData.demo = false;
     this.userData.transactions = [];
     this.userData.interfaceCosts = [];
     this.userData.interfaceIncome = [];
     this.authorization.login = false;
     this.authorization.username = '';
     localStorage.removeItem('token');
+    localStorage.removeItem('demo');
   }
 }

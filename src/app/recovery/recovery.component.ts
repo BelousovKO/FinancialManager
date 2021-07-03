@@ -15,6 +15,7 @@ export class RecoveryComponent implements OnInit {
   emailIsTaken = false;
   responseReceived = false;
   recovery: FormGroup;
+  serverError = false;
 
 
   constructor(private fb: FormBuilder,
@@ -88,27 +89,33 @@ export class RecoveryComponent implements OnInit {
       this._changePas.sendTo(this.recovery.controls.userName.value)
         .subscribe(
           response => {
-            this.nameIsTaken = response.status === 'OK';
-            this.responseReceived = true;
-            if (this.nameIsTaken) {
-              setTimeout(() => { this.authorization.recovery = false; }, 5000);
-            }
+            this.resp(response);
           },
-          error => console.error('Error! ', error)
+          error => {
+            // console.error('Error! ', error);
+            this.serverError = true;
+          }
         );
     } else {
       this._changePas.sendTo(this.recovery.controls.email.value)
         .subscribe(
           response => {
-            this.emailIsTaken = response.status === 'OK';
-            this.responseReceived = true;
-            if (this.emailIsTaken) {
-              setTimeout(() => { this.authorization.recovery = false; }, 5000);
-            }
+            this.resp(response);
           },
-          error => console.error('Error! ', error)
+          error => {
+            // console.error('Error! ', error);
+            this.serverError = true;
+          }
         );
     }
     this.submitted = true;
+  }
+
+  resp(response): void {
+    this.emailIsTaken = response.status === 'OK';
+    this.responseReceived = true;
+    if (this.emailIsTaken) {
+      setTimeout(() => { this.authorization.recovery = false; }, 3000);
+    }
   }
 }

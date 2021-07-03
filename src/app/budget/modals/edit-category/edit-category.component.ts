@@ -55,6 +55,16 @@ export class EditCategoryComponent implements OnInit {
       this.userData.interfaceCosts[this.indexCategory].color = this.color;
       typeCategory = 'cost';
     }
+    if (this.userData.demo) {
+      const demoData = JSON.parse(localStorage.getItem('demoData'));
+      this.interface.length === 6 ?
+        demoData.userData.interface.income = this.userData.interfaceIncome :
+        demoData.userData.interface.expense = this.userData.interfaceCosts;
+      localStorage.setItem('demoData', JSON.stringify(demoData));
+      this.userData.loading = false;
+      this.closeEditCategory.emit();
+      return;
+    }
     const body = {userId: this.userData.userId, interface: this.interface, typeInterface: typeCategory, token: this.token};
     this.changeInterface.change(body)
       .subscribe(
@@ -64,7 +74,7 @@ export class EditCategoryComponent implements OnInit {
             this.closeEditCategory.emit();
           }
         },
-        error => console.error('Error! ', error)
+        // error => console.error('Error! ', error)
       );
   }
 

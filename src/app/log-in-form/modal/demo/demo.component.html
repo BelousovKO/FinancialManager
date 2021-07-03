@@ -1,0 +1,13 @@
+<div>
+  <div class="shadow" (click)="closeDemo.emit()"></div>
+  <div class="demo-modal">
+    <p>
+      В данный момент сервер не доступен. Приложение может быть запущенно в demo режиме.
+      Все данные будут записаны в local storage.
+    </p>
+    <div class="buttons">
+      <button class="ok" (click)="createDemoData()">Ok</button>
+      <button class="cancel" (click)="closeDemo.emit()">Отмена</button>
+    </div>
+  </div>
+</div>

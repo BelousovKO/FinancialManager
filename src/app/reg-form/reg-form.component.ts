@@ -14,10 +14,11 @@ import {UserDataService} from '../services/user-data.service';
   styleUrls: ['./reg-form.component.scss']
 })
 export class RegFormComponent implements OnInit {
-  submitted = false;
-  nameIsTaken = false;
-  emailIsTaken = false;
-  type1 = 'text';
+  public submitted = false;
+  public nameIsTaken = false;
+  public emailIsTaken = false;
+  public type1 = 'text';
+  public serverError = false;
 
   registrationForm: FormGroup;
 
@@ -92,7 +93,10 @@ export class RegFormComponent implements OnInit {
               this.nameIsTaken = true;
             }
           },
-          error => console.error('Error! ', error)
+          error => {
+            // console.error('Error! ', error);
+            this.serverError = true;
+          }
         );
     }
   }
@@ -106,7 +110,10 @@ export class RegFormComponent implements OnInit {
               this.emailIsTaken = true;
             }
           },
-          error => console.error('Error! ', error)
+          error => {
+            // console.error('Error! ', error);
+            this.serverError = true;
+          }
         );
     }
   }
@@ -126,7 +133,10 @@ export class RegFormComponent implements OnInit {
             localStorage.setItem('token', response.token);
           }
         },
-        error => console.error('Error! ', error)
+        error => {
+          // console.error('Error! ', error);
+          this.serverError = true;
+        }
       );
   }
 }
