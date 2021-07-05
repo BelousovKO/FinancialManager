@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DateService} from '../../../services/date.service';
 import * as moment from 'moment';
-import 'moment/locale/ru';
 import {UserDataService} from '../../../services/user-data.service';
 import {EditTransactionService} from '../../../services/edit-transaction.service';
 

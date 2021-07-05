@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {DateService} from '../../../services/date.service';
-import 'moment/locale/ru';
 import * as moment from 'moment';
 
 @Component({
