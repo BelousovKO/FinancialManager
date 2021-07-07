@@ -97,3 +97,9 @@
 .shadow {
   z-index: 1;
 }
+
+@media (max-width: 540px) {
+  .date-filtering {
+    top: 100px;
+  }
+}

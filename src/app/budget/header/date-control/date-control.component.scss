@@ -43,3 +43,25 @@
 .filter-icons_year span {
   width: 35px;
 }
+
+@media (max-width: 540px) {
+  .container-date-filter {
+    width: 85%;
+    margin: 0 auto;
+    font-size: .6rem;
+
+    .modal-button {
+      margin: 0 .5rem;
+
+      .date-filter-title {
+        margin-left: 5px;
+      }
+    }
+
+    .filter-icons, .filter-icons_year {
+      span {
+        width: 22px;
+      }
+    }
+  }
+}

@@ -106,3 +106,10 @@
     font-size: 2rem;
   }
 }
+
+@media (max-width: 540px) {
+  .transaction-list-container {
+    width: 90%;
+    height: 385px;
+  }
+}

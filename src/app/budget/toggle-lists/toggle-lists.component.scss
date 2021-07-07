@@ -25,3 +25,12 @@
 .noActive {
   color: dimgray;
 }
+
+@media (max-width: 540px) {
+  .toggle-lists {
+    .buttons-container {
+      width: 80%;
+      margin: 15px auto 0;
+    }
+  }
+}

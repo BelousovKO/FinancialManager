@@ -49,3 +49,20 @@
     grid-column: span 3;
   }
 }
+
+@media (max-width: 540px) {
+  .header {
+    height: 100px;
+    font-size: .8rem;
+    padding-bottom: 5px;
+  }
+
+  button {
+    font-size: .8rem;
+    padding: 5px;
+  }
+
+  .icon-edit {
+    font-size: 1.4rem;
+  }
+}

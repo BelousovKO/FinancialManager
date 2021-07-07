@@ -218,3 +218,32 @@
     }
   }
 }
+
+@media (max-width: 540px) {
+  .modal-transaction {
+    width: 100%;
+    left: 0;
+    top: 107px;
+
+    header {
+      height: 65px;
+    }
+
+    .info-amount {
+      height: 65px;
+    }
+
+    .note-amount {
+      height: 40px;
+    }
+
+    .container-buttons-amount {
+      background-color: white;
+      height: 271px;
+    }
+
+    .date-amount {
+      height: 20px;
+    }
+  }
+}
