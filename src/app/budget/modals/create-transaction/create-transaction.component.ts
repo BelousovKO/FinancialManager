@@ -96,7 +96,6 @@ export class CreateTransactionComponent implements OnInit {
   getTransactionDate(newDate: moment.Moment): void {
     this.transactionDate = newDate;
     this.modalChoiceDate = false;
-    console.log('this.transactionDate: ', this.transactionDate.format('DD.MM.YYYY'));
   }
 
   generateDate(): void {
@@ -216,7 +215,6 @@ export class CreateTransactionComponent implements OnInit {
             this.userData.loading = false;
             if (response.status === 'OK') {
               this.userData.transactions.push(response.data);
-              console.log(response.data);
               this.closeModalTransaction.emit();
               this.dateService.date.next(this.dateService.date.value);
             }

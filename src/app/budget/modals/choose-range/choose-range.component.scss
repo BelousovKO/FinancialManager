@@ -63,3 +63,10 @@
 .shadow {
   z-index: 1;
 }
+
+@media (max-width: 540px) {
+  .choose-range {
+    width: 94%;
+    left: 3%;
+  }
+}
