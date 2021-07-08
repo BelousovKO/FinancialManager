@@ -203,6 +203,7 @@ export class CreateTransactionComponent implements OnInit {
             // error => console.error('Error! ', error)
           );
         this.closeModalTransaction.emit();
+        this.userData.loading = false;
         return;
       }
       if (this.userData.demo) {
@@ -223,6 +224,8 @@ export class CreateTransactionComponent implements OnInit {
         );
     }
     this.transactionSum = '0';
+    this.userData.loading = false;
+    this.closeModalTransaction.emit();
   }
 
   SelectedCategory([newInterface, category]): void {
