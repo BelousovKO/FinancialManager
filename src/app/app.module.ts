@@ -10,26 +10,27 @@ import {RegFormComponent} from './reg-form/reg-form.component';
 import {RecoveryComponent} from './recovery/recovery.component';
 import {PointReplacerPipe} from './pipes/point-replacer.pipe';
 import {MomentPipe} from './pipes/moment.pipe';
-import { BudgetComponent } from './budget/budget.component';
-import { HeaderComponent } from './budget/header/header.component';
-import { DateControlComponent } from './budget/header/date-control/date-control.component';
-import { CategoryListComponent } from './budget/category-list/category-list.component';
-import { DonutChartComponent } from './budget/category-list/donut-chart/donut-chart.component';
-import { CreateTransactionComponent } from './budget/modals/create-transaction/create-transaction.component';
-import { EditNoteComponent } from './budget/modals/edit-note/edit-note.component';
-import { EditDateTransactionComponent } from './budget/modals/edit-date-transaction/edit-date-transaction.component';
-import { CalendarComponent } from './budget/modals/calendar/calendar.component';
-import { ModalCalendarComponent } from './budget/modals/modal-calendar/modal-calendar.component';
-import { DateFilteringComponent } from './budget/modals/date-filtering/date-filtering.component';
-import { ChooseRangeComponent } from './budget/modals/choose-range/choose-range.component';
-import { EditCategoryComponent } from './budget/modals/edit-category/edit-category.component';
-import { ChangeIconComponent } from './budget/modals/change-icon/change-icon.component';
-import { ToggleListsComponent } from './budget/toggle-lists/toggle-lists.component';
-import { TransactionListComponent } from './budget/transaction-list/transaction-list.component';
-import { LoaderComponent } from './loader/loader.component';
-import { DeleteTransactionComponent } from './budget/modals/delete-transaction/delete-transaction.component';
-import { SelectCategoriesComponent } from './budget/modals/select-categories/select-categories.component';
-import { DemoComponent } from './log-in-form/modal/demo/demo.component';
+import {BudgetComponent} from './budget/budget.component';
+import {HeaderComponent} from './budget/header/header.component';
+import {DateControlComponent} from './budget/header/date-control/date-control.component';
+import {CategoryListComponent} from './budget/category-list/category-list.component';
+import {DonutChartComponent} from './budget/category-list/donut-chart/donut-chart.component';
+import {CreateTransactionComponent} from './budget/modals/create-transaction/create-transaction.component';
+import {EditNoteComponent} from './budget/modals/edit-note/edit-note.component';
+import {EditDateTransactionComponent} from './budget/modals/edit-date-transaction/edit-date-transaction.component';
+import {CalendarComponent} from './budget/modals/calendar/calendar.component';
+import {ModalCalendarComponent} from './budget/modals/modal-calendar/modal-calendar.component';
+import {DateFilteringComponent} from './budget/modals/date-filtering/date-filtering.component';
+import {ChooseRangeComponent} from './budget/modals/choose-range/choose-range.component';
+import {EditCategoryComponent} from './budget/modals/edit-category/edit-category.component';
+import {ChangeIconComponent} from './budget/modals/change-icon/change-icon.component';
+import {ToggleListsComponent} from './budget/toggle-lists/toggle-lists.component';
+import {TransactionListComponent} from './budget/transaction-list/transaction-list.component';
+import {LoaderComponent} from './loader/loader.component';
+import {DeleteTransactionComponent} from './budget/modals/delete-transaction/delete-transaction.component';
+import {SelectCategoriesComponent} from './budget/modals/select-categories/select-categories.component';
+import {DemoComponent} from './log-in-form/modal/demo/demo.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 const appRoutes: Routes = [
   {path: '', component: BudgetComponent},
@@ -70,7 +71,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [PointReplacerPipe],
   bootstrap: [AppComponent]

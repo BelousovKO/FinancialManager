@@ -1,5 +1,5 @@
 <div class="shadow" (click)="closeDateFiltering.emit()"></div>
-<ul class="date-filtering">
+<ul class="date-filtering" [@myAnimation]>
   <li class="filter-range filter-date-btn"
       [ngClass]="{choice: dateService.dateFilter === 'r'}"
       (click)="closeDateFiltering.emit('range');
