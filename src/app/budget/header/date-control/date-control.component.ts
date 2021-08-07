@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 import {DateService} from '../../../services/date.service';
 import * as moment from 'moment';
 
@@ -7,15 +7,13 @@ import * as moment from 'moment';
   templateUrl: './date-control.component.html',
   styleUrls: ['./date-control.component.scss']
 })
-export class DateControlComponent implements OnInit {
+export class DateControlComponent {
 
   public modalDateFiltering = false;
   public modalCalendar = false;
   public modalChooseRange = false;
 
-  constructor(public dateService: DateService) { }
-
-  ngOnInit(): void {
+  constructor(public dateService: DateService) {
   }
 
   closeDateFiltering(modal?: string): void {

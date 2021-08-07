@@ -93,10 +93,7 @@ export class RegFormComponent implements OnInit {
               this.nameIsTaken = true;
             }
           },
-          error => {
-            // console.error('Error! ', error);
-            this.serverError = true;
-          }
+          () => this.serverError = true
         );
     }
   }
@@ -110,10 +107,7 @@ export class RegFormComponent implements OnInit {
               this.emailIsTaken = true;
             }
           },
-          error => {
-            // console.error('Error! ', error);
-            this.serverError = true;
-          }
+          () => this.serverError = true
         );
     }
   }
@@ -133,10 +127,7 @@ export class RegFormComponent implements OnInit {
             localStorage.setItem('token', response.token);
           }
         },
-        error => {
-          // console.error('Error! ', error);
-          this.serverError = true;
-        }
+        () => this.serverError = true
       );
   }
 }

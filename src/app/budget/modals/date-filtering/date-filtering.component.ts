@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {DateService} from '../../../services/date.service';
 import * as moment from 'moment';
 import {animate, style, transition, trigger} from '@angular/animations';
@@ -14,15 +14,12 @@ import {animate, style, transition, trigger} from '@angular/animations';
     ])
   ])]
 })
-export class DateFilteringComponent implements OnInit {
+export class DateFilteringComponent {
 
   @Output() closeDateFiltering: EventEmitter<any> = new EventEmitter();
 
   public today = moment();
 
   constructor(public dateService: DateService) {
-  }
-
-  ngOnInit(): void {
   }
 }

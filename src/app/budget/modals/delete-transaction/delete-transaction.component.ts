@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {UserDataService} from '../../../services/user-data.service';
 import {DateService} from '../../../services/date.service';
 import {EditTransactionService} from '../../../services/edit-transaction.service';
@@ -8,7 +8,7 @@ import {EditTransactionService} from '../../../services/edit-transaction.service
   templateUrl: './delete-transaction.component.html',
   styleUrls: ['./delete-transaction.component.scss']
 })
-export class DeleteTransactionComponent implements OnInit {
+export class DeleteTransactionComponent {
 
   @Input() id: string;
   @Output() closeModalDelete: EventEmitter<any> = new EventEmitter();
@@ -17,9 +17,6 @@ export class DeleteTransactionComponent implements OnInit {
   constructor(public userData: UserDataService,
               public dateService: DateService,
               public editTransaction: EditTransactionService) {
-  }
-
-  ngOnInit(): void {
   }
 
   delete(): void {
@@ -48,8 +45,7 @@ export class DeleteTransactionComponent implements OnInit {
             this.userData.transactions = this.userData.transactions.filter(e => e.id !== this.id);
             this.dateService.date.next(this.dateService.date.value);
           }
-        },
-        // error => console.error('Error! ', error)
+        }
       );
     this.deleteTransaction.emit();
   }

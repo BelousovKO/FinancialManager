@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import * as moment from 'moment';
 import {DateService} from '../../../services/date.service';
 
@@ -7,7 +7,7 @@ import {DateService} from '../../../services/date.service';
   templateUrl: './edit-date-transaction.component.html',
   styleUrls: ['./edit-date-transaction.component.scss']
 })
-export class EditDateTransactionComponent implements OnInit {
+export class EditDateTransactionComponent {
 
   @Input() transactionDate: moment.Moment;
   @Input() backgroundColor: string;
@@ -19,9 +19,6 @@ export class EditDateTransactionComponent implements OnInit {
   public dataFilter = this.dateService.dateFilter;
 
   constructor(public dateService: DateService) { }
-
-  ngOnInit(): void {
-  }
 
   close(newDate: moment.Moment): void {
     this.closeChoiceDate.emit(newDate);

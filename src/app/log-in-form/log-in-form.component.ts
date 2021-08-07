@@ -58,10 +58,7 @@ export class LogInFormComponent implements OnInit {
               localStorage.removeItem('token');
             }
           },
-          error => {
-            // console.error('Error! ', error);
-            this.serverError = true;
-          }
+          () => this.serverError = true
         );
     }
   }
@@ -109,8 +106,7 @@ export class LogInFormComponent implements OnInit {
             password: '',
           });
         },
-        error => {
-         // console.error('Error! ', error);
+        () => {
           this.userData.loading = false;
           this.serverError = true;
         }

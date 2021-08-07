@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {DateService} from '../../../services/date.service';
 import * as moment from 'moment';
 
@@ -7,7 +7,7 @@ import * as moment from 'moment';
   templateUrl: './choose-range.component.html',
   styleUrls: ['./choose-range.component.scss']
 })
-export class ChooseRangeComponent implements OnInit {
+export class ChooseRangeComponent {
 
   @Output() closeChooseRange: EventEmitter<any> = new EventEmitter();
 
@@ -16,9 +16,6 @@ export class ChooseRangeComponent implements OnInit {
   public day: string;
 
   constructor(public dateService: DateService) {
-  }
-
-  ngOnInit(): void {
   }
 
   close(rangeDate: moment.Moment): void {

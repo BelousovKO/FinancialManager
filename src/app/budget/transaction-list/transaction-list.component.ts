@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import * as moment from 'moment';
 import {UserDataService} from '../../services/user-data.service';
 import {DateService} from '../../services/date.service';
@@ -8,7 +8,7 @@ import {DateService} from '../../services/date.service';
   templateUrl: './transaction-list.component.html',
   styleUrls: ['./transaction-list.component.scss']
 })
-export class TransactionListComponent implements OnInit {
+export class TransactionListComponent implements OnInit, OnDestroy {
 
   public transaction: any;
   public transactionDataFiltered = [];
@@ -23,13 +23,14 @@ export class TransactionListComponent implements OnInit {
   public transactionTitle: string;
   public dateTransaction: string;
   public edit = true;
+  private subs;
 
   constructor(public userData: UserDataService,
               public dateService: DateService) {
   }
 
   ngOnInit(): void {
-    this.dateService.date.subscribe(this.filteredData.bind(this));
+    this.subs = this.dateService.date.subscribe(this.filteredData.bind(this));
   }
 
   filteredData(): any {
@@ -209,5 +210,12 @@ export class TransactionListComponent implements OnInit {
     this.modalSelectCategories = false;
     this.edit = false;
     this.modalCreateTransaction = true;
+  }
+
+  @HostListener('window:beforeunload')
+  ngOnDestroy(): void {
+    if (this.subs) {
+      this.subs.unsubscribe();
+    }
   }
 }

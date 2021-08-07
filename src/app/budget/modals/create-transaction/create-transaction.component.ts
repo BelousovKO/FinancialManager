@@ -199,8 +199,7 @@ export class CreateTransactionComponent implements OnInit {
                 this.userData.transactions.push(response.data);
                 this.dateService.date.next(this.dateService.date.value);
               }
-            },
-            // error => console.error('Error! ', error)
+            }
           );
         this.closeModalTransaction.emit();
         this.userData.loading = false;
@@ -219,8 +218,7 @@ export class CreateTransactionComponent implements OnInit {
               this.closeModalTransaction.emit();
               this.dateService.date.next(this.dateService.date.value);
             }
-          },
-        // error => console.error('Error! ', error)
+          }
         );
     }
     this.transactionSum = '0';

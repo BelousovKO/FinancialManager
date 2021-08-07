@@ -91,10 +91,7 @@ export class RecoveryComponent implements OnInit {
           response => {
             this.resp(response);
           },
-          error => {
-            // console.error('Error! ', error);
-            this.serverError = true;
-          }
+          () => this.serverError = true
         );
     } else {
       this._changePas.sendTo(this.recovery.controls.email.value)
@@ -102,10 +99,7 @@ export class RecoveryComponent implements OnInit {
           response => {
             this.resp(response);
           },
-          error => {
-            // console.error('Error! ', error);
-            this.serverError = true;
-          }
+          () => this.serverError = true
         );
     }
     this.submitted = true;

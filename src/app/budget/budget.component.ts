@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-budget',
@@ -6,14 +6,11 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./budget.component.scss']
 })
 
-export class BudgetComponent implements OnInit {
+export class BudgetComponent {
 
   public list = 'category';
 
   constructor() {
-  }
-
-  ngOnInit(): void {
   }
 
   changedList(value: string): void {

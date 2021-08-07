@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {DateService} from '../../../services/date.service';
 import * as moment from 'moment';
 
@@ -7,16 +7,15 @@ import * as moment from 'moment';
   templateUrl: './modal-calendar.component.html',
   styleUrls: ['./modal-calendar.component.scss']
 })
-export class ModalCalendarComponent implements OnInit {
+export class ModalCalendarComponent {
 
   @Input() backgroundColor: string;
   @Input() date: moment.Moment;
   @Output() closeModalCalendar: EventEmitter<any> = new EventEmitter();
 
-  constructor(public dateService: DateService) { }
+  public destroy = false;
 
-  ngOnInit(): void {
-  }
+  constructor(public dateService: DateService) { }
 
   close(): void {
     this.date = this.dateService.calendarDate.value;

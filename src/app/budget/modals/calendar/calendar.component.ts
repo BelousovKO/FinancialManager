@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import * as moment from 'moment';
 import {DateService} from '../../../services/date.service';
 import 'moment/locale/ru';
@@ -19,14 +19,16 @@ interface Week {
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnDestroy {
 
   public calendar: Week[];
+  private subs;
 
-  constructor(private dateService: DateService) { }
+  constructor(private dateService: DateService) {
+  }
 
   ngOnInit(): void {
-    this.dateService.calendarDate.subscribe(this.generate.bind(this));
+    this.subs = this.dateService.calendarDate.subscribe(this.generate.bind(this));
   }
 
   generate(now: moment.Moment): void {
@@ -56,4 +58,10 @@ export class CalendarComponent implements OnInit {
     this.dateService.selectDay(day);
   }
 
+  @HostListener('window:beforeunload')
+  ngOnDestroy(): void {
+    if (this.subs) {
+      this.subs.unsubscribe();
+    }
+  }
 }

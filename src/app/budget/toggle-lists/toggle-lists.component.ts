@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {UserDataService} from '../../services/user-data.service';
 
 @Component({
@@ -6,14 +6,11 @@ import {UserDataService} from '../../services/user-data.service';
   templateUrl: './toggle-lists.component.html',
   styleUrls: ['./toggle-lists.component.scss']
 })
-export class ToggleListsComponent implements OnInit {
+export class ToggleListsComponent {
 
   @Input() content: string;
   @Output() changeList: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(public userData: UserDataService) { }
-
-  ngOnInit(): void {
-  }
 
 }

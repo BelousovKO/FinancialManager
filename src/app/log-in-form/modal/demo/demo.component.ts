@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {UserDataService} from '../../../services/user-data.service';
 import {AuthorizationService} from '../../../services/authorization.service';
 
@@ -7,15 +7,12 @@ import {AuthorizationService} from '../../../services/authorization.service';
   templateUrl: './demo.component.html',
   styleUrls: ['./demo.component.scss']
 })
-export class DemoComponent implements OnInit {
+export class DemoComponent {
 
   @Output() closeDemo: EventEmitter<any> = new EventEmitter();
 
   constructor(public authorization: AuthorizationService,
               public userData: UserDataService) { }
-
-  ngOnInit(): void {
-  }
 
   createDemoData(): void {
     localStorage.setItem('demo', 'true');

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {UserDataService} from '../../services/user-data.service';
 import {DateService} from '../../services/date.service';
 
@@ -7,20 +7,21 @@ import {DateService} from '../../services/date.service';
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.scss']
 })
-export class CategoryListComponent implements OnInit {
+export class CategoryListComponent implements OnInit, OnDestroy {
 
   public interface = [];
   public typeTransactions = 'cost';
   public modal = false;
   public createCategory = false;
   public indexCategory: number;
+  private subs;
 
   constructor(public userData: UserDataService,
               public dateService: DateService) {
   }
 
   ngOnInit(): void {
-    this.dateService.date.subscribe(this.interfaceUpdate.bind(this));
+    this.subs = this.dateService.date.subscribe(this.interfaceUpdate.bind(this));
   }
 
   interfaceUpdate(): void {
@@ -46,5 +47,12 @@ export class CategoryListComponent implements OnInit {
   toggleTypeTransactions(): void {
     this.typeTransactions === 'cost' ? this.typeTransactions = 'income' : this.typeTransactions = 'cost';
     this.interfaceUpdate();
+  }
+
+  @HostListener('window:beforeunload')
+  ngOnDestroy(): void {
+    if (this.subs) {
+      this.subs.unsubscribe();
+    }
   }
 }

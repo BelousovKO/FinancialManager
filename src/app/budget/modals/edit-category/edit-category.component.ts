@@ -73,8 +73,7 @@ export class EditCategoryComponent implements OnInit {
           if (response.status === 'OK') {
             this.closeEditCategory.emit();
           }
-        },
-        // error => console.error('Error! ', error)
+        }
       );
   }
 

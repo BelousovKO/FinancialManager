@@ -6,7 +6,6 @@ import {HttpClient} from '@angular/common/http';
 })
 export class ChangeInterface {
 
-
   _url = 'http://localhost:8080/interface';
 
   constructor(private _http: HttpClient) {
