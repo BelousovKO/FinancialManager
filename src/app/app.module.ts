@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
-import {HttpClientModule} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import {AppComponent} from './app.component';
 import {LogInFormComponent} from './log-in-form/log-in-form.component';
@@ -37,45 +37,38 @@ const appRoutes: Routes = [
   {path: '**', redirectTo: ''}
 ];
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    LogInFormComponent,
-    RegFormComponent,
-    RecoveryComponent,
-    PointReplacerPipe,
-    MomentPipe,
-    BudgetComponent,
-    HeaderComponent,
-    DateControlComponent,
-    CategoryListComponent,
-    DonutChartComponent,
-    CreateTransactionComponent,
-    EditNoteComponent,
-    EditDateTransactionComponent,
-    CalendarComponent,
-    ModalCalendarComponent,
-    DateFilteringComponent,
-    ChooseRangeComponent,
-    EditCategoryComponent,
-    ChangeIconComponent,
-    ToggleListsComponent,
-    TransactionListComponent,
-    LoaderComponent,
-    DeleteTransactionComponent,
-    SelectCategoriesComponent,
-    DemoComponent,
-  ],
-  imports: [
-    BrowserModule,
-    RouterModule.forRoot(appRoutes),
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule
-  ],
-  providers: [PointReplacerPipe],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        LogInFormComponent,
+        RegFormComponent,
+        RecoveryComponent,
+        PointReplacerPipe,
+        MomentPipe,
+        BudgetComponent,
+        HeaderComponent,
+        DateControlComponent,
+        CategoryListComponent,
+        DonutChartComponent,
+        CreateTransactionComponent,
+        EditNoteComponent,
+        EditDateTransactionComponent,
+        CalendarComponent,
+        ModalCalendarComponent,
+        DateFilteringComponent,
+        ChooseRangeComponent,
+        EditCategoryComponent,
+        ChangeIconComponent,
+        ToggleListsComponent,
+        TransactionListComponent,
+        LoaderComponent,
+        DeleteTransactionComponent,
+        SelectCategoriesComponent,
+        DemoComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        RouterModule.forRoot(appRoutes),
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule], providers: [PointReplacerPipe, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {
 }
