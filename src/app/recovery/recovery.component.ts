@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthorizationService} from '../services/authorization.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {ChangePasService} from '../services/change-pas.service';
 
 @Component({
@@ -14,11 +14,11 @@ export class RecoveryComponent implements OnInit {
   nameIsTaken = false;
   emailIsTaken = false;
   responseReceived = false;
-  recovery: FormGroup;
+  recovery: UntypedFormGroup;
   serverError = false;
 
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
               public authorization: AuthorizationService,
               public _changePas: ChangePasService) {
   }

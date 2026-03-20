@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {LogInService} from '../services/log-in.service';
 import {AuthorizationService} from '../services/authorization.service';
 import {AuthenticationService} from '../services/authentication.service';
@@ -16,9 +16,9 @@ export class LogInFormComponent implements OnInit {
   public statusLogin = '';
   public serverError = false;
 
-  public logInForm: FormGroup;
+  public logInForm: UntypedFormGroup;
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
               private _logInService: LogInService,
               public authorization: AuthorizationService,
               private _authentication: AuthenticationService,
