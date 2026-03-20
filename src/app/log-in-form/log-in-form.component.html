@@ -16,12 +16,14 @@
     <div class="form-group mb-1">
 
       <label>
-        <input formControlName="password"
-               type="password"
-               class="form-control"
-               placeholder="Введите пароль"
-               autocomplete="current-password"
-               (ngModelChange)="removeSpacePassword()">
+        <input 
+          formControlName="password"
+          type="password"
+          class="form-control"
+          placeholder="Введите пароль"
+          autocomplete="current-password"
+          (ngModelChange)="removeSpacePassword()"
+        >
       </label>
     </div>
 
