@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {forbiddenNameValidator} from '../shared/user-name.validator';
 import {PasswordValidator} from '../shared/password.validator';
 import {RegistrationService} from '../services/registration.service';
@@ -20,7 +20,7 @@ export class RegFormComponent implements OnInit {
   public type1 = 'text';
   public serverError = false;
 
-  registrationForm: FormGroup;
+  registrationForm: UntypedFormGroup;
 
   get userName(): any {
     return this.registrationForm.get('userName');
@@ -66,16 +66,17 @@ export class RegFormComponent implements OnInit {
     return this.registrationForm.get('consent');
   }
 
-  constructor(private fb: FormBuilder,
-              private _registrationService: RegistrationService,
-              private _checkNameService: CheckNameService,
-              public authorization: AuthorizationService,
-              public _checkMailService: CheckMailService,
-              public userData: UserDataService) {
+  constructor(
+    private _fb: UntypedFormBuilder,
+    private _registrationService: RegistrationService,
+    private _checkNameService: CheckNameService,
+    public authorization: AuthorizationService,
+    public checkMailService: CheckMailService,
+    public userData: UserDataService) {
   }
 
   ngOnInit(): void {
-    this.registrationForm = this.fb.group({
+    this.registrationForm = this._fb.group({
       userName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20), forbiddenNameValidator]],
       email: ['', [Validators.required, Validators.maxLength(40), Validators.email]],
       password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
@@ -100,7 +101,7 @@ export class RegFormComponent implements OnInit {
 
   checkMail(userMail): void {
     if (userMail) {
-      this._checkMailService.checking(userMail)
+      this.checkMailService.checking(userMail)
         .subscribe(
           response => {
             if (response.status === 'CANCEL') {
