@@ -26,11 +26,11 @@ export class RegFormComponent implements OnInit {
     return this.registrationForm.get('userName');
   }
 
-  get userNameMinLength() {
+  get userNameMinLength(): number | undefined {
     return this.userName.errors?.minlength;
   }
 
-  get userNameMaxLength() {
+  get userNameMaxLength(): any {
     return this.userName.errors?.maxlength;
   }
 
