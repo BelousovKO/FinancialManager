@@ -22,15 +22,15 @@ export class RegFormComponent implements OnInit {
 
   registrationForm: UntypedFormGroup;
 
-  get userName(): any {
+  get userName() {
     return this.registrationForm.get('userName');
   }
 
-  get userNameMinLength(): any {
+  get userNameMinLength() {
     return this.userName.errors?.minlength;
   }
 
-  get userNameMaxLength(): any {
+  get userNameMaxLength() {
     return this.userName.errors?.maxlength;
   }
 
