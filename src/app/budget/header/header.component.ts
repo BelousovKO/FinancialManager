@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import {UserDataService} from '../../services/user-data.service';
 import {AuthorizationService} from '../../services/authorization.service';
 
@@ -8,22 +8,44 @@ import {AuthorizationService} from '../../services/authorization.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  private _userData = inject(UserDataService);
+  private _authorization = inject(AuthorizationService);
 
-  constructor(public userData: UserDataService,
-              public authorization: AuthorizationService) { }
+  /** Активировано ли редактирование категорий */
+  isEditState = computed<boolean>(() => this._userData.editState());
 
-  ngOnInit(): void {
-    this.userData.dataGeneration();
+  /** Баланс */
+  get balance(): number {
+    return this._userData.balance
+  }
+  /** Положительный ли баланс */
+  get isBalancePositive(): boolean {
+    return this._userData.balance >= 0
+  }
+  /** Имя пользователя */
+  get username(): string {
+    return this._authorization.username;
   }
 
+  /** @inheritdoc */
+  ngOnInit(): void {
+    this._userData.dataGeneration();
+  }
+
+  /** Разлогин */
   exit(): void {
-    this.userData.demo = false;
-    this.userData.transactions = [];
-    this.userData.interfaceCosts = [];
-    this.userData.interfaceIncome = [];
-    this.authorization.login = false;
-    this.authorization.username = '';
+    this._userData.demo = false;
+    this._userData.transactions = [];
+    this._userData.interfaceCosts = [];
+    this._userData.interfaceIncome = [];
+    this._authorization.login = false;
+    this._authorization.username = '';
     localStorage.removeItem('token');
     localStorage.removeItem('demo');
+  }
+
+  /** Переключение режима редактирования категорий */
+  toggleEditState(): void {
+    this._userData.toggleEditState();
   }
 }

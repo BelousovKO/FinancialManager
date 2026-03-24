@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {computed, Injectable, signal} from '@angular/core';
 import * as moment from 'moment';
 import {DateService} from './date.service';
 import {AuthorizationService} from './authorization.service';
@@ -7,6 +7,8 @@ import {AuthorizationService} from './authorization.service';
   providedIn: 'root'
 })
 export class UserDataService {
+  private _editState = signal<boolean>(false);
+
   public demo = false;
   public userId: string;
   public transactions = [];
@@ -20,7 +22,10 @@ export class UserDataService {
   public interface = [];
   public interfaceCosts = [];
   public interfaceIncome = [];
-  public editState = false;
+
+  /** Активирован ли режим редактирования категорий */
+  editState = computed<boolean>(() => this._editState());
+
   public loading = false;
   public demoData = {userData: {
       userId: 'demo',
@@ -128,6 +133,11 @@ export class UserDataService {
               public authorization: AuthorizationService) {
   }
 
+  /** Переключение режима редактирования категорий */
+  toggleEditState(): void {
+    this._editState.set(!this._editState());
+  }
+
   updateUserData(response): void {
     this.transactions = response.userData.transactions;
     this.interfaceCosts = response.userData.interface.expense;
@@ -208,7 +218,7 @@ export class UserDataService {
   createDemoData(): void {
     localStorage.setItem('demo', 'true');
     this.demo = true;
-    this.authorization.username = 'demo';
+    this.authorization.username = 'Demo';
     this.authorization.login = true;
     localStorage.getItem('demoData') ?
       this.demoData = JSON.parse(localStorage.getItem('demoData')) :

@@ -3,7 +3,7 @@ import {UserDataService} from '../../services/user-data.service';
 import {DateService} from '../../services/date.service';
 
 @Component({
-  selector: 'app-category-list',
+  selector: 'category-list',
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.scss']
 })

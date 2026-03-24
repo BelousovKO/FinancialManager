@@ -1,9 +1,9 @@
 <app-header></app-header>
 
 @if (isCategory()) {
-    <app-category-list></app-category-list>
+    <category-list></category-list>
 } @else {
-    <app-transaction-list></app-transaction-list>
+    <transaction-list></transaction-list>
 }
 
-<app-toggle-lists [content]="mode()" (changeList)="toggleMode($event)"></app-toggle-lists>
+<toggle-lists [mode]="mode()" (toggleMode)="toggleMode($event)"></toggle-lists>

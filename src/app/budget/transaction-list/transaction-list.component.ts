@@ -4,7 +4,7 @@ import {UserDataService} from '../../services/user-data.service';
 import {DateService} from '../../services/date.service';
 
 @Component({
-  selector: 'app-transaction-list',
+  selector: 'transaction-list',
   templateUrl: './transaction-list.component.html',
   styleUrls: ['./transaction-list.component.scss']
 })

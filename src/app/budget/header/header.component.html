@@ -1,25 +1,34 @@
 <div class="header">
   <div class="exit">
-    <div>{{this.authorization.username}} привет!</div>
+    <div>{{ username }} привет!</div>
     <button class="btn btn-primary" (click)="exit()">Выход</button>
   </div>
-  <div *ngIf="!userData.editState" class="balance-container">
-    <div class="title-balance"
-         [ngClass]="{'green-balance': userData.balance >= 0, 'red-balance': userData.balance < 0}">
-      Баланс:
-    </div>
-    <div class="balance"
-         [ngClass]="{'green-balance': userData.balance >= 0, 'red-balance': userData.balance < 0}">
-      {{userData.balance | number | pointReplacer }} ₽
-    </div>
-  </div>
-  <div *ngIf="!userData.editState" (click)="userData.editState = true" class="edit-menu">
-    <i class="material-icons icon-edit">edit</i>
-  </div>
-  <div *ngIf="userData.editState" (click)="userData.editState = false" class="edit-menu">
+  @if (isEditState()) {
+    <div class="edit-menu" (click)="toggleEditState()">
     <div class="edit-menu-content">
       <i class="material-icons">arrow_back</i><span>Изменить категории</span>
     </div>
   </div>
-  <app-date-control *ngIf="!userData.editState"></app-date-control>
+  } @else {
+    <div class="balance-container">
+      <div 
+        class="title-balance" 
+        [class.green-balance]="isBalancePositive" 
+        [class.red-balance]="!isBalancePositive"
+      >
+        Баланс:
+      </div>
+      <div 
+        class="balance"
+        [class.green-balance]="isBalancePositive" 
+        [class.red-balance]="!isBalancePositive"
+      >
+        {{ balance | number | pointReplacer }} ₽
+      </div>
+    </div>
+    <div class="edit-menu" (click)="toggleEditState()">
+      <i class="material-icons icon-edit">edit</i>
+    </div>
+    <app-date-control></app-date-control>
+  }
 </div>
