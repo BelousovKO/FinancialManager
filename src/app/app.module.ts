@@ -37,38 +37,47 @@ const appRoutes: Routes = [
   {path: '**', redirectTo: ''}
 ];
 
-@NgModule({ declarations: [
-        AppComponent,
-        LogInFormComponent,
-        RegFormComponent,
-        RecoveryComponent,
-        PointReplacerPipe,
-        MomentPipe,
-        BudgetComponent,
-        HeaderComponent,
-        DateControlComponent,
-        CategoryListComponent,
-        DonutChartComponent,
-        CreateTransactionComponent,
-        EditNoteComponent,
-        EditDateTransactionComponent,
-        CalendarComponent,
-        ModalCalendarComponent,
-        DateFilteringComponent,
-        ChooseRangeComponent,
-        EditCategoryComponent,
-        ChangeIconComponent,
-        ToggleListsComponent,
-        TransactionListComponent,
-        LoaderComponent,
-        DeleteTransactionComponent,
-        SelectCategoriesComponent,
-        DemoComponent,
+@NgModule({ 
+    declarations: [
+      AppComponent,
+      LogInFormComponent,
+      RegFormComponent,
+      RecoveryComponent,
+      PointReplacerPipe,
+      MomentPipe,
+      BudgetComponent,
+      HeaderComponent,
+      DateControlComponent,
+      CategoryListComponent,
+      DonutChartComponent,
+      CreateTransactionComponent,
+      EditNoteComponent,
+      EditDateTransactionComponent,
+      CalendarComponent,
+      ModalCalendarComponent,
+      DateFilteringComponent,
+      ChooseRangeComponent,
+      EditCategoryComponent,
+      ChangeIconComponent,
+      ToggleListsComponent,
+      TransactionListComponent,
+      LoaderComponent,
+      DeleteTransactionComponent,
+      SelectCategoriesComponent,
+      DemoComponent,
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
-        RouterModule.forRoot(appRoutes),
-        FormsModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule], providers: [PointReplacerPipe, provideHttpClient(withInterceptorsFromDi())] })
+    bootstrap: [AppComponent], 
+    imports: [
+      BrowserModule,
+      RouterModule.forRoot(appRoutes),
+      FormsModule,
+      ReactiveFormsModule,
+      BrowserAnimationsModule
+    ], 
+    providers: [
+      PointReplacerPipe, 
+      provideHttpClient(withInterceptorsFromDi())
+    ] 
+  })
 export class AppModule {
 }

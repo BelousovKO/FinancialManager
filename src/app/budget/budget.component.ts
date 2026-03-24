@@ -1,19 +1,19 @@
-import {Component} from '@angular/core';
+import {Component, computed, signal} from '@angular/core';
+import {BudgetMode} from './models';
 
+/** Компонент основной страницы приложения */
 @Component({
   selector: 'app-budget',
-  templateUrl: './budget.component.html',
-  styleUrls: ['./budget.component.scss']
+  templateUrl: './budget.component.html'
 })
-
 export class BudgetComponent {
+  /** Мод категории/операции */
+  mode = signal<BudgetMode>('category');
+  /** Переключен ли мод на категории */
+  isCategory = computed<boolean>(() => this.mode() === 'category');
 
-  public list = 'category';
-
-  constructor() {
-  }
-
-  changedList(value: string): void {
-    this.list = value;
+  /** Переключение мода */
+  toggleMode(value: BudgetMode): void {    
+    this.mode.set(value);
   }
 }
