@@ -1,34 +1,53 @@
 <ul>
-  <li *ngFor="let elem of interface; let idx = index">
-    <div *ngIf="interface[idx].title"
-         (click)="modal = true; indexCategory = idx"
-         [ngClass]="{opacity03: !sumsCategory()[idx]}">
-      <h2>{{interface[idx].title}}</h2>
-      <div class="costs material-icons" style="{{backgroundColor(idx)}}">{{interface[idx].icon}}</div>
-      <div class="sum" style="{{color(idx)}}">{{sumsCategory()[idx]}} ₽</div>
-    </div>
-    <div *ngIf="!interface[idx].title && interface[idx - 1].title"
-         (click)="modal = true; indexCategory = idx; createCategory = true">
-      <div class="costs new-cost material-icons" [ngClass]="{hidden: userData.editState}">add</div>
-    </div>
-  </li>
+  @for (category of categories; track $index) {
+    <li>
+      @if (category.title) {
+        <div
+          [class.opacity03]="!sumCategory($index)"
+          (click)="clickToCategory($index)"
+        >
+          <h2>{{ category.title }}</h2>
+          <div class="costs material-icons" [style]="backgroundColor($index)">
+            {{ category.icon }}
+          </div>
+          <div class="sum" [style]="color($index)">
+            {{ sumCategory($index) }} ₽
+          </div>
+        </div>
+      }
+
+      @if (isShowAddButton($index)) {
+        <div
+          class="costs new-cost material-icons"
+          (click)="clickToCategory($index)"
+        >
+          add
+        </div>
+      }
+    </li>
+  }
 
   <li class="donut-chart" (click)="toggleTypeTransactions()">
-    <app-donut-chart [interface]="interface"
-                     [typeTransactions]="typeTransactions"
-                     [sumsCategory]="sumsCategory()">
-    </app-donut-chart>
+    <app-donut-chart
+      [interface]="categories"
+      [typeTransactions]="typeTransactions"
+      [sumsCategory]="sumsCategory()"
+    ></app-donut-chart>
   </li>
 </ul>
 
-<div *ngIf="modal">
-  <app-create-transaction *ngIf="!userData.editState && !createCategory"
-                          (closeModalTransaction)="modal = false; interfaceUpdate()"
-                          [interface]="interface"
-                          [indexCategory]="indexCategory"></app-create-transaction>
+@if (isAddTransaction) {
+  <app-create-transaction
+    [interface]="categories"
+    [indexCategory]="indexCategory"
+    (closeModalTransaction)="closeModal()"
+  ></app-create-transaction>
+}
 
-  <app-edit-category *ngIf="userData.editState || createCategory"
-                     (closeEditCategory)="modal = false; createCategory = false"
-                     [interface]="interface"
-                     [indexCategory]="indexCategory"></app-edit-category>
-</div>
+@if (isEditCategory) {
+  <app-edit-category
+    [interface]="categories"
+    [indexCategory]="indexCategory"
+    (closeEditCategory)="closeModal()"
+  ></app-edit-category>
+}

@@ -13,15 +13,11 @@ export class HeaderComponent implements OnInit {
 
   /** Активировано ли редактирование категорий */
   isEditState = computed<boolean>(() => this._userData.editState());
-
   /** Баланс */
-  get balance(): number {
-    return this._userData.balance
-  }
+  balance = computed<number>(() => this._userData.balance());
   /** Положительный ли баланс */
-  get isBalancePositive(): boolean {
-    return this._userData.balance >= 0
-  }
+  isBalancePositive = computed<boolean>(() => this.balance() >= 0);
+  
   /** Имя пользователя */
   get username(): string {
     return this._authorization.username;

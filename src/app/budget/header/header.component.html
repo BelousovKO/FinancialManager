@@ -13,17 +13,17 @@
     <div class="balance-container">
       <div 
         class="title-balance" 
-        [class.green-balance]="isBalancePositive" 
-        [class.red-balance]="!isBalancePositive"
+        [class.green-balance]="isBalancePositive()" 
+        [class.red-balance]="!isBalancePositive()"
       >
         Баланс:
       </div>
       <div 
         class="balance"
-        [class.green-balance]="isBalancePositive" 
-        [class.red-balance]="!isBalancePositive"
+        [class.green-balance]="isBalancePositive()" 
+        [class.red-balance]="!isBalancePositive()"
       >
-        {{ balance | number | pointReplacer }} ₽
+        {{ balance() | number | pointReplacer }} ₽
       </div>
     </div>
     <div class="edit-menu" (click)="toggleEditState()">

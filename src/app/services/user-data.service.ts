@@ -8,21 +8,24 @@ import {AuthorizationService} from './authorization.service';
 })
 export class UserDataService {
   private _editState = signal<boolean>(false);
+  private _balance = signal<number>(0);
 
   public demo = false;
-  public userId: string;
+  public userId: string | null = null;
   public transactions = [];
   public costs = [];
   public income = [];
   public sumIncome = 0;
   public sumCosts = 0;
-  public costsCategorySums = [];
-  public incomeCategorySums = [];
-  public balance = 0;
+  public costsCategorySums: number[] = [];
+  public incomeCategorySums: number[] = [];
+
   public interface = [];
   public interfaceCosts = [];
   public interfaceIncome = [];
 
+  /** Баланс */
+  balance = computed<number>(() => this._balance());
   /** Активирован ли режим редактирования категорий */
   editState = computed<boolean>(() => this._editState());
 
@@ -154,7 +157,7 @@ export class UserDataService {
     this.income = this.transactions.filter(e => e.type === 'income');
     switch (this.dateService.dateFilter) {
       case 'i':
-        this.balance = this.balanceGenerate();
+        this._balance.set(this.balanceGenerate());
         break;
       case 'd':
         this.filteredTransactions('DD-MM-YYYY');
@@ -171,12 +174,12 @@ export class UserDataService {
       case 'w':
         this.costs = this.costs.filter(e => this.conditionWeek(e));
         this.income = this.income.filter(e => this.conditionWeek(e));
-        this.balance = this.balanceGenerate();
+        this._balance.set(this.balanceGenerate());
         break;
       case 'r':
         this.costs = this.costs.filter(e => this.conditionRange(e));
         this.income = this.income.filter(e => this.conditionRange(e));
-        this.balance = this.balanceGenerate();
+        this._balance.set(this.balanceGenerate());
         break;
     }
   }
@@ -196,7 +199,7 @@ export class UserDataService {
       moment(e.date).format(format) === this.dateService.date.value.clone().format(format));
     this.income = this.income.filter(e =>
       moment(e.date).format(format) === this.dateService.date.value.clone().format(format));
-    this.balance = this.balanceGenerate();
+    this._balance.set(this.balanceGenerate());
   }
 
   balanceGenerate(): number {
